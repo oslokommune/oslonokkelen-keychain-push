@@ -1,1 +1,38 @@
 = Oslonøkkelen - Keychain push
+
+Third party systems can send "keychains" to users of Oslonøkkelen who has verified their phone numbers.
+Most norwegians should hopefully recognize this pattern from https://vipps.no[Vipps].
+
+
+== Terminology
+Short explanation of various terms used in this documentation and api.
+
+[options="header",cols="1,3"]
+|=======
+| Term
+| Explanation
+
+| Keychain
+| Personal permission granting access to certain doors to certain times
+
+| Keychain factory
+| Configuration in Oslonøkkelen responsible for creating personal `keychains`.
+Oslonøkkelen supports multiple different types of such factories for push / pull models.
+
+|=======
+
+
+
+
+
+== Protobuf messages
+
+We use https://developers.google.com/protocol-buffers/[protobuf] to encode messages.
+
+====
+[source,protobuf]
+----
+include::../../../../oslonokkelen-keychain-push-protobuf/src/main/proto/keychain-push.proto[]
+----
+====
+
