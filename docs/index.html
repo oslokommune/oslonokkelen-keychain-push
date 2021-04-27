@@ -447,8 +447,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_terminology">Terminology</a></li>
-<li><a href="#_overview">Overview</a>
+<li><a href="#_pushing_keychains_step_by_step">Pushing keychains - step-by-step</a>
 <ul class="sectlevel2">
+<li><a href="#_obtaining_an_api_key">Obtaining an api key</a></li>
+<li><a href="#_configuring_one_or_more_keychain_factories">Configuring one or more keychain factories</a>
+<ul class="sectlevel3">
+<li><a href="#_timezones">Timezones</a></li>
+<li><a href="#_self_service">Self service?</a></li>
+</ul>
+</li>
+<li><a href="#_getting_the_recipient_to_verify_a_phone_number_in_oslonøkkelen">Getting the recipient to verify a phone number in Oslonøkkelen</a></li>
 <li><a href="#_pushing_new_keychains">Pushing new keychains</a></li>
 </ul>
 </li>
@@ -461,7 +469,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p>Third party systems can send "keychains" to users of Oslonøkkelen who has verified their phone numbers.
-Most norwegians should hopefully recognize this pattern from <a href="https://vipps.no">Vipps</a>.</p>
+Most norwegians should hopefully recognize this pattern from <a href="https://vipps.no">Vipps</a>. We recommend reading this
+document top-to-bottom at least once if you intend to integrate your system with Oslonøkkelen.</p>
 </div>
 </div>
 </div>
@@ -492,19 +501,96 @@ Most norwegians should hopefully recognize this pattern from <a href="https://vi
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configuration in Oslonøkkelen responsible for creating personal <code>keychains</code>.
 Oslonøkkelen supports multiple different types of such factories for push / pull models.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lookup key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your system have to identify the recipient of the keychain somehow. We call this lookup key in the api. Right now
+we only support looking up profiles based on phone numbers, but we are considering adding support for email.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_overview">Overview</h2>
+<h2 id="_pushing_keychains_step_by_step">Pushing keychains - step-by-step</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The following seconds explain (more or less in order) the steps you have to do before your system can push permissions
+to users of Oslonøkkelen.</p>
+</div>
 <div class="sect2">
-<h3 id="_pushing_new_keychains">Pushing new keychains</h3>
+<h3 id="_obtaining_an_api_key">Obtaining an api key</h3>
+<div class="paragraph">
+<p>Your system will get an id and api key that must be added as http headers to each request to Oslonøkkelen backend.
+The api key should (obviously) be kept secret and only transferred over https.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="api-key.svg" alt="api key" width="576" height="96">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_one_or_more_keychain_factories">Configuring one or more keychain factories</h3>
+<div class="paragraph">
+<p>A keychain factory is the mechanism in Oslonøkkelen responsible for creating personal keychains granting users access
+to various doors at the appropriate time. The api described in this document interacts with a certain <em>type</em> of keychain
+factory in Oslonøkkelen.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="keychain-factory-overview.svg" alt="keychain factory overview" width="680" height="464">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_timezones">Timezones</h4>
+<div class="paragraph">
+<p>Each keychain factory will expect push messages to use local time in a given timezone. The reason behind this choice is
+that the local time is probably more relevant for most bookings / appointments. Should Norway ever stop observing daylight
+saving time you probably don&#8217;t want your booked events to occur on a different time of day&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_self_service">Self service?</h4>
+<div class="paragraph">
+<p>We are working on "self service" keychain factory configuration, but right now you have to order the factories you need.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_the_recipient_to_verify_a_phone_number_in_oslonøkkelen">Getting the recipient to verify a phone number in Oslonøkkelen</h3>
 <div class="paragraph">
 <p>Before someone can receive personal keychains in Oslonøkkelen, that person will have to verify a phone number in the app.
 That phone number can later be used to send keychains from other systems. Using a semi public id like phone number makes
 it possible to send keychains to others.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="phone-overview.svg" alt="phone overview" width="296" height="160">
+</div>
+</div>
+<div class="paragraph">
+<p>As more people verify their phone numbers we expect this to become less of a problem, but for a while it is really
+important that your system explains (in a nice way) that the recipient of the keychain must have a verified phone number
+in Oslonøkkelen. Something to keep in mind here is that the person using your system might not be the recipient of the
+keychain (example: someone booking a room on behalf of someone else).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pushing_new_keychains">Pushing new keychains</h3>
+<div class="paragraph">
+<p>Pushing a permission is done by creating a <code>PushKeychainRequest</code> message (see protobuf messages below) and posting it
+to <code>&#8230;&#8203;/api/keychainfactory/{keychain-factory-id}/push/{permission-id}</code> with the http headers described above.</p>
+</div>
+<div class="paragraph">
+<p>The <code>keychain-factory-id</code> identifies the keychain factory you configured in a previous step. The factory will decide
+what the new keychain can open. Any later changes to the factory will be reflected in all keychains generated by this factory.
+For example, adding a third door to a keychain factory with two doors will allow new and old keychains generated by this
+factory to open the third door.</p>
+</div>
+<div class="paragraph">
+<p>The second parameter <code>permission-id</code> is pretty important. It must be unique within your system and can be used to update
+or delete the keychain at some later time. Most systems will probably already have an internal id like a booking
+reference that can be used.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -672,7 +758,7 @@ message KeychainFactoryPushInfo {
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2021-04-27 13:59:20 +0200
+Last updated 2021-04-27 14:51:52 +0200
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

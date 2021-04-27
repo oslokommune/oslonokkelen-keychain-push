@@ -2,7 +2,8 @@
 :icons: font
 
 Third party systems can send "keychains" to users of Oslonøkkelen who has verified their phone numbers.
-Most norwegians should hopefully recognize this pattern from https://vipps.no[Vipps].
+Most norwegians should hopefully recognize this pattern from https://vipps.no[Vipps]. We recommend reading this
+document top-to-bottom at least once if you intend to integrate your system with Oslonøkkelen.
 
 
 == Terminology
@@ -20,17 +21,115 @@ Short explanation of various terms used in this documentation and api.
 | Configuration in Oslonøkkelen responsible for creating personal `keychains`.
 Oslonøkkelen supports multiple different types of such factories for push / pull models.
 
+| Lookup key
+| Your system have to identify the recipient of the keychain somehow. We call this lookup key in the api. Right now
+we only support looking up profiles based on phone numbers, but we are considering adding support for email.
+
 |=======
 
 
-== Overview
+== Pushing keychains - step-by-step
+The following seconds explain (more or less in order) the steps you have to do before your system can push permissions
+to users of Oslonøkkelen.
+
+=== Obtaining an api key
+Your system will get an id and api key that must be added as http headers to each request to Oslonøkkelen backend.
+The api key should (obviously) be kept secret and only transferred over https.
+
+[svgbob, api-key, svg]
+....
+     .---------------.                              | Http request from
+     | Oslonøkkelen  |<-----------------------------| your system
+     | backend api   |
+     '---------------'   o "X-System-Id: your-amazing-system-id"
+                         o "X-System-Api-Key: pepperkake-pekkerkake-123"
+....
+
+
+=== Configuring one or more keychain factories
+A keychain factory is the mechanism in Oslonøkkelen responsible for creating personal keychains granting users access
+to various doors at the appropriate time. The api described in this document interacts with a certain _type_ of keychain
+factory in Oslonøkkelen.
 
 
 
-=== Pushing new keychains
+[svgbob, keychain-factory-overview, svg]
+....
+
+       __________                    __________
+      /          \                  /          \
+     /  Building  \                /  Building  \
+    /      A       \              /      B       \
+   /                \            /                \
+  /.                .\          /.                .\
+   |  .---.  .---.  |            |  .---.         |
+   |  | 1 |  | 2 |  |            |  | 1 |         |
+ --+--+---+--+---+--+------------+--+---+---------+-
+        ^                            ^ ^
+        |                            | |              Doors that can be opened
+        |     .----------------------' |              electronically using the
+        |     |                        |              Oslonøkkelen app.
+        |     |                        |
+~~~~~~~~|~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        |     |                        |
+    .---+-----+----.            .------+-------.      Keychain factories
+    | Factory      |            | Factory      |      configured for your system.
+    | ID: X        |            | ID: Y        |      Only your system can use these
+    |--------------|            |--------------|      to create keychains.
+    | Timezone     |            | Timezone     |
+    | Europe /Oslo |            | Europe /Oslo |
+    |--------------|            |--------------|
+    | Doors        |            | Doors        |
+    | o A1         |            | o B1         |
+    | o B1         |            '--------------'
+    '--------------'
+
+....
+
+==== Timezones
+Each keychain factory will expect push messages to use local time in a given timezone. The reason behind this choice is
+that the local time is probably more relevant for most bookings / appointments. Should Norway ever stop observing daylight
+saving time you probably don't want your booked events to occur on a different time of day...
+
+==== Self service?
+We are working on "self service" keychain factory configuration, but right now you have to order the factories you need.
+
+=== Getting the recipient to verify a phone number in Oslonøkkelen
 Before someone can receive personal keychains in Oslonøkkelen, that person will have to verify a phone number in the app.
 That phone number can later be used to send keychains from other systems. Using a semi public id like phone number makes
 it possible to send keychains to others.
+
+[svgbob, phone-overview, svg]
+....
+
+         Starts by verifying
+   ,-.   personal phone number
+   `-'   123 12 123     .----------.
+   /|\  --------------->| Profile  |
+    |                   |   DB     |
+   / \                  '----------'
+
+  T I M
+....
+
+As more people verify their phone numbers we expect this to become less of a problem, but for a while it is really
+important that your system explains (in a nice way) that the recipient of the keychain must have a verified phone number
+in Oslonøkkelen. Something to keep in mind here is that the person using your system might not be the recipient of the
+keychain (example: someone booking a room on behalf of someone else).
+
+
+=== Pushing new keychains
+Pushing a permission is done by creating a `PushKeychainRequest` message (see protobuf messages below) and posting it
+to `.../api/keychainfactory/{keychain-factory-id}/push/{permission-id}` with the http headers described above.
+
+The `keychain-factory-id` identifies the keychain factory you configured in a previous step. The factory will decide
+what the new keychain can open. Any later changes to the factory will be reflected in all keychains generated by this factory.
+For example, adding a third door to a keychain factory with two doors will allow new and old keychains generated by this
+factory to open the third door.
+
+The second parameter `permission-id` is pretty important. It must be unique within your system and can be used to update
+or delete the keychain at some later time. Most systems will probably already have an internal id like a booking
+reference that can be used.
 
 [svgbob, push-overview, svg]
 ....
