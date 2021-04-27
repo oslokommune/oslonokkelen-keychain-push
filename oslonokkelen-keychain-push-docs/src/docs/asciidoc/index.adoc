@@ -1,4 +1,5 @@
 = Oslonøkkelen - Keychain push
+:icons: font
 
 Third party systems can send "keychains" to users of Oslonøkkelen who has verified their phone numbers.
 Most norwegians should hopefully recognize this pattern from https://vipps.no[Vipps].
@@ -22,7 +23,43 @@ Oslonøkkelen supports multiple different types of such factories for push / pul
 |=======
 
 
+== Overview
 
+
+
+=== Pushing new keychains
+Before someone can receive personal keychains in Oslonøkkelen, that person will have to verify a phone number in the app.
+That phone number can later be used to send keychains from other systems. Using a semi public id like phone number makes
+it possible to send keychains to others.
+
+[svgbob, push-overview, svg]
+....
+
+                         Oslonøkkelen                                    Your system
+      .                  -------------                             |     ------------
+    T |                                                            |
+    i |                                                            |
+    m |         Starts by verifying                                |
+    e |   ,-.   personal phone number                              |
+      |   `-'   123 12 123     .----------.                        |
+      |   /|\  --------------->| Profile  |                        |                        ,-.
+      |    |                   |   DB     |                        |                        `-'
+ +1   |   / \                  '----------'                        |                        /|\   A user in your system
+ day -+                                ^                           |  Push information       |    that knows Tim's number.
+      |  T I M               A new     |       .-----------.       |  abut the permission    |
+      |                      personal  |       | Keychain  |<-----------------------------  / \
+      |                      keychain  |       | factory   |       |
+      |                      added to  |       |-----------|       |                       K I M
+      |                      profile   `-------| ID: x     |       |
+      |                                        '--------+--'       |
+      |                                                 |          |  Http callback informing your
+      |                                                 |          |  system about the new keychain.
+      |                                                 |          |  Could be used to detect api misuse.
+      |                                                 `---------------------->
+      |                                                            |
+      |                                                            |
+      v
+....
 
 
 == Protobuf messages

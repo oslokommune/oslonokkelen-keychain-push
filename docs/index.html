@@ -434,6 +434,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
 <body class="article toc2 toc-left">
@@ -446,6 +447,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_terminology">Terminology</a></li>
+<li><a href="#_overview">Overview</a>
+<ul class="sectlevel2">
+<li><a href="#_pushing_new_keychains">Pushing new keychains</a></li>
+</ul>
+</li>
 <li><a href="#_protobuf_messages">Protobuf messages</a></li>
 </ul>
 </div>
@@ -488,6 +494,24 @@ Oslonøkkelen supports multiple different types of such factories for push / pul
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_overview">Overview</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_pushing_new_keychains">Pushing new keychains</h3>
+<div class="paragraph">
+<p>Before someone can receive personal keychains in Oslonøkkelen, that person will have to verify a phone number in the app.
+That phone number can later be used to send keychains from other systems. Using a semi public id like phone number makes
+it possible to send keychains to others.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="push-overview.svg" alt="push overview" width="984" height="416">
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -648,7 +672,7 @@ message KeychainFactoryPushInfo {
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2021-04-27 13:22:56 +0200
+Last updated 2021-04-27 13:59:20 +0200
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
