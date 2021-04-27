@@ -38,11 +38,13 @@ The api key should (obviously) be kept secret and only transferred over https.
 
 [svgbob, api-key, svg]
 ....
-     .---------------.                              | Http request from
-     | Oslonøkkelen  |<-----------------------------| your system
-     | backend api   |
-     '---------------'   o "X-System-Id: your-amazing-system-id"
-                         o "X-System-Api-Key: pepperkake-pekkerkake-123"
+     .---------------.
+     | Oslonøkkelen  |<-----------------                                         .
+     | backend api   |   Http request from
+     '---------------'   your system with headers:
+
+                          o "X-System-Id: your-amazing-system-id"
+                          o "X-System-Api-Key: pepperkake-pekkerkake-123"
 ....
 
 
@@ -160,6 +162,30 @@ reference that can be used.
       v
 ....
 
+=== Listening for event callbacks
+Oslonøkkelen supports pushing `KeychainEvent when something "interesting" happens to keychains created
+by factories owned by your system. It will work like illustrated in the sequence diagram below.
+
+[seqdiag,event-push,svg]
+....
+seqdiag {
+  tim; oslonokkelen; your-system;
+
+  tim => oslonokkelen [label="Open door x", return="OK"] {
+    oslonokkelen => your-system [label="Event: keychain-used\nSigned with key k1"] {
+      your-system => oslonokkelen [label="Fetch key: k1", return="jwk"] {
+        your-system -> your-system [label="Verify signature"]
+      }
+    }
+  }
+
+
+}
+....
+
+WARNING: We have not decided on the format yet, but your system
+can fetch the public key from a well known uri on Oslonøkkelen to verify the signature. The basic idea is that your
+system can verify that the event is from Oslonøkkelen.
 
 == Protobuf messages
 
