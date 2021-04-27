@@ -8,7 +8,7 @@ plugins {
 }
 
 allprojects {
-    group = "com.github.oslokommune.oslonokkelen.keychains"
+    group = "com.github.oslokommune.oslonokkelen.oslonokkelen-keychain-push"
     version = "1.0.0-SNAPSHOT"
 
     repositories {

@@ -1,0 +1,138 @@
+syntax = "proto3";
+
+package com.github.oslokommune.oslonokkelen.keychainpush.proto;
+
+option java_outer_classname = "KeychainPushApi";
+option java_multiple_files = false;
+
+// Used by third party system to push permissions to Oslonøkkelen.
+//
+// POST https://.../api/keychainfactory/{keychain-factory-id}/push/{permission-id}
+//
+// If the permission is successfully stored it will reply with http 201 and no response body.
+// On error the response should contain `PermissionPushErrorResponse`
+message PushKeychainRequest {
+
+    // How Oslonøkkelen can find the recipients of the permission.
+    //
+    // Important
+    // ---------
+    // Right now Oslonøkkelen only supports a single recipient.
+    // Sending requests with 0 or > 1 recipient will return an invalid request.
+    repeated Recipient recipients = 1;
+
+    // Determines when Oslonøkkelen is allowed to grant access.
+    // Must contain at least one entry.
+    repeated Period periods = 2;
+
+    // "Nice to know" information to be presented to the user.
+    InformationForUser informationForUser = 3;
+
+    // At least one of these options must be provided. The recipient of the permission must have confirmed
+    // this in Oslonøkkelen before any permissions can be pushed from third party systems.
+    message Recipient {
+        oneof lookupKey {
+
+            // Recipient phone number including country code.
+            PhoneNumber phoneNumber = 1;
+
+            // We might add support for looking up users based on email later
+            // string emailAddress = 2;
+
+        }
+    }
+
+    // Determines when the recipient can use the keychain to open doors.
+    // Note that each "keychain factory" is configured with a timezone (Europe/Oslo in 99.999999% of the cases)
+    // and `from` and `until` fields are local time for that timezone.
+    message Period {
+
+        // ISO-8601 - Example: 2020-12-15T15:00:00
+        // Don't include utc offset!
+        string from = 1;
+
+        // ISO-8601 - Example: 2020-12-15T15:00:00
+        // Don't include utc offset!
+        string until = 2;
+
+    }
+
+    // This information does not affect the permission itself, but is presented
+    // to use user in the app. Think of this as "nice to have" information.
+    message InformationForUser {
+
+        // Useful information related to the permission. Could be a reminder
+        // to do (or not do) something after entering a building.
+        //
+        // Todo: Set and document max length
+        string message = 1;
+
+        // Markdown will look a lot nicer in the app.
+        // The default type is text.
+        TextContentType messageContentType = 2;
+
+        // If this is a booking it might be nice to include a link to a page where the recipient
+        // can see and modify the booking.
+        string moreInfoLink = 3;
+
+    }
+
+
+    enum TextContentType {
+
+        PLAIN_TEXT = 0;
+
+        MARKDOWN = 1;
+
+    }
+
+    // Used to look up user profiles.
+    message PhoneNumber {
+
+        // Example: 47
+        string countryCode = 1;
+
+        string phoneNumber = 2;
+
+    }
+
+    // Content-Type: application/protobuf;type=push-error
+    message ErrorResponse {
+
+        // Says something about what went wrong and what can be done about it.
+        ErrorCode errorCode = 1;
+
+        // Can be used later to find more information about what went wrong
+        string correlationId = 2;
+
+        enum ErrorCode {
+
+            // Unexpected error.
+            UNKNOWN = 0;
+
+            // Unable to find a user profile.
+            // Recipient of permissions must verify phone or email address
+            // before he or she can receive permissions from third party systems.
+            MISSING_PROFILE = 1;
+
+            // Id or key is wrong. Please don't try again without
+            // fixing the credentials.
+            INVALID_CREDENTIALS = 2;
+
+        }
+
+    }
+
+}
+
+// Third party systems can use this to fetch information about a keychain factories
+// owned by that system. This can be a convenient way to validate the configuration.
+//
+// GET: https://.../api/keychainfactory/{keychain-factory-id}
+// Response content-type: application/protobuf;type=keychain-factory-push-info
+message KeychainFactoryPushInfo {
+
+    // Example: Europe/Oslo
+    string timezoneId = 1;
+
+}
