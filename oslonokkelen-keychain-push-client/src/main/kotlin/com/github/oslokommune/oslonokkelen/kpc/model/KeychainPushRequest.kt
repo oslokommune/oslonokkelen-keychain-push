@@ -1,5 +1,8 @@
 package com.github.oslokommune.oslonokkelen.kpc.model
 
+import java.net.URI
+import java.time.LocalDateTime
+
 /**
  * @param recipients How can Oslonøkkelen identify the recipients
  * @param periods When the recipients should be allowed access
@@ -18,6 +21,57 @@ data class KeychainPushRequest(
         if (periods.isEmpty()) {
             throw IllegalArgumentException("Must contain at least one period")
         }
+    }
+
+
+    companion object {
+        fun build(block: Builder.() -> Unit): KeychainPushRequest {
+            val builder = Builder()
+            block(builder)
+
+            return KeychainPushRequest(
+                    recipients = builder.recipients,
+                    periods = builder.periods,
+                    informationForUser = InformationForUser(
+                            moreInfoUri = builder.moreInfoUri,
+                            information = builder.information,
+                            informationIsMarkdown = builder.markdown
+                    )
+            )
+        }
+    }
+
+
+    class Builder {
+
+        internal val recipients = mutableListOf<ProfileLookupKey>()
+        internal val periods = mutableListOf<Period>()
+
+        internal var moreInfoUri: URI? = null
+        internal var information: String? = null
+        internal var markdown = false
+
+        fun recipientByPhoneNumber(countryCode: String, number: String) {
+            recipients.add(ProfileLookupKey.PhoneNumber(countryCode, number))
+        }
+
+        fun accessBetween(from: String, until: String) {
+            accessBetween(LocalDateTime.parse(from), LocalDateTime.parse(until))
+        }
+
+        fun accessBetween(from: LocalDateTime, until: LocalDateTime) {
+            periods.add(Period(from, until))
+        }
+
+        fun moreInformationLink(uri: String) {
+            moreInfoUri = URI.create(uri)
+        }
+
+        fun information(information: String, isMarkdown: Boolean = false) {
+            this.information = information
+            this.markdown = isMarkdown
+        }
+
     }
 
 }

@@ -209,6 +209,27 @@ dependencies {
 }
 ----
 
+Creating a client...
+[source,kotlin]
+----
+// Create your ktor http client instance using your preferred engine.
+// You are responsible for configuring sensible timeouts, metrics, logging etc..
+val ktorHttpClient = HttpClient(CIO)
+
+// Configure credentials needed for authentication
+val config = OslonokkelenKeychainPushClient.Config(
+        baseUri = URI.create("https://citykey-api.k8s.oslo.kommune.no"),
+        clientApiKey = "pepperkake-pepperkake-123",
+        clientId = "your-system-id"
+)
+
+// Finally create a keychain push client using your configured ktor client + configuration
+val keychainPushClient = OslonokkelenKeychainPushKtorClient(
+        client = ktorHttpClient,
+        config = config
+)
+----
+
 == Protobuf messages
 
 We use https://developers.google.com/protocol-buffers/[protobuf] to encode messages.

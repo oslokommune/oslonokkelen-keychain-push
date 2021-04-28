@@ -652,6 +652,29 @@ dependencies {
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Creating a client&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">// Create your ktor http client instance using your preferred engine.
+// You are responsible for configuring sensible timeouts, metrics, logging etc..
+val ktorHttpClient = HttpClient(CIO)
+
+// Configure credentials needed for authentication
+val config = OslonokkelenKeychainPushClient.Config(
+        baseUri = URI.create("https://citykey-api.k8s.oslo.kommune.no"),
+        clientApiKey = "pepperkake-pepperkake-123",
+        clientId = "your-system-id"
+)
+
+// Finally create a keychain push client using your configured ktor client + configuration
+val keychainPushClient = OslonokkelenKeychainPushKtorClient(
+        client = ktorHttpClient,
+        config = config
+)</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -867,7 +890,7 @@ message KeychainEvent {
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2021-04-28 17:51:02 +0200
+Last updated 2021-04-28 18:15:37 +0200
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

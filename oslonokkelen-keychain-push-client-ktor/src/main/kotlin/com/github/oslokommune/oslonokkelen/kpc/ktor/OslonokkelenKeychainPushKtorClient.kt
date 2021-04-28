@@ -148,5 +148,5 @@ class OslonokkelenKeychainPushKtorClient(
 
         return responseContentType.parameter("type")
     }
-    
+
 }
