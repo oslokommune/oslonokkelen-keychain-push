@@ -461,6 +461,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_listening_for_event_callbacks">Listening for event callbacks</a></li>
 </ul>
 </li>
+<li><a href="#_kotlin_client">Kotlin client</a></li>
 <li><a href="#_protobuf_messages">Protobuf messages</a></li>
 </ul>
 </div>
@@ -623,6 +624,32 @@ system can verify that the event is from Oslonøkkelen.
 </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_kotlin_client">Kotlin client</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Right now we leverage <a href="https://jitpack.io/#oslokommune/oslonokkelen-keychain-push">jitpack.io</a> for building the Kotlin client.
+The neat thing about jitpack is that it can build any commit on demand. The first time you fetch an artefact it might take
+some time as it has to be built.</p>
+</div>
+<div class="paragraph">
+<p>Sample <code>build.gradle.kts</code> configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">repositories {
+    mavenCentral() // You probably already have this..
+    maven { setUrl("https://jitpack.io") } // Just need to add this!
+}
+
+dependencies {
+    implementation("com.github.oslokommune:oslonokkelen-keychain-push:2c8671650f")
+    // The rest of your dependencies...
+}</code></pre>
 </div>
 </div>
 </div>
@@ -840,7 +867,7 @@ message KeychainEvent {
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2021-04-28 12:16:21 +0200
+Last updated 2021-04-28 17:51:02 +0200
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
