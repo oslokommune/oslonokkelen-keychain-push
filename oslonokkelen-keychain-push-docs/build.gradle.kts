@@ -14,6 +14,10 @@ repositories {
 
 tasks {
     "asciidoctor"(AsciidoctorTask::class) {
+
+        // Changes to protobuf should invalidate previous output from this task
+        inputs.dir(file("../oslonokkelen-keychain-push-protobuf/src/main/proto"))
+
         setOutputDir(file("../docs"))
         outputOptions {
             if (project.hasProperty("pdf")) {
