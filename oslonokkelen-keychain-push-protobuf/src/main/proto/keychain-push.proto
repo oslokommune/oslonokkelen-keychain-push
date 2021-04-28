@@ -96,30 +96,31 @@ message PushKeychainRequest {
 
   }
 
-  // Content-Type: application/protobuf;type=push-error
-  message ErrorResponse {
+}
 
-    // Says something about what went wrong and what can be done about it.
-    ErrorCode errorCode = 1;
+// Content-Type: application/protobuf;type=error
+message ErrorResponse {
 
-    // Can be used later to find more information about what went wrong
-    string correlationId = 2;
+  // Says something about what went wrong and what can be done about it.
+  ErrorCode errorCode = 1;
 
-    enum ErrorCode {
+  // Optional debug message. This is _not_ intended for the end user, but it can
+  // contain useful technical information for debugging problems.
+  string technicalDebugMessage = 2;
 
-      // Unexpected error.
-      UNKNOWN = 0;
+  enum ErrorCode {
 
-      // Unable to find a user profile.
-      // Recipient of permissions must verify phone or email address
-      // before he or she can receive permissions from third party systems.
-      MISSING_PROFILE = 1;
+    // Unexpected error.
+    UNKNOWN = 0;
 
-      // Id or key is wrong. Please don't try again without
-      // fixing the credentials.
-      INVALID_CREDENTIALS = 2;
+    // Unable to find a user profile.
+    // Recipient of permissions must verify phone or email address
+    // before he or she can receive permissions from third party systems.
+    MISSING_PROFILE = 1;
 
-    }
+    // Id or key is wrong. Please don't try again without
+    // fixing the credentials.
+    INVALID_CREDENTIALS = 2;
 
   }
 
@@ -129,7 +130,7 @@ message PushKeychainRequest {
 // owned by that system. This can be a convenient way to validate the configuration.
 //
 // GET: https://.../api/keychainfactory/{keychain-factory-id}
-// Response content-type: application/protobuf;type=keychain-factory-push-info
+// Response content-type: application/protobuf;type=keychain-factory-info
 message KeychainFactoryPushInfo {
 
   // Example: Europe/Oslo

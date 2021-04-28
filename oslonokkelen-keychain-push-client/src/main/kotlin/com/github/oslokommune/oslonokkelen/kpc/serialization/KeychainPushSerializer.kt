@@ -1,13 +1,13 @@
 package com.github.oslokommune.oslonokkelen.kpc.serialization
 
-import com.github.oslokommune.oslonokkelen.kpc.model.InformationForUser
-import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
-import com.github.oslokommune.oslonokkelen.kpc.model.Period
-import com.github.oslokommune.oslonokkelen.kpc.model.ProfileLookupKey
 import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi
 import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi.PushKeychainRequest.Recipient.LookupKeyCase
 import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi.PushKeychainRequest.TextContentType.MARKDOWN
 import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi.PushKeychainRequest.TextContentType.PLAIN_TEXT
+import com.github.oslokommune.oslonokkelen.kpc.model.InformationForUser
+import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
+import com.github.oslokommune.oslonokkelen.kpc.model.Period
+import com.github.oslokommune.oslonokkelen.kpc.model.ProfileLookupKey
 import java.net.URI
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
