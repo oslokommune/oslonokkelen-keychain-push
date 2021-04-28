@@ -29,7 +29,7 @@ we only support looking up profiles based on phone numbers, but we are consideri
 
 
 == Pushing keychains - step-by-step
-The following seconds explain (more or less in order) the steps you have to do before your system can push permissions
+The following explain (more or less in order) the steps you have to do before your system can push permissions
 to users of Oslonøkkelen.
 
 === Obtaining an api key
