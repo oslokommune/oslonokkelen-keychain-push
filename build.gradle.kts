@@ -8,7 +8,7 @@ plugins {
 }
 
 allprojects {
-    group = "com.github.oslokommune.oslonokkelen.oslonokkelen-kpc"
+    group = "com.github.oslokommune"
     version = "1.0.0-SNAPSHOT"
 
     repositories {
