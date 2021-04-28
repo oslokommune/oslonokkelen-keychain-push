@@ -187,6 +187,28 @@ WARNING: We have not decided on the format yet, but your system
 can fetch the public key from a well known uri on Oslonøkkelen to verify the signature. The basic idea is that your
 system can verify that the event is from Oslonøkkelen.
 
+
+== Kotlin client
+
+Right now we leverage https://jitpack.io/#oslokommune/oslonokkelen-keychain-push[jitpack.io] for building the Kotlin client.
+The neat thing about jitpack is that it can build any commit on demand. The first time you fetch an artefact it might take
+some time as it has to be built.
+
+Sample `build.gradle.kts` configuration:
+
+[source,kotlin]
+----
+repositories {
+    mavenCentral() // You probably already have this..
+    maven { setUrl("https://jitpack.io") } // Just need to add this!
+}
+
+dependencies {
+    implementation("com.github.oslokommune:oslonokkelen-keychain-push:2c8671650f")
+    // The rest of your dependencies...
+}
+----
+
 == Protobuf messages
 
 We use https://developers.google.com/protocol-buffers/[protobuf] to encode messages.
