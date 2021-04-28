@@ -10,8 +10,6 @@ Docs
 Documentation is published to:
 https://oslokommune.github.io/oslonokkelen-keychain-push/
 
-Run `./gradlew asciidoc` to re-generate documentation found under `docs`.
-
 
 Anti bikeshedding
 -----------------
@@ -19,3 +17,22 @@ Please install the Ktlint git pre-commit hook to auto format changed files befor
 submitting pull requests to this repository.
 
     ./gradlew addKtlintFormatGitPreCommitHook
+
+
+Modules
+-------
+
+### :oslonokkelen-keychain-push-docs
+Asciidoc documentation. Run `./gradlew :oslonokkelen-keychain-push-docs:asciidoc` to render the documentation as html 
+under `docs`. It depends on having a few chart / diagram utils available on `$PATH`. The build script should detect if
+any of those are missing and print instructions on how to install them. 
+
+### :oslonokkelen-keychain-push-protobuf
+Protobuf messages used in the api. Gradle tasks for compiling `.proto` to `.java`.  
+
+
+### :oslonokkelen-keychain-push-client
+Kotlin client.
+
+### :oslonokkelen-keychain-push-client-ktor
+Kotlin / Ktor client.

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"><svg xmlns:inkspace='http://www.inkscape.org/namespaces/inkscape' preserveAspectRatio='xMidYMid meet' viewBox='0 0 640 626' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>
+  <defs id='defs_block'>
+    <filter inkspace:collect='always' height='1.504' id='filter_blur' width='1.1575' x='-0.07875' y='-0.252'>
+      <feGaussianBlur inkspace:collect='always' id='feGaussianBlur3780' stdDeviation='4.2'/>
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc>seqdiag {
+  tim; oslonokkelen; your-system;
+
+  tim =&gt; oslonokkelen [label="Open door x", return="OK"] {
+    oslonokkelen =&gt; your-system [label="Event: keychain-used\nSigned with key k1"] {
+      your-system =&gt; oslonokkelen [label="Fetch key: k1", return="jwk"] {
+        your-system -&gt; your-system [label="Verify signature"]
+      }
+    }
+  }
+
+
+}</desc>
+  <rect fill='rgb(0,0,0)' height='463' style='filter:url(#filter_blur);opacity:0.7;fill-opacity:1' width='8' x='127' y='141'/>
+  <rect fill='rgb(0,0,0)' height='417' style='filter:url(#filter_blur);opacity:0.7;fill-opacity:1' width='8' x='319' y='141'/>
+  <rect fill='rgb(0,0,0)' height='159' style='filter:url(#filter_blur);opacity:0.7;fill-opacity:1' width='8' x='323' y='284'/>
+  <rect fill='rgb(0,0,0)' height='274' style='filter:url(#filter_blur);opacity:0.7;fill-opacity:1' width='8' x='511' y='219'/>
+  <rect fill='rgb(0,0,0)' height='40' stroke='rgb(0,0,0)' style='filter:url(#filter_blur);opacity:0.7;fill-opacity:1' width='128' x='67' y='46'/>
+  <rect fill='rgb(0,0,0)' height='40' stroke='rgb(0,0,0)' style='filter:url(#filter_blur);opacity:0.7;fill-opacity:1' width='128' x='259' y='46'/>
+  <rect fill='rgb(0,0,0)' height='40' stroke='rgb(0,0,0)' style='filter:url(#filter_blur);opacity:0.7;fill-opacity:1' width='128' x='451' y='46'/>
+  <path d='M 128 80 L 128 614' fill='none' stroke='rgb(0,0,0)' stroke-dasharray='8 4'/>
+  <rect fill='moccasin' height='463' stroke='rgb(0,0,0)' width='8' x='124' y='135'/>
+  <path d='M 320 80 L 320 614' fill='none' stroke='rgb(0,0,0)' stroke-dasharray='8 4'/>
+  <rect fill='moccasin' height='417' stroke='rgb(0,0,0)' width='8' x='316' y='135'/>
+  <rect fill='moccasin' height='159' stroke='rgb(0,0,0)' width='8' x='320' y='278'/>
+  <path d='M 512 80 L 512 614' fill='none' stroke='rgb(0,0,0)' stroke-dasharray='8 4'/>
+  <rect fill='moccasin' height='274' stroke='rgb(0,0,0)' width='8' x='508' y='213'/>
+  <rect fill='rgb(255,255,255)' height='40' stroke='rgb(0,0,0)' width='128' x='64' y='40'/>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='18' x='128.0' y='66'>tim</text>
+  <rect fill='rgb(255,255,255)' height='40' stroke='rgb(0,0,0)' width='128' x='256' y='40'/>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='72' x='320.0' y='66'>oslonokkelen</text>
+  <rect fill='rgb(255,255,255)' height='40' stroke='rgb(0,0,0)' width='128' x='448' y='40'/>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='66' x='512.0' y='66'>your-system</text>
+  <path d='M 136 135 L 312 135' fill='none' stroke='rgb(0,0,0)'/>
+  <polygon fill='rgb(0,0,0)' points='304,131 312,135 304,139' stroke='rgb(0,0,0)'/>
+  <path d='M 328 213 L 504 213' fill='none' stroke='rgb(0,0,0)'/>
+  <polygon fill='rgb(0,0,0)' points='496,209 504,213 496,217' stroke='rgb(0,0,0)'/>
+  <path d='M 332 278 L 504 278' fill='none' stroke='rgb(0,0,0)'/>
+  <polygon fill='rgb(0,0,0)' points='340,274 332,278 340,282' stroke='rgb(0,0,0)'/>
+  <path d='M 520 356 L 600 356' fill='none' stroke='rgb(0,0,0)'/>
+  <path d='M 600 356 L 600 372' fill='none' stroke='rgb(0,0,0)'/>
+  <path d='M 600 372 L 520 372' fill='none' stroke='rgb(0,0,0)'/>
+  <polygon fill='rgb(0,0,0)' points='528,368 520,372 528,376' stroke='rgb(0,0,0)'/>
+  <path d='M 328 437 L 504 437' fill='none' stroke='rgb(0,0,0)' stroke-dasharray='4'/>
+  <polygon fill='rgb(0,0,0)' points='496,433 504,437 496,441' stroke='rgb(0,0,0)'/>
+  <path d='M 328 487 L 504 487' fill='none' stroke='rgb(0,0,0)' stroke-dasharray='4'/>
+  <polygon fill='rgb(0,0,0)' points='336,483 328,487 336,491' stroke='rgb(0,0,0)'/>
+  <path d='M 136 552 L 312 552' fill='none' stroke='rgb(0,0,0)' stroke-dasharray='4'/>
+  <polygon fill='rgb(0,0,0)' points='144,548 136,552 144,556' stroke='rgb(0,0,0)'/>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='66' x='173.0' y='133'>Open door x</text>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='120' x='392.0' y='198'>Event: keychain-used</text>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='108' x='386.0' y='211'>Signed with key k1</text>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='78' x='465.0' y='276'>Fetch key: k1</text>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='96' x='568.0' y='348'>Verify signature</text>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='18' x='341.0' y='435'>jwk</text>
+  <text fill='rgb(0,0,0)' font-family='sans-serif' font-size='11' font-style='normal' font-weight='normal' text-anchor='middle' textLength='12' x='306.0' y='550'>OK</text>
+</svg>
