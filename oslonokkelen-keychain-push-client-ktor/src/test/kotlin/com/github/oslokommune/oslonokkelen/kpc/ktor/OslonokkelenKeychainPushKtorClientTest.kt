@@ -4,6 +4,9 @@ import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi
 import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryInfo
+import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
+import com.github.oslokommune.oslonokkelen.kpc.model.Period
+import com.github.oslokommune.oslonokkelen.kpc.model.ProfileLookupKey
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
 import io.ktor.http.HttpStatusCode
@@ -13,6 +16,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.net.URI
+import java.time.LocalDateTime
 import java.time.ZoneId
 
 internal class OslonokkelenKeychainPushKtorClientTest {
@@ -100,6 +104,32 @@ internal class OslonokkelenKeychainPushKtorClientTest {
                                 id = factoryId,
                                 timezone = ZoneId.of("Europe/Oslo")
                         ))
+            }
+        }
+    }
+
+    @Test
+    fun `Can push request`() {
+        HttpMock("/api/keychainfactory/test-factory/push/ref-123") {
+            respond(
+                    status = HttpStatusCode.OK,
+                    content = KeychainPushApi.PushKeychainRequest.OkResponse.getDefaultInstance().toByteArray(),
+                    headers = headersOf("Content-Type", "application/protobuf; type=push-ok")
+            )
+        }.use { mock ->
+            val client = OslonokkelenKeychainPushKtorClient(
+                    client = mock.client,
+                    config = config
+            )
+
+            runBlocking {
+                val factoryId = KeychainFactoryId("test-factory")
+                val keychainId = factoryId.createKeychainId("ref-123")
+
+                client.push(keychainId, KeychainPushRequest(
+                        recipients = listOf(ProfileLookupKey.PhoneNumber("47", "12312123")),
+                        periods = listOf(Period(LocalDateTime.now(), LocalDateTime.now().plusDays(2)))
+                ))
             }
         }
     }

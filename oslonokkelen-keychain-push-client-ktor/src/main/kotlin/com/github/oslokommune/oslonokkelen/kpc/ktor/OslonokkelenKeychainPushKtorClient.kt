@@ -6,6 +6,7 @@ import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryInfo
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
+import com.github.oslokommune.oslonokkelen.kpc.serialization.KeychainPushSerializer
 import com.google.protobuf.GeneratedMessageV3
 import io.ktor.client.HttpClient
 import io.ktor.client.features.expectSuccess
@@ -13,6 +14,7 @@ import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readBytes
@@ -63,7 +65,28 @@ class OslonokkelenKeychainPushKtorClient(
     }
 
     override suspend fun push(keychainId: KeychainId, request: KeychainPushRequest) {
-        TODO("Not yet implemented")
+        try {
+            val uri = config.formatKeychainPushUri(keychainId).toString()
+            val ktorRequest = client.post<HttpStatement>(uri) {
+                body = KeychainPushSerializer.toProtobuf(request).toByteArray()
+                requestBuilder(this)
+            }
+
+            val httpResponse = ktorRequest.execute()
+
+            readSuccessfulResponsePayload(
+                    factory = KeychainPushApi.PushKeychainRequest.OkResponse::parseFrom,
+                    httpResponse = httpResponse,
+                    expectedType = "push-ok"
+            )
+        } catch (ex: OslonokkelenKeychainPushClient.ClientException) {
+            throw ex
+        } catch (ex: Exception) {
+            throw OslonokkelenKeychainPushClient.ClientException.Unknown(
+                    message = "Failed to push ${keychainId.value}",
+                    cause = ex
+            )
+        }
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
@@ -125,5 +148,5 @@ class OslonokkelenKeychainPushKtorClient(
 
         return responseContentType.parameter("type")
     }
-
+    
 }
