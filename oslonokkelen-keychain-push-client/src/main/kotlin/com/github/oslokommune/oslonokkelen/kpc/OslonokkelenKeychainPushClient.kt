@@ -28,7 +28,7 @@ interface OslonokkelenKeychainPushClient {
         private val baseUriStr = baseUri.toString().removeSuffix("/")
 
         fun formatKeychainFactoryInfoUri(id: KeychainFactoryId): URI {
-            return URI.create("$baseUri/api/keychainfactory/${id.value}")
+            return URI.create("$baseUriStr/api/keychainfactory/${id.value}")
         }
 
     }
