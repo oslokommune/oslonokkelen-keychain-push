@@ -16,6 +16,7 @@ object KeychainPushSerializer {
 
     fun toProtobuf(request: KeychainPushRequest): KeychainPushApi.PushKeychainRequest {
         val informationForUser = KeychainPushApi.PushKeychainRequest.InformationForUser.newBuilder()
+        informationForUser.title = request.informationForUser.title
 
         if (request.informationForUser.moreInfoUri != null) {
             informationForUser.moreInfoLink = request.informationForUser.moreInfoUri.toString()
@@ -84,7 +85,8 @@ object KeychainPushSerializer {
                             URI.create(request.informationForUser.moreInfoLink)
                         } else {
                             null
-                        }
+                        },
+                        title = request.informationForUser.title
                 )
         )
     }

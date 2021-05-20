@@ -9,7 +9,7 @@ internal class KeychainPushRequestTest {
 
     @Test
     fun `Convenient builder should produce same instance as more verbose constructor`() {
-        val requestMadeByBuilder = KeychainPushRequest.build {
+        val requestMadeByBuilder = KeychainPushRequest.build("Some booking") {
             accessBetween("2020-05-19T20:00:00", "2020-05-19T22:00:00")
             recipientByPhoneNumber("47", "12312123")
             moreInformationLink("https://info.example.com")
@@ -30,6 +30,7 @@ internal class KeychainPushRequestTest {
                         )
                 ),
                 informationForUser = InformationForUser(
+                        title = "Some booking",
                         moreInfoUri = URI.create("https://info.example.com"),
                         information = "Be nice",
                         informationIsMarkdown = true

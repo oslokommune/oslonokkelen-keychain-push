@@ -31,8 +31,6 @@ protobuf {
     }
 }
 
-
-
 publishing {
     publications {
         create<MavenPublication>("maven") {

@@ -27,6 +27,7 @@ internal class KeychainPushSerializerTest {
                         )
                 ),
                 informationForUser = InformationForUser(
+                        title = "Some booking",
                         moreInfoUri = URI.create("https://www.vg.no"),
                         information = "Nøkkelen ligger *under* matta",
                         informationIsMarkdown = true
@@ -55,7 +56,8 @@ internal class KeychainPushSerializerTest {
                         )
                 ),
                 informationForUser = InformationForUser(
-                        moreInfoUri = URI.create("https://www.vg.no")
+                        moreInfoUri = URI.create("https://www.vg.no"),
+                        title = "Some booking"
                 )
         )
 
@@ -81,6 +83,7 @@ internal class KeychainPushSerializerTest {
                         )
                 ),
                 informationForUser = InformationForUser(
+                        title = "Some booking",
                         information = "Nøkkelen ligger *under* matta",
                         informationIsMarkdown = true
                 )

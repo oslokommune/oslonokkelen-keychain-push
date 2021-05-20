@@ -2,6 +2,7 @@ package com.github.oslokommune.oslonokkelen.kpc.ktor
 
 import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi
 import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
+import com.github.oslokommune.oslonokkelen.kpc.model.InformationForUser
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryInfo
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
@@ -128,7 +129,10 @@ internal class OslonokkelenKeychainPushKtorClientTest {
 
                 client.push(keychainId, KeychainPushRequest(
                         recipients = listOf(ProfileLookupKey.PhoneNumber("47", "12312123")),
-                        periods = listOf(Period(LocalDateTime.now(), LocalDateTime.now().plusDays(2)))
+                        periods = listOf(Period(LocalDateTime.now(), LocalDateTime.now().plusDays(2))),
+                        informationForUser = InformationForUser(
+                                title = "Some booking"
+                        )
                 ))
             }
         }

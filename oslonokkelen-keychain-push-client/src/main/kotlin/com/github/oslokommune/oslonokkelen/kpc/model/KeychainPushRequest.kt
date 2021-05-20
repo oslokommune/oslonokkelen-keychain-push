@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 data class KeychainPushRequest(
         val recipients: List<ProfileLookupKey>,
         val periods: List<Period>,
-        val informationForUser: InformationForUser = InformationForUser()
+        val informationForUser: InformationForUser
 ) {
 
     init {
@@ -25,8 +25,8 @@ data class KeychainPushRequest(
 
 
     companion object {
-        fun build(block: Builder.() -> Unit): KeychainPushRequest {
-            val builder = Builder()
+        fun build(title: String, block: Builder.() -> Unit): KeychainPushRequest {
+            val builder = Builder(title)
             block(builder)
 
             return KeychainPushRequest(
@@ -35,14 +35,15 @@ data class KeychainPushRequest(
                     informationForUser = InformationForUser(
                             moreInfoUri = builder.moreInfoUri,
                             information = builder.information,
-                            informationIsMarkdown = builder.markdown
+                            informationIsMarkdown = builder.markdown,
+                            title = builder.title
                     )
             )
         }
     }
 
 
-    class Builder {
+    class Builder(internal val title: String) {
 
         internal val recipients = mutableListOf<ProfileLookupKey>()
         internal val periods = mutableListOf<Period>()

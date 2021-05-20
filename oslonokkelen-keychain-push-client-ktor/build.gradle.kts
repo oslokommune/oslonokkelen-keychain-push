@@ -22,7 +22,8 @@ dependencies {
 
     implementation("org.slf4j:slf4j-api:1.7.30")
 
-    api("io.ktor:ktor-client-core-jvm:$ktorVersion")
+    api("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-core-jvm:$ktorVersion")
 
     testImplementation("io.ktor:ktor-client-cio:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
