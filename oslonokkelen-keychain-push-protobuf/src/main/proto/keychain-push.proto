@@ -62,15 +62,15 @@ message PushKeychainRequest {
   message InformationForUser {
 
     // Mandatory title.
-    // Example: "Testveien 2A - 19th of May - #booking-123"
+    // Max length: 100
     //
-    // Todo: Document max length
+    // Example: "Testveien 2A - 19th of May - #booking-123"
     string title = 1;
 
     // Useful information related to the permission. Could be a reminder
     // to do (or not do) something after entering a building.
     //
-    // Todo: Document max length
+    // Max length: 2000
     string message = 2;
 
     // Markdown will look a lot nicer in the app.
