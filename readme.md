@@ -9,8 +9,9 @@ to users who have verified their phone number.
 
 Docs
 ----
-Full documentation: https://oslokommune.github.io/oslonokkelen-keychain-push/
-
+Full documentation: 
+https://oslokommune.github.io/oslonokkelen-keychain-push/
+ 
 We use Asciidoctor for our documentation. Follow these steps to submit changes. You will need some cli tools installed,
 but the build tasks will tell you if any of them are missing. 
 
@@ -35,11 +36,14 @@ under `docs`. It depends on having a few chart / diagram utils available on `$PA
 any of those are missing and print instructions on how to install them. 
 
 ### :oslonokkelen-keychain-push-protobuf
-Protobuf messages used in the api. Gradle tasks for compiling `.proto` to `.java`.  
+Protobuf messages used in the api. Gradle tasks for compiling `.proto` to `.java`. Our documentation embeds the protobuf
+so please remember to re-generate the docs after updating the protobuf api. 
 
 
 ### :oslonokkelen-keychain-push-client
-Kotlin client.
+Kotlin client not tied to a specific http client implementation. You can either use the `oslonokkelen-keychain-push-client-ktor`
+implementation for Ktor or provide your own implementation of `OslonokkelenKeychainPushClient` if you want to use a 
+different http client.
 
 ### :oslonokkelen-keychain-push-client-ktor
-Kotlin / Ktor client.
+Kotlin / Ktor client implementation.
