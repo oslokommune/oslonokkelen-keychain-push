@@ -9,9 +9,14 @@ to users who have verified their phone number.
 
 Docs
 ----
-Documentation is published to:
-https://oslokommune.github.io/oslonokkelen-keychain-push/
+Full documentation: https://oslokommune.github.io/oslonokkelen-keychain-push/
 
+We use Asciidoctor for our documentation. Follow these steps to submit changes. You will need some cli tools installed,
+but the build tasks will tell you if any of them are missing. 
+
+1. Update the [asciidoc files](https://github.com/oslokommune/oslonokkelen-keychain-push/tree/main/oslonokkelen-keychain-push-docs/src/docs/asciidoc)
+2. Generate updated html files by running `./gradlew :oslonokkelen-keychain-push-docs:asciidoc`
+3. Commit and push your changes.
 
 Anti bikeshedding
 -----------------

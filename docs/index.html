@@ -750,19 +750,25 @@ message PushKeychainRequest {
   // to use user in the app. Think of this as "nice to have" information.
   message InformationForUser {
 
+    // Mandatory title.
+    // Max length: 100
+    //
+    // Example: "Testveien 2A - 19th of May - #booking-123"
+    string title = 1;
+
     // Useful information related to the permission. Could be a reminder
     // to do (or not do) something after entering a building.
     //
-    // Todo: Set and document max length
-    string message = 1;
+    // Max length: 2000
+    string message = 2;
 
     // Markdown will look a lot nicer in the app.
     // The default type is text.
-    TextContentType messageContentType = 2;
+    TextContentType messageContentType = 3;
 
     // If this is a booking it might be nice to include a link to a page where the recipient
     // can see and modify the booking.
-    string moreInfoLink = 3;
+    string moreInfoLink = 4;
 
   }
 
