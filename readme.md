@@ -1,6 +1,7 @@
 Oslonøkkelen - Keychain push 
 ============================
 [![](https://jitpack.io/v/oslokommune/oslonokkelen-keychain-push.svg)](https://jitpack.io/#oslokommune/oslonokkelen-keychain-push)
+[![Test](https://github.com/oslokommune/oslonokkelen-keychain-push/actions/workflows/testing.yml/badge.svg)](https://github.com/oslokommune/oslonokkelen-keychain-push/actions/workflows/testing.yml)
 
 Users of Oslonøkkelen get access to doors via keychains. Other systems can an API to push keychains
 to users who have verified their phone number. 
