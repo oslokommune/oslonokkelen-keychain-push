@@ -1,7 +1,8 @@
-package com.github.oslokommune.oslonokkelen.kpc.model.cli
+package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.requireObject
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.Context
 import kotlinx.coroutines.runBlocking
 
 class KeychainInfoCliCommand : CliktCommand(
