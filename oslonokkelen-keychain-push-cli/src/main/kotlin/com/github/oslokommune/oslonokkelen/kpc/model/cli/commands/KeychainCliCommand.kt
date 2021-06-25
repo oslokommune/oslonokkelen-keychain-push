@@ -1,4 +1,4 @@
-package com.github.oslokommune.oslonokkelen.kpc.model.cli
+package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
@@ -6,6 +6,7 @@ import com.github.ajalt.clikt.parameters.options.required
 import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
 import com.github.oslokommune.oslonokkelen.kpc.ktor.OslonokkelenKeychainPushKtorClient
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.Context
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import java.net.URI
