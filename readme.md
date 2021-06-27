@@ -47,3 +47,6 @@ different http client.
 
 ### :oslonokkelen-keychain-push-client-ktor
 Kotlin / Ktor client implementation.
+
+### :oslonokkelen-keychain-push-cli
+Simple cli application for testing the api. 
