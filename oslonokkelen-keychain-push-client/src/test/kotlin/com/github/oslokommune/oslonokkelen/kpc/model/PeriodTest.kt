@@ -29,4 +29,16 @@ internal class PeriodTest {
         assertNotNull(p)
     }
 
+    @Test
+    fun `Cant grant access too far into the future - We might lift this restriction in the future`() {
+        val a = LocalDateTime.now()
+        val b = a.plusDays(Period.MAX_DAYS + 1)
+
+        val ex = assertThrows<IllegalArgumentException> {
+            Period(a, b)
+        }
+
+        assertThat(ex).hasMessage("Can't grant access for more then 365 days")
+    }
+
 }
