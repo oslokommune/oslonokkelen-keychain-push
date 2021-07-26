@@ -20,7 +20,7 @@ val ktorVersion = "1.6.0"
 dependencies {
     api(project(":oslonokkelen-keychain-push-client"))
 
-    implementation("org.slf4j:slf4j-api:1.7.31")
+    implementation("org.slf4j:slf4j-api:1.7.32")
 
     api("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-core-jvm:$ktorVersion")
@@ -28,7 +28,7 @@ dependencies {
     testImplementation("io.ktor:ktor-client-cio:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 
-    testImplementation("org.slf4j:slf4j-simple:1.7.31")
+    testImplementation("org.slf4j:slf4j-simple:1.7.32")
     testImplementation("org.assertj:assertj-core:3.20.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
 }
