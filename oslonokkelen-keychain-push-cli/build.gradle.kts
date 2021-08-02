@@ -6,7 +6,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
-    `maven-publish`
     idea
 
     id("com.github.johnrengelman.shadow") version "7.0.0"
@@ -50,15 +49,6 @@ tasks.test {
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-        }
-    }
-}
-
 
 tasks {
     named<ShadowJar>("shadowJar") {
