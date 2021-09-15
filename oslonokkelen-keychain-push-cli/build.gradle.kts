@@ -41,13 +41,9 @@ plugins.withType<TestLoggerPlugin> {
 tasks.test {
     useJUnitPlatform()
     reports {
-        html.isEnabled = true
-        junitXml.isEnabled = true
+        html.required.set(true)
+        junitXml.required.set(true)
     }
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
 }
 
 tasks {
