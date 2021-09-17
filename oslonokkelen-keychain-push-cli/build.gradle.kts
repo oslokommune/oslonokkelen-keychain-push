@@ -25,7 +25,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:1.6.3")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
-    testImplementation("org.assertj:assertj-core:3.19.0")
+    testImplementation("org.assertj:assertj-core:3.20.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.0")
 }
 
