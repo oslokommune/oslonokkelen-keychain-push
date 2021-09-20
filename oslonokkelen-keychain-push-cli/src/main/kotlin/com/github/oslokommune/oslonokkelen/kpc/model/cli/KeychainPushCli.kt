@@ -7,7 +7,10 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.push.KeychainP
 
 fun main(args: Array<String>) {
     KeychainCliCommand()
-        .subcommands(KeychainPushCliCommand(), KeychainInfoCliCommand())
+        .subcommands(
+            KeychainPushCliCommand(),
+            KeychainInfoCliCommand()
+        )
         .main(args)
 }
 

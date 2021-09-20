@@ -111,7 +111,7 @@ internal class OslonokkelenKeychainPushKtorClientTest {
 
     @Test
     fun `Can push request`() {
-        HttpMock("/api/keychainfactory/test-factory/push/ref-123") {
+        HttpMock("/api/keychainfactory/test-factory/ref-123") {
             respond(
                     status = HttpStatusCode.OK,
                     content = KeychainPushApi.PushKeychainRequest.OkResponse.getDefaultInstance().toByteArray(),

@@ -2,16 +2,19 @@ package com.github.oslokommune.oslonokkelen.kpc.ktor
 
 import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi
 import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
+import com.github.oslokommune.oslonokkelen.kpc.model.KeychainDeleteRequest
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryInfo
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
+import com.github.oslokommune.oslonokkelen.kpc.serialization.KeychainDeleteSerializer
 import com.github.oslokommune.oslonokkelen.kpc.serialization.KeychainPushSerializer
 import com.google.protobuf.GeneratedMessageV3
 import io.ktor.client.HttpClient
 import io.ktor.client.features.expectSuccess
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -66,7 +69,7 @@ class OslonokkelenKeychainPushKtorClient(
 
     override suspend fun push(keychainId: KeychainId, request: KeychainPushRequest) {
         try {
-            val uri = config.formatKeychainPushUri(keychainId).toString()
+            val uri = config.formatKeychainUri(keychainId).toString()
             val ktorRequest = client.post<HttpStatement>(uri) {
                 body = KeychainPushSerializer.toProtobuf(request).toByteArray()
                 requestBuilder(this)
@@ -85,6 +88,31 @@ class OslonokkelenKeychainPushKtorClient(
             throw OslonokkelenKeychainPushClient.ClientException.Unknown(
                     message = "Failed to push ${keychainId.value}",
                     cause = ex
+            )
+        }
+    }
+
+    override suspend fun delete(keychainId: KeychainId, request: KeychainDeleteRequest) {
+        try {
+            val uri = config.formatKeychainUri(keychainId).toString()
+            val ktorRequest = client.delete<HttpStatement>(uri) {
+                body = KeychainDeleteSerializer.toProtobuf(request).toByteArray()
+                requestBuilder(this)
+            }
+
+            val httpResponse = ktorRequest.execute()
+
+            readSuccessfulResponsePayload(
+                factory = KeychainPushApi.PushKeychainRequest.OkResponse::parseFrom,
+                httpResponse = httpResponse,
+                expectedType = "delete-ok"
+            )
+        } catch (ex: OslonokkelenKeychainPushClient.ClientException) {
+            throw ex
+        } catch (ex: Exception) {
+            throw OslonokkelenKeychainPushClient.ClientException.Unknown(
+                message = "Failed to delete ${keychainId.value}",
+                cause = ex
             )
         }
     }

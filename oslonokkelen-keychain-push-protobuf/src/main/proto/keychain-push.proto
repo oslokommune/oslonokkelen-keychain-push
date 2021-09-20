@@ -110,6 +110,13 @@ message PushKeychainRequest {
   }
 
 }
+// Content-Type: application/protobuf;type=delete
+message KeychainDeleteRequest {
+
+  // Optional reason. Will show up in the app.
+  string humanReadableReason = 1;
+
+}
 
 // Content-Type: application/protobuf;type=error
 message ErrorResponse {
