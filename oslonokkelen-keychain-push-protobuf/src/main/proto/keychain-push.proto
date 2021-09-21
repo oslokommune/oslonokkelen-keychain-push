@@ -116,6 +116,14 @@ message KeychainDeleteRequest {
   // Optional reason. Will show up in the app.
   string humanReadableReason = 1;
 
+
+  // Empty for now, but we might want to add fields later..
+  //
+  // Content-Type: application/protobuf;type=delete-ok
+  message OkResponse {
+
+  }
+
 }
 
 // Content-Type: application/protobuf;type=error

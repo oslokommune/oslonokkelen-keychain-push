@@ -3,6 +3,7 @@ package com.github.oslokommune.oslonokkelen.kpc.ktor
 import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi
 import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
 import com.github.oslokommune.oslonokkelen.kpc.model.InformationForUser
+import com.github.oslokommune.oslonokkelen.kpc.model.KeychainDeleteRequest
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryInfo
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
@@ -133,6 +134,31 @@ internal class OslonokkelenKeychainPushKtorClientTest {
                         informationForUser = InformationForUser(
                                 title = "Some booking"
                         )
+                ))
+            }
+        }
+    }
+
+    @Test
+    fun `Can delete keychain`() {
+        HttpMock("/api/keychainfactory/test-factory/ref-123") {
+            respond(
+                    status = HttpStatusCode.OK,
+                    content = KeychainPushApi.KeychainDeleteRequest.OkResponse.getDefaultInstance().toByteArray(),
+                    headers = headersOf("Content-Type", "application/protobuf; type=delete-ok")
+            )
+        }.use { mock ->
+            val client = OslonokkelenKeychainPushKtorClient(
+                    client = mock.client,
+                    config = config
+            )
+
+            runBlocking {
+                val factoryId = KeychainFactoryId("test-factory")
+                val keychainId = factoryId.createKeychainId("ref-123")
+
+                client.delete(keychainId, KeychainDeleteRequest(
+                    reason = "Oups"
                 ))
             }
         }

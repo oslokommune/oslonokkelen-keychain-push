@@ -1,7 +1,6 @@
 import com.adarshr.gradle.testlogger.TestLoggerExtension
 import com.adarshr.gradle.testlogger.TestLoggerPlugin
 import com.adarshr.gradle.testlogger.theme.ThemeType
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
@@ -23,7 +22,10 @@ dependencies {
     implementation("org.slf4j:slf4j-api:1.7.32")
 
     api("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-core-jvm:$ktorVersion")
+    api("io.ktor:ktor-client-core-jvm:$ktorVersion")
+    api("io.ktor:ktor-http:$ktorVersion") {
+        because("Intellij doesn't seem to resolve this transitive dependency on its own")
+    }
 
     testImplementation("io.ktor:ktor-client-cio:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
