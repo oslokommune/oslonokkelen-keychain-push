@@ -91,8 +91,8 @@
     <rect class='solid nofill' height='48' rx='4' width='128' x='44' y='8'/>
     <text x='58' y='44'>backend</text>
     <text x='122' y='44'>api</text>
-    <line class='solid end_marked_arrow' x1='192' x2='176' y1='24' y2='24'/>
-    <line class='solid' x1='192' x2='320' y1='24' y2='24'/>
+    <polygon class='filled' points='184,20 176,24 184,28'/>
+    <line class='solid' x1='184' x2='320' y1='24' y2='24'/>
     <text x='202' y='44'>Http</text>
     <text x='242' y='44'>request</text>
     <text x='306' y='44'>from</text>

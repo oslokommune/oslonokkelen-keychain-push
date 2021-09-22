@@ -799,6 +799,21 @@ message PushKeychainRequest {
   }
 
 }
+// Content-Type: application/protobuf;type=delete
+message KeychainDeleteRequest {
+
+  // Optional reason. Will show up in the app.
+  string humanReadableReason = 1;
+
+
+  // Empty for now, but we might want to add fields later..
+  //
+  // Content-Type: application/protobuf;type=delete-ok
+  message OkResponse {
+
+  }
+
+}
 
 // Content-Type: application/protobuf;type=error
 message ErrorResponse {
@@ -896,7 +911,7 @@ message KeychainEvent {
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2021-04-28 18:15:37 +0200
+Last updated 2021-09-15 13:08:46 +0200
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
