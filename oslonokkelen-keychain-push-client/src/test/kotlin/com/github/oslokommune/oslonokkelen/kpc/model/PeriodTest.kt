@@ -38,7 +38,7 @@ internal class PeriodTest {
             Period(a, b)
         }
 
-        assertThat(ex).hasMessage("Can't grant access for more then 365 days")
+        assertThat(ex).hasMessage("Can't grant access for more then 1095 days")
     }
 
 }

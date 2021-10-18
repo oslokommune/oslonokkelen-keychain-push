@@ -25,7 +25,7 @@ data class Period(
 
     companion object {
 
-        const val MAX_DAYS = 365L
+        const val MAX_DAYS = 365*3L
 
     }
 }
