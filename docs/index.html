@@ -647,7 +647,12 @@ some time as it has to be built.</p>
 }
 
 dependencies {
-    implementation("com.github.oslokommune:oslonokkelen-keychain-push:2c8671650f")
+
+    // You can find the latest version here:
+    // https://jitpack.io/#oslokommune/oslonokkelen-keychain-push
+    implementation("com.github.oslokommune.oslonokkelen-keychain-push:oslonokkelen-keychain-push-client:v0.2.5")
+    implementation("com.github.oslokommune.oslonokkelen-keychain-push:oslonokkelen-keychain-push-client-ktor:v0.2.5")
+
     // The rest of your dependencies...
 }</code></pre>
 </div>
@@ -911,7 +916,7 @@ message KeychainEvent {
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2021-09-15 13:08:46 +0200
+Last updated 2021-10-18 12:34:16 +0200
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
