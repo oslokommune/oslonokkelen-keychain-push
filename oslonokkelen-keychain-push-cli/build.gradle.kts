@@ -22,7 +22,7 @@ dependencies {
     api(project(":oslonokkelen-keychain-push-client-ktor"))
     implementation("com.github.ajalt.clikt:clikt-jvm:3.3.0")
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
-    implementation("io.ktor:ktor-client-cio:1.6.4")
+    implementation("io.ktor:ktor-client-cio:1.6.5")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
     testImplementation("org.assertj:assertj-core:3.21.0")
