@@ -7,7 +7,9 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.AddProf
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.ConfigCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.ListProfilesCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.RemoveProfileCommand
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainInfoCliCommand
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.KeychainFactoryCommand
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.KeychainInfoCliCommand
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainPushCliCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigProvider
 import io.ktor.client.HttpClient
@@ -20,8 +22,12 @@ fun main(args: Array<String>) {
 
     KeychainCliCommand(httpClient, configurationHandle)
         .subcommands(
-            KeychainPushCliCommand(),
-            KeychainInfoCliCommand(out),
+            KeychainCommand().subcommands(
+                KeychainPushCliCommand()
+            ),
+            KeychainFactoryCommand().subcommands(
+                KeychainInfoCliCommand(out)
+            ),
             ConfigCommand().subcommands(
                 AddProfileCommand(out, configurationHandle),
                 ListProfilesCommand(out, configurationHandle),
