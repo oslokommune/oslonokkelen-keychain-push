@@ -1,4 +1,4 @@
-package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.push
+package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.requireObject

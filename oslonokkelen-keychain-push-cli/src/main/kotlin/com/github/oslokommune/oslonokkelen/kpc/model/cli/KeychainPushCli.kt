@@ -7,8 +7,8 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.AddProf
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.ConfigCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.ListProfilesCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.RemoveProfileCommand
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.info.KeychainInfoCliCommand
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.push.KeychainPushCliCommand
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainInfoCliCommand
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainPushCliCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigProvider
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
