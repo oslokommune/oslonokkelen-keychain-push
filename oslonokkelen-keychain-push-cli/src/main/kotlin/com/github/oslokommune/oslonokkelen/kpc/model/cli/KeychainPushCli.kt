@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
     KeychainCliCommand(httpClient, configurationHandle)
         .subcommands(
             KeychainPushCliCommand(),
-            KeychainInfoCliCommand(),
+            KeychainInfoCliCommand(out),
             ConfigCommand().subcommands(
                 AddProfileCommand(out, configurationHandle),
                 ListProfilesCommand(out, configurationHandle),

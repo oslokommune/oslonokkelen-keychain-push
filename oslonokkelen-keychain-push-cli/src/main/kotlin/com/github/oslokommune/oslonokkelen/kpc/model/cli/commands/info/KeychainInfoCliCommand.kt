@@ -6,10 +6,11 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.Context
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ProfileSelector
 import kotlinx.coroutines.runBlocking
 
-class KeychainInfoCliCommand : CliktCommand(
+class KeychainInfoCliCommand(private val out: CliOutput) : CliktCommand(
     help = "Fetch keychain factory details",
     name = "info"
 ) {
@@ -25,9 +26,10 @@ class KeychainInfoCliCommand : CliktCommand(
             val factoryId = KeychainFactoryId(keychainFactoryId)
             val info = pushClient.pullFactoryInfo(factoryId)
 
-            println(factoryId.value)
-            println("=".repeat(factoryId.value.length))
-            println("Timezone: ${info.timezone.id}")
+            out.table {
+                headers("Factory id", "Timezone")
+                row(factoryId.value, info.timezone.id)
+            }
         }
     }
 
