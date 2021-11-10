@@ -30,8 +30,8 @@ class KeychainPushCliCommand : CliktCommand(
     private val keychainIdStr by option("--keychain-id", help = "Identifies the keychain within the factory").required()
     private val title by option("--title", help = "Human readable title").required()
     private val recipientPhoneNumber by option("--recipient-phone-number", help = "Recipient phone number").required()
-    private val from by option("--from", help = "From").default(now.toString())
-    private val until by option("--until", help = "Until").default(now.plusDays(2).toString())
+    private val from by option("--from", help = "From (example: $now)").required()
+    private val until by option("--until", help = "Until (example: ${now.plusDays(2)})").required()
 
     override fun run() {
         println("Pushing keychain")
