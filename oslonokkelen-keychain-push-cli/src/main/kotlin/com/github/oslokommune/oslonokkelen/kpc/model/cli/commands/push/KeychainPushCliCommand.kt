@@ -23,7 +23,6 @@ class KeychainPushCliCommand : CliktCommand(
     private val now = LocalDateTime.now().truncatedTo(MINUTES)
     private val selectedProfile by requireObject<ProfileSelector>()
 
-
     private val profileId by option("--profile-id", help = "The profile / system you want to use").required()
 
     private val keychainFactoryIdStr by option("--keychain-factory-id", help = "Identifies the keychain within the factory").required()
