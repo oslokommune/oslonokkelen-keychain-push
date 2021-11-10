@@ -9,13 +9,14 @@ import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.Context
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ProfileSelector
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.time.temporal.ChronoUnit.MINUTES
 
-class KeychainPushCliCommand : CliktCommand(
+class KeychainPushCliCommand(private val out: CliOutput) : CliktCommand(
     help = "Push a keychain",
     name = "push"
 ) {
@@ -33,7 +34,7 @@ class KeychainPushCliCommand : CliktCommand(
     private val until by option("--until", help = "Until (example: ${now.plusDays(2)})").required()
 
     override fun run() {
-        println("Pushing keychain")
+        out.info("Pushing keychain")
 
         selectedProfile.withSession(profileId) { pushClient ->
             val info = pushClient.pullFactoryInfo(KeychainFactoryId(keychainFactoryIdStr))

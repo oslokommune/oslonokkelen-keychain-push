@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
     KeychainCliCommand(httpClient, configurationHandle)
         .subcommands(
             KeychainCommand().subcommands(
-                KeychainPushCliCommand()
+                KeychainPushCliCommand(out)
             ),
             KeychainFactoryCommand().subcommands(
                 KeychainInfoCliCommand(out)
