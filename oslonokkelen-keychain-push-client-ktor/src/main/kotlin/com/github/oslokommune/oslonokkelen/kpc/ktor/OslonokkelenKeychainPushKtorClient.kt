@@ -36,8 +36,8 @@ class OslonokkelenKeychainPushKtorClient(
 ) : OslonokkelenKeychainPushClient {
 
     private val requestBuilder: HttpRequestBuilder.() -> Unit = {
-        header(OslonokkelenKeychainPushClient.clientIdHeaderName, config.clientId)
-        header(OslonokkelenKeychainPushClient.clientApiKeyHeaderName, config.clientApiKey)
+        header(OslonokkelenKeychainPushClient.clientIdHeaderName, config.systemId)
+        header(OslonokkelenKeychainPushClient.clientApiKeyHeaderName, config.apiSecret)
         accept(ContentType.Application.ProtoBuf)
         expectSuccess = false
     }

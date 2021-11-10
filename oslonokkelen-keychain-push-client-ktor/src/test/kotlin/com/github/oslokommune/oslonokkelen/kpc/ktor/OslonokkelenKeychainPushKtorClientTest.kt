@@ -25,8 +25,8 @@ internal class OslonokkelenKeychainPushKtorClientTest {
 
     private val config = OslonokkelenKeychainPushClient.Config(
             baseUri = URI.create("https://test"),
-            clientApiKey = "pepperkake-pepperkake-123",
-            clientId = "test-system"
+            apiSecret = "pepperkake-pepperkake-123",
+            systemId = "test-system"
     )
 
     @Test

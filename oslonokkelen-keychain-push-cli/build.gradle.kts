@@ -8,6 +8,7 @@ plugins {
     `java-library`
     idea
 
+    kotlin("plugin.serialization") version "1.5.31"
     id("com.github.johnrengelman.shadow") version "7.1.0"
     id("org.jetbrains.kotlin.jvm")
     id("com.adarshr.test-logger")
@@ -23,6 +24,9 @@ dependencies {
     implementation("com.github.ajalt.clikt:clikt-jvm:3.3.0")
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
     implementation("io.ktor:ktor-client-cio:1.6.5")
+
+    implementation("com.charleskorn.kaml:kaml:0.36.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.0")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
     testImplementation("org.assertj:assertj-core:3.21.0")

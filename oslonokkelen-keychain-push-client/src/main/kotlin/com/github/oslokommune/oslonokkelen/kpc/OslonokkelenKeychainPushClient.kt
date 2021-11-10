@@ -18,13 +18,13 @@ interface OslonokkelenKeychainPushClient {
 
     /**
      * @param baseUri Where the service is running
-     * @param clientId Identifies your system
-     * @param clientApiKey Keep this secret
+     * @param systemId Identifies your system
+     * @param apiSecret Keep this secret
      */
     class Config(
-            val baseUri: URI = URI.create("https://citykey-api.k8s.oslo.kommune.no"),
-            val clientId: String,
-            val clientApiKey: String
+        val baseUri: URI = URI.create("https://citykey-api.k8s.oslo.kommune.no"),
+        val systemId: String,
+        val apiSecret: String
     ) {
 
         private val baseUriStr = baseUri.toString().removeSuffix("/")
