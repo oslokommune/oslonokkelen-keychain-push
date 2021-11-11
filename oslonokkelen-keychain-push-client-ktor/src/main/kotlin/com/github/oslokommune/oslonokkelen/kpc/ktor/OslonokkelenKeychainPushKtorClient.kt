@@ -5,6 +5,7 @@ import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainDeleteRequest
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryInfo
+import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactorySummary
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
 import com.github.oslokommune.oslonokkelen.kpc.serialization.KeychainDeleteSerializer
@@ -88,6 +89,41 @@ class OslonokkelenKeychainPushKtorClient(
             throw OslonokkelenKeychainPushClient.ClientException.Unknown(
                     message = "Failed to push ${keychainId.value}",
                     cause = ex
+            )
+        }
+    }
+
+    override suspend fun listFactories(): List<KeychainFactorySummary> {
+        return try  {
+            val uri = config.formatKeychainFactoryListUri().toString()
+            val ktorRequest = client.post<HttpStatement>(uri) {
+                body = KeychainPushApi.ListKeychainFactoriesRequest.newBuilder()
+                    .build()
+                    .toByteArray()
+
+                requestBuilder(this)
+            }
+
+            val httpResponse = ktorRequest.execute()
+
+            val response = readSuccessfulResponsePayload(
+                factory = KeychainPushApi.ListKeychainFactoriesRequest.ListResponse::parseFrom,
+                httpResponse = httpResponse,
+                expectedType = "factories-list"
+            )
+
+            response.summaryList.map { entry ->
+                KeychainFactorySummary(
+                    id = KeychainFactoryId(entry.id),
+                    title = entry.title
+                )
+            }
+        } catch (ex: OslonokkelenKeychainPushClient.ClientException) {
+            throw ex
+        } catch (ex: Exception) {
+            throw OslonokkelenKeychainPushClient.ClientException.Unknown(
+                message = "Failed to list keychain factories",
+                cause = ex
             )
         }
     }

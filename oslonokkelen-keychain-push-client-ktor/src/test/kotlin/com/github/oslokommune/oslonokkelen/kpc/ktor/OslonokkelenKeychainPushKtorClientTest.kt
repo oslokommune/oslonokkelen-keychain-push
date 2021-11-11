@@ -6,6 +6,7 @@ import com.github.oslokommune.oslonokkelen.kpc.model.InformationForUser
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainDeleteRequest
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryInfo
+import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactorySummary
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
 import com.github.oslokommune.oslonokkelen.kpc.model.Period
 import com.github.oslokommune.oslonokkelen.kpc.model.ProfileLookupKey
@@ -24,26 +25,26 @@ import java.time.ZoneId
 internal class OslonokkelenKeychainPushKtorClientTest {
 
     private val config = OslonokkelenKeychainPushClient.Config(
-            baseUri = URI.create("https://test"),
-            apiSecret = "pepperkake-pepperkake-123",
-            systemId = "test-system"
+        baseUri = URI.create("https://test"),
+        apiSecret = "pepperkake-pepperkake-123",
+        systemId = "test-system"
     )
 
     @Test
     fun `Can parse information from structured error response`() {
         HttpMock("/api/keychainfactory/test-factory") {
             respond(
-                    KeychainPushApi.ErrorResponse.newBuilder()
-                            .setErrorCode(KeychainPushApi.ErrorResponse.ErrorCode.INVALID_CREDENTIALS)
-                            .setTechnicalDebugMessage("I don't know you")
-                            .build()
-                            .toByteArray(),
-                    headers = headersOf("Content-Type", "application/protobuf; type=error")
+                KeychainPushApi.ErrorResponse.newBuilder()
+                    .setErrorCode(KeychainPushApi.ErrorResponse.ErrorCode.INVALID_CREDENTIALS)
+                    .setTechnicalDebugMessage("I don't know you")
+                    .build()
+                    .toByteArray(),
+                headers = headersOf("Content-Type", "application/protobuf; type=error")
             )
         }.use { mock ->
             val client = OslonokkelenKeychainPushKtorClient(
-                    client = mock.client,
-                    config = config
+                client = mock.client,
+                config = config
             )
 
             runBlocking {
@@ -57,17 +58,51 @@ internal class OslonokkelenKeychainPushKtorClientTest {
     }
 
     @Test
-    fun `Can handle unstructured error response`() {
-        HttpMock("/api/keychainfactory/test-factory") {
-            respondError(
-                    status = HttpStatusCode.BadGateway,
-                    headers = headersOf("X-Trace-Id", "trace-123"),
-                    content = "Oups"
+    fun `Can parse factory list response`() {
+        HttpMock("/api/keychainfactory") {
+            respond(
+                KeychainPushApi.ListKeychainFactoriesRequest.ListResponse.newBuilder()
+                    .addSummary(
+                        KeychainPushApi.ListKeychainFactoriesRequest.FactorySummary.newBuilder()
+                            .setId("test-factory")
+                            .setTitle("Test factory")
+                            .build()
+                    )
+                    .build()
+                    .toByteArray(),
+                headers = headersOf("Content-Type", "application/protobuf; type=factories-list")
             )
         }.use { mock ->
             val client = OslonokkelenKeychainPushKtorClient(
-                    client = mock.client,
-                    config = config
+                client = mock.client,
+                config = config
+            )
+
+            runBlocking {
+                val list = client.listFactories()
+
+                assertThat(list).containsExactly(
+                    KeychainFactorySummary(
+                        id = KeychainFactoryId("test-factory"),
+                        title = "Test factory"
+                    )
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Can handle unstructured error response`() {
+        HttpMock("/api/keychainfactory/test-factory") {
+            respondError(
+                status = HttpStatusCode.BadGateway,
+                headers = headersOf("X-Trace-Id", "trace-123"),
+                content = "Oups"
+            )
+        }.use { mock ->
+            val client = OslonokkelenKeychainPushKtorClient(
+                client = mock.client,
+                config = config
             )
 
             runBlocking {
@@ -84,17 +119,17 @@ internal class OslonokkelenKeychainPushKtorClientTest {
     fun `Can extract information from successful response`() {
         HttpMock("/api/keychainfactory/test-factory") {
             respond(
-                    status = HttpStatusCode.OK,
-                    headers = headersOf("Content-Type", "application/protobuf; type=keychain-factory-info"),
-                    content = KeychainPushApi.KeychainFactoryPushInfo.newBuilder()
-                            .setTimezoneId("Europe/Oslo")
-                            .build()
-                            .toByteArray()
+                status = HttpStatusCode.OK,
+                headers = headersOf("Content-Type", "application/protobuf; type=keychain-factory-info"),
+                content = KeychainPushApi.KeychainFactoryPushInfo.newBuilder()
+                    .setTimezoneId("Europe/Oslo")
+                    .build()
+                    .toByteArray()
             )
         }.use { mock ->
             val client = OslonokkelenKeychainPushKtorClient(
-                    client = mock.client,
-                    config = config
+                client = mock.client,
+                config = config
             )
 
             runBlocking {
@@ -102,10 +137,12 @@ internal class OslonokkelenKeychainPushKtorClientTest {
                 val info = client.pullFactoryInfo(factoryId)
 
                 assertThat(info)
-                        .isEqualTo(KeychainFactoryInfo(
-                                id = factoryId,
-                                timezone = ZoneId.of("Europe/Oslo")
-                        ))
+                    .isEqualTo(
+                        KeychainFactoryInfo(
+                            id = factoryId,
+                            timezone = ZoneId.of("Europe/Oslo")
+                        )
+                    )
             }
         }
     }
@@ -114,27 +151,29 @@ internal class OslonokkelenKeychainPushKtorClientTest {
     fun `Can push request`() {
         HttpMock("/api/keychainfactory/test-factory/ref-123") {
             respond(
-                    status = HttpStatusCode.OK,
-                    content = KeychainPushApi.PushKeychainRequest.OkResponse.getDefaultInstance().toByteArray(),
-                    headers = headersOf("Content-Type", "application/protobuf; type=push-ok")
+                status = HttpStatusCode.OK,
+                content = KeychainPushApi.PushKeychainRequest.OkResponse.getDefaultInstance().toByteArray(),
+                headers = headersOf("Content-Type", "application/protobuf; type=push-ok")
             )
         }.use { mock ->
             val client = OslonokkelenKeychainPushKtorClient(
-                    client = mock.client,
-                    config = config
+                client = mock.client,
+                config = config
             )
 
             runBlocking {
                 val factoryId = KeychainFactoryId("test-factory")
                 val keychainId = factoryId.createKeychainId("ref-123")
 
-                client.push(keychainId, KeychainPushRequest(
+                client.push(
+                    keychainId, KeychainPushRequest(
                         recipients = listOf(ProfileLookupKey.PhoneNumber("47", "12312123")),
                         periods = listOf(Period(LocalDateTime.now(), LocalDateTime.now().plusDays(2))),
                         informationForUser = InformationForUser(
-                                title = "Some booking"
+                            title = "Some booking"
                         )
-                ))
+                    )
+                )
             }
         }
     }
@@ -143,23 +182,25 @@ internal class OslonokkelenKeychainPushKtorClientTest {
     fun `Can delete keychain`() {
         HttpMock("/api/keychainfactory/test-factory/ref-123") {
             respond(
-                    status = HttpStatusCode.OK,
-                    content = KeychainPushApi.KeychainDeleteRequest.OkResponse.getDefaultInstance().toByteArray(),
-                    headers = headersOf("Content-Type", "application/protobuf; type=delete-ok")
+                status = HttpStatusCode.OK,
+                content = KeychainPushApi.KeychainDeleteRequest.OkResponse.getDefaultInstance().toByteArray(),
+                headers = headersOf("Content-Type", "application/protobuf; type=delete-ok")
             )
         }.use { mock ->
             val client = OslonokkelenKeychainPushKtorClient(
-                    client = mock.client,
-                    config = config
+                client = mock.client,
+                config = config
             )
 
             runBlocking {
                 val factoryId = KeychainFactoryId("test-factory")
                 val keychainId = factoryId.createKeychainId("ref-123")
 
-                client.delete(keychainId, KeychainDeleteRequest(
-                    reason = "Oups"
-                ))
+                client.delete(
+                    keychainId, KeychainDeleteRequest(
+                        reason = "Oups"
+                    )
+                )
             }
         }
     }

@@ -126,6 +126,20 @@ message KeychainDeleteRequest {
 
 }
 
+// Content-Type: application/protobuf;type=factories-ls
+message ListKeychainFactoriesRequest {
+
+  // Content-Type: application/protobuf;type=factory-list
+  message ListResponse {
+    repeated FactorySummary summary = 1;
+  }
+
+  message FactorySummary {
+    string id = 1;
+    string title = 2;
+  }
+}
+
 // Content-Type: application/protobuf;type=error
 message ErrorResponse {
 

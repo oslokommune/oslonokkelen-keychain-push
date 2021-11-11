@@ -4,6 +4,7 @@ import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainDeleteRequest
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryInfo
+import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactorySummary
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
 import java.net.URI
@@ -15,6 +16,8 @@ interface OslonokkelenKeychainPushClient {
     suspend fun push(keychainId: KeychainId, request: KeychainPushRequest)
 
     suspend fun delete(keychainId: KeychainId, request: KeychainDeleteRequest)
+
+    suspend fun listFactories() : List<KeychainFactorySummary>
 
     /**
      * @param baseUri Where the service is running
@@ -35,6 +38,10 @@ interface OslonokkelenKeychainPushClient {
 
         fun formatKeychainUri(id: KeychainId): URI {
             return URI.create("$baseUriStr/api/keychainfactory/${id.factoryId.value}/${id.value}")
+        }
+
+        fun formatKeychainFactoryListUri(): URI {
+            return URI.create("$baseUriStr/api/keychainfactory")
         }
 
     }
