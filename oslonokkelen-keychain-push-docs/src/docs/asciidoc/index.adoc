@@ -246,3 +246,34 @@ include::../../../../oslonokkelen-keychain-push-protobuf/src/main/proto/keychain
 ----
 ====
 
+== CLI
+
+The repository contains a really simple CLI for experimenting / debugging.
+
+
+=== Fat jar
+The simplest way to build the CLI is to create a fat jar.
+
+[source,bash]
+----
+./gradlew :oslonokkelen-keychain-push-cli:shadowJar
+java -jar oslonokkelen-keychain-push-cli/build/libs/keychain-pusher.jar --help
+----
+
+=== Native binary
+This CLI can be compiled into a native binary  with https://github.com/graalvm[GraalVM]. We recommend
+https://sdkman.io/[SDKMan] as a convenient way of installing and upgrading GraalVM.
+
+[source,bash]
+----
+./gradlew :oslonokkelen-keychain-push-cli:nativeCompile
+cp oslonokkelen-keychain-push-cli/build/native/nativeCompile/keychain-pusher <some-folder-on-$PATH>
+
+# Optional: Generate shell autocomplete script
+# See https://ajalt.github.io/clikt/autocomplete/ for more details
+_KEYCHAIN_PUSHER_COMPLETE=zsh keychain-pusher > /tmp/keychain-pusher-autocomplete
+source /tmp/keychain-pusher-autocomplete
+
+# If you placed the binary somewhere on $PATH you should be able to execute it like this.
+keychain-pusher --help
+----

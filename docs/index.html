@@ -465,6 +465,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_kotlin_client">Kotlin client</a></li>
 <li><a href="#_protobuf_messages">Protobuf messages</a></li>
+<li><a href="#_cli">CLI</a>
+<ul class="sectlevel2">
+<li><a href="#_fat_jar">Fat jar</a></li>
+<li><a href="#_native_binary">Native binary</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -914,11 +920,52 @@ message KeychainEvent {
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_cli">CLI</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The repository contains a really simple CLI for experimenting / debugging.</p>
+</div>
+<div class="sect2">
+<h3 id="_fat_jar">Fat jar</h3>
+<div class="paragraph">
+<p>The simplest way to build the CLI is to create a fat jar.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./gradlew :oslonokkelen-keychain-push-cli:shadowJar
+java -jar oslonokkelen-keychain-push-cli/build/libs/keychain-pusher.jar --help</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_native_binary">Native binary</h3>
+<div class="paragraph">
+<p>This CLI can be compiled into a native binary  with <a href="https://github.com/graalvm">GraalVM</a>. We recommend
+<a href="https://sdkman.io/">SDKMan</a> as a convenient way of installing and upgrading GraalVM.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./gradlew :oslonokkelen-keychain-push-cli:nativeCompile
+cp oslonokkelen-keychain-push-cli/build/native/nativeCompile/keychain-pusher &lt;some-folder-on-$PATH&gt;
+
+# Optional: Generate shell autocomplete script
+# See https://ajalt.github.io/clikt/autocomplete/ for more details
+_KEYCHAIN_PUSHER_COMPLETE=zsh keychain-pusher &gt; /tmp/keychain-pusher-autocomplete
+source /tmp/keychain-pusher-autocomplete
+
+# If you placed the binary somewhere on $PATH you should be able to execute it like this.
+keychain-pusher --help</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2021-11-11 08:23:29 +0100
+Last updated 2021-11-11 09:23:26 +0100
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

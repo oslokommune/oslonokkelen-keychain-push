@@ -1,24 +1,32 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
-import com.github.ajalt.clikt.parameters.options.option
-import com.github.ajalt.clikt.parameters.options.required
-import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
-import com.github.oslokommune.oslonokkelen.kpc.ktor.OslonokkelenKeychainPushKtorClient
-import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.Context
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ProfileSelector
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import java.net.URI
 
 class KeychainCliCommand(
     private val httpClient: HttpClient,
     private val configurationHandle: ConfigurationHandle
 ) : CliktCommand(
-    help = "Simulated third party system",
+    help = """A tool to simulate what Oslonøkkelen calls a "third party system" intended for experimenting / debugging. 
+        |In order to use this tool you need a few things from Oslonøkkelen: 
+        | ```
+        |  - A system id
+        |  - An api secret
+        |  - Uri to the api 
+        | ```
+        |
+        | Once you have this information you can configure a profile. You can configure multiple
+        | profiles for different environments (prod, test, local..).  
+        | ```
+        | keychain-pusher config add 
+        |     --profile-id <prod:your-system> \ 
+        |     --backend-uri <https://....> \
+        |     --system-id <your-system-id> \
+        |     --api-secret <your-secret> 
+        | ```
+    """.trimMargin(),
     name = "keychain-pusher"
 ) {
     override fun run() {
