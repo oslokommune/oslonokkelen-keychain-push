@@ -1,6 +1,8 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.context
+import com.github.ajalt.clikt.output.CliktHelpFormatter
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ProfileSelector
 import io.ktor.client.HttpClient
@@ -29,6 +31,16 @@ class KeychainCliCommand(
     """.trimMargin(),
     name = "keychain-pusher"
 ) {
+
+    init {
+        context {
+            helpFormatter = CliktHelpFormatter(
+                showDefaultValues = true,
+                showRequiredTag = true
+            )
+        }
+    }
+
     override fun run() {
         currentContext.findOrSetObject {
             ProfileSelector(configurationHandle, httpClient)

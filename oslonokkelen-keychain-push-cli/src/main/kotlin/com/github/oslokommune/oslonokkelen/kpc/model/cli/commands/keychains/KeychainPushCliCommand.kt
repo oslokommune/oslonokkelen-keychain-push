@@ -21,15 +21,15 @@ class KeychainPushCliCommand(private val out: CliOutput) : CliktCommand(
 
     private val profileId by option("--profile-id", help = "The profile / system you want to use").required()
 
-    private val keychainFactoryIdStr by option("--keychain-factory-id", help = "Identifies the keychain within the factory").required()
-    private val keychainIdStr by option("--keychain-id", help = "Identifies the keychain within the factory").required()
-    private val title by option("--title", help = "Human readable title").required()
-    private val recipientPhoneNumber by option("--recipient-phone-number", help = "Recipient phone number").required()
+    private val keychainFactoryIdStr by option("--keychain-factory-id", help = "Identifies the keychain factory. This will factory will decide what the keychain can unlock.").required()
+    private val keychainIdStr by option("--keychain-id", help = "Identifies the keychain within a factory. This could be something like a booking reference.").required()
+    private val title by option("--title", help = "Human readable title. Ideally something that makes the user remember what this is").required()
+    private val recipientPhoneNumber by option("--recipient-phone-number", help = "Recipient norwegian phone number (eight digits)").required()
     private val from by option("--from", help = "From (example: $now)").required()
     private val until by option("--until", help = "Until (example: ${now.plusDays(2)})").required()
 
     override fun run() {
-        out.print("Pushing keychain")
+        out.print("Pushing keychain $keychainFactoryIdStr/$keychainIdStr")
 
         selectedProfile.withSession(profileId) { pushClient ->
             val info = pushClient.pullFactoryInfo(KeychainFactoryId(keychainFactoryIdStr))
