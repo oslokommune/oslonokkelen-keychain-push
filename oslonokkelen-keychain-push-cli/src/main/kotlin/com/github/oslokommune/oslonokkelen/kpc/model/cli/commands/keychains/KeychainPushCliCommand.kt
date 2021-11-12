@@ -2,18 +2,13 @@ package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.requireObject
-import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
-import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.Context
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ProfileSelector
-import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import java.time.temporal.ChronoUnit.MINUTES
 
 class KeychainPushCliCommand(private val out: CliOutput) : CliktCommand(
@@ -34,7 +29,7 @@ class KeychainPushCliCommand(private val out: CliOutput) : CliktCommand(
     private val until by option("--until", help = "Until (example: ${now.plusDays(2)})").required()
 
     override fun run() {
-        out.info("Pushing keychain")
+        out.print("Pushing keychain")
 
         selectedProfile.withSession(profileId) { pushClient ->
             val info = pushClient.pullFactoryInfo(KeychainFactoryId(keychainFactoryIdStr))

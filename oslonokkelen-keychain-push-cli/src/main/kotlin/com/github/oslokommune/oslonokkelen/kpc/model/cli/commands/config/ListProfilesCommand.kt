@@ -13,7 +13,7 @@ class ListProfilesCommand (
 ) {
 
     override fun run() {
-        out.info("Listing configured profiles...")
+        out.print("Listing configured profiles...")
 
         out.table {
             headers("Profile id", "System id", "Backend URI", "Secret")

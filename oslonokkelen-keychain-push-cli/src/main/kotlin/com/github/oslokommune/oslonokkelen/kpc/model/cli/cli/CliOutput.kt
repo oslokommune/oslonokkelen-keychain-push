@@ -2,7 +2,7 @@ package com.github.oslokommune.oslonokkelen.kpc.model.cli.cli
 
 class CliOutput {
 
-    fun info(str: String) {
+    fun print(str: String) {
         System.err.println(str)
     }
 

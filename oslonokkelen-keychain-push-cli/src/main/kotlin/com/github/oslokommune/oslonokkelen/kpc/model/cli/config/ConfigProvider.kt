@@ -13,8 +13,8 @@ object ConfigProvider {
         val path = defaultConfigFile()
 
         val config = if (!Files.exists(path)) {
-            out.info("Configuration file not found.")
-            out.info("Generating default configuration file: $path")
+            out.print("Configuration file not found.")
+            out.print("Generating default configuration file: $path")
             val config = Configuration.default
             write(path, config)
             config

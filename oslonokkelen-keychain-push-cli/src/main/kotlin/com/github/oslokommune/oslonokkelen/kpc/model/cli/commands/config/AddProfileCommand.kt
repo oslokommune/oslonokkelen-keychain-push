@@ -25,7 +25,7 @@ class AddProfileCommand(
     private val apiSecret by option("--api-secret", help = "Your secret api key").required()
 
     override fun run() {
-        out.info("Adding profile for $systemId at $backendUri")
+        out.print("Adding profile for $systemId at $backendUri")
 
         configurationHandle.addProfile(
             profileId = profileId,

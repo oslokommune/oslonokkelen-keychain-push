@@ -9,6 +9,7 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.ListPro
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.RemoveProfileCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.KeychainFactoryCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.KeychainInfoCliCommand
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.ListKeychainFactoriesCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainPushCliCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigProvider
@@ -26,7 +27,8 @@ fun main(args: Array<String>) {
                 KeychainPushCliCommand(out)
             ),
             KeychainFactoryCommand().subcommands(
-                KeychainInfoCliCommand(out)
+                KeychainInfoCliCommand(out),
+                ListKeychainFactoriesCommand(out)
             ),
             ConfigCommand().subcommands(
                 AddProfileCommand(out, configurationHandle),
