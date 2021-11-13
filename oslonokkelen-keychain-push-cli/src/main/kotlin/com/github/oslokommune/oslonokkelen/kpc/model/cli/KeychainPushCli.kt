@@ -24,11 +24,11 @@ fun main(args: Array<String>) {
     KeychainCliCommand(httpClient, configurationHandle)
         .subcommands(
             KeychainCommand().subcommands(
-                KeychainPushCliCommand(out)
+                KeychainPushCliCommand(out, configurationHandle)
             ),
             KeychainFactoryCommand().subcommands(
-                KeychainInfoCliCommand(out),
-                ListKeychainFactoriesCommand(out)
+                KeychainInfoCliCommand(out, configurationHandle),
+                ListKeychainFactoriesCommand(out, configurationHandle)
             ),
             ConfigCommand().subcommands(
                 AddProfileCommand(out, configurationHandle),
