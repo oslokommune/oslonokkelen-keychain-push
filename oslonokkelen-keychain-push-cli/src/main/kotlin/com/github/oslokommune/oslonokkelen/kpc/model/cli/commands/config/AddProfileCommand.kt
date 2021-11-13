@@ -6,6 +6,7 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
+import io.ktor.client.HttpClient
 
 class AddProfileCommand(
     private val out: CliOutput,

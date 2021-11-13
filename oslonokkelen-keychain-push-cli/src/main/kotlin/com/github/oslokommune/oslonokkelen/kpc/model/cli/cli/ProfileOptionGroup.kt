@@ -4,9 +4,17 @@ import com.github.ajalt.clikt.parameters.groups.OptionGroup
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.ajalt.clikt.parameters.options.validate
+import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
+import com.github.oslokommune.oslonokkelen.kpc.ktor.OslonokkelenKeychainPushKtorClient
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
+import io.ktor.client.HttpClient
+import kotlinx.coroutines.runBlocking
+import java.net.URI
 
-class ProfileOptionGroup(private val configurationHandle: ConfigurationHandle) : OptionGroup(
+class ProfileOptionGroup(
+    private val configurationHandle: ConfigurationHandle,
+    private val httpClient: HttpClient
+    ) : OptionGroup(
     name = "Profile options",
     help = "Selects target profile (environment)"
 ) {
@@ -22,5 +30,22 @@ class ProfileOptionGroup(private val configurationHandle: ConfigurationHandle) :
                 }
             }
         }
+
+    fun withSession(block: suspend (OslonokkelenKeychainPushClient) -> Unit) {
+        val profile = configurationHandle.requireProfile(profileId)
+
+        val client = OslonokkelenKeychainPushKtorClient(
+            client = httpClient,
+            config = OslonokkelenKeychainPushClient.Config(
+                baseUri = URI.create(profile.backendUri),
+                systemId = profile.systemId,
+                apiSecret = profile.apiSecret
+            )
+        )
+
+        runBlocking {
+            block(client)
+        }
+    }
 
 }

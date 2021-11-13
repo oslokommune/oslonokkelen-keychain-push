@@ -21,19 +21,19 @@ fun main(args: Array<String>) {
     val configurationHandle = ConfigProvider.readConfig(out)
     val httpClient = HttpClient(CIO)
 
-    KeychainCliCommand(httpClient, configurationHandle)
+    KeychainCliCommand()
         .subcommands(
             KeychainCommand().subcommands(
-                KeychainPushCliCommand(out, configurationHandle)
+                KeychainPushCliCommand(out, configurationHandle, httpClient)
             ),
             KeychainFactoryCommand().subcommands(
-                KeychainInfoCliCommand(out, configurationHandle),
-                ListKeychainFactoriesCommand(out, configurationHandle)
+                KeychainInfoCliCommand(out, configurationHandle, httpClient),
+                ListKeychainFactoriesCommand(out, configurationHandle, httpClient)
             ),
             ConfigCommand().subcommands(
                 AddProfileCommand(out, configurationHandle),
                 ListProfilesCommand(out, configurationHandle),
-                RemoveProfileCommand(out, configurationHandle),
+                RemoveProfileCommand(out, configurationHandle, httpClient),
             )
         )
         .main(args)

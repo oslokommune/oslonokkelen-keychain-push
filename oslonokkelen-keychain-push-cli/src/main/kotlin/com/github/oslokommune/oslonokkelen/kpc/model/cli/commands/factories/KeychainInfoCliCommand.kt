@@ -9,21 +9,24 @@ import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.ProfileOptionGroup
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ProfileSelector
+import io.ktor.client.HttpClient
 
-class KeychainInfoCliCommand(private val out: CliOutput, configurationHandle: ConfigurationHandle) : CliktCommand(
+class KeychainInfoCliCommand(
+    private val out: CliOutput,
+    configurationHandle: ConfigurationHandle,
+    httpClient: HttpClient
+) : CliktCommand(
     help = "Fetch keychain factory details",
     name = "info"
 ) {
 
-    private val selectedProfile by requireObject<ProfileSelector>()
-    private val profileOptions by ProfileOptionGroup(configurationHandle)
+    private val profileOptions by ProfileOptionGroup(configurationHandle, httpClient)
     private val keychainFactoryId by option("--keychain-factory-id", help = "The keychain factory you want to pull information for").required()
 
     override fun run() {
         out.print("Fetching keychain information for: $keychainFactoryId")
 
-        selectedProfile.withSession(profileOptions.profileId) { pushClient ->
+        profileOptions.withSession() { pushClient ->
             val factoryId = KeychainFactoryId(keychainFactoryId)
             val info = pushClient.pullFactoryInfo(factoryId)
 

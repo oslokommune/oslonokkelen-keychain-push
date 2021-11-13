@@ -4,13 +4,9 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.context
 import com.github.ajalt.clikt.output.CliktHelpFormatter
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ProfileSelector
 import io.ktor.client.HttpClient
 
-class KeychainCliCommand(
-    private val httpClient: HttpClient,
-    private val configurationHandle: ConfigurationHandle
-) : CliktCommand(
+class KeychainCliCommand : CliktCommand(
     help = """A tool to simulate what Oslonøkkelen calls a "third party system" intended for experimenting / debugging. 
         |In order to use this tool you need a few things from Oslonøkkelen: 
         | ```
@@ -42,8 +38,5 @@ class KeychainCliCommand(
     }
 
     override fun run() {
-        currentContext.findOrSetObject {
-            ProfileSelector(configurationHandle, httpClient)
-        }
     }
 }
