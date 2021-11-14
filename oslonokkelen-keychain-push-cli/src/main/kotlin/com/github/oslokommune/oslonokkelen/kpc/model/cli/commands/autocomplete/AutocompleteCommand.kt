@@ -5,6 +5,7 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.ajalt.clikt.parameters.types.enum
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.autocomplete.AutocompleteCommand.Autocomplete.KEYCHAIN_FACTORY_IDS
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.autocomplete.AutocompleteCommand.Autocomplete.PROFILE_IDS
 
 class AutocompleteCommand(
@@ -19,8 +20,12 @@ class AutocompleteCommand(
         .required()
 
     override fun run() {
-        val values = findAutocompleteValuesFor()
-        println(values.joinToString(" "))
+        try {
+            val values = findAutocompleteValuesFor()
+            println(values.joinToString(" "))
+        } catch (t: Throwable) {
+            echo("Failed to generate autocomplete for $autocomplete: ${t.message}", err = true)
+        }
     }
 
     private fun findAutocompleteValuesFor(): Set<String> {
@@ -28,11 +33,17 @@ class AutocompleteCommand(
             PROFILE_IDS -> {
                 service.profileIds
             }
+            KEYCHAIN_FACTORY_IDS -> {
+                service.withSession { client ->
+                    client.listFactories().map { it.id.value }.toSet()
+                }
+            }
         }
     }
 
     enum class Autocomplete {
-        PROFILE_IDS
+        PROFILE_IDS,
+        KEYCHAIN_FACTORY_IDS
     }
 
 }
