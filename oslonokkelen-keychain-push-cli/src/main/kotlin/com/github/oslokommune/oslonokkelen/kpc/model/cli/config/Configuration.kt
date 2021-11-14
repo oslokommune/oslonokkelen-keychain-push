@@ -1,6 +1,7 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.config
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 @Serializable
 data class Configuration(
@@ -14,6 +15,8 @@ data class Configuration(
         val apiSecret: String,
         val backendUri: String
     ) {
+
+        @Transient
         val id = "$systemId@$backendUri"
     }
 

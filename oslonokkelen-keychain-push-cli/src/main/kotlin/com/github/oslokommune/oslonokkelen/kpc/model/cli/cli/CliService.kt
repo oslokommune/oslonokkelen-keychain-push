@@ -16,7 +16,7 @@ class CliService(
     val profileIds: Set<String>
         get() = configurationHandle.profileIds
 
-    fun <R> withSession(block: suspend (OslonokkelenKeychainPushClient) -> R): R {
+    fun <R> withSession(block: suspend Session.(OslonokkelenKeychainPushClient) -> R): R {
         val activeProfileId = configurationHandle.activeProfileId ?: throw CliException(
             """No profiles defined. 
             |See how you can add one by running 
@@ -37,8 +37,11 @@ class CliService(
         )
 
         return runBlocking {
-            block(client)
+            val session = Session(profile)
+            block(session, client)
         }
     }
+
+    class Session(val profile: Configuration.Profile)
 
 }

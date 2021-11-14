@@ -15,6 +15,7 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.Keyc
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.KeychainInfoCliCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.ListKeychainFactoriesCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainCommand
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainDeleteCliCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainPushCliCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigProvider
 import io.ktor.client.HttpClient
@@ -29,7 +30,8 @@ fun main(args: Array<String>) {
     KeychainCliCommand()
         .subcommands(
             KeychainCommand().subcommands(
-                KeychainPushCliCommand(service)
+                KeychainPushCliCommand(service),
+                KeychainDeleteCliCommand(service)
             ),
             KeychainFactoryCommand().subcommands(
                 KeychainInfoCliCommand(out, service),
