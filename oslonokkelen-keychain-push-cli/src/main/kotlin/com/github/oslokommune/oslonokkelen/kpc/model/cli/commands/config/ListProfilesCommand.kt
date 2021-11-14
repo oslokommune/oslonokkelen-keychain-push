@@ -3,7 +3,6 @@ package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
-import io.ktor.client.HttpClient
 
 class ListProfilesCommand(
     private val out: CliOutput,
@@ -14,14 +13,21 @@ class ListProfilesCommand(
 ) {
 
     override fun run() {
-        out.print("Listing configured profiles...")
+        out.stderr("Listing configured profiles...")
 
         out.table {
-            headers("Profile id", "System id", "Backend URI", "Secret")
+            headers("Profile id (system-id @ backend-uri)", "Active", "Secret")
 
             for (profileId in configurationHandle.profileIds) {
                 val profile = configurationHandle.requireProfile(profileId)
-                row(profile.id, profile.systemId, profile.backendUri, profile.apiSecret)
+                val isActive = profileId == configurationHandle.activeProfileId
+                val activeText = if (isActive) {
+                    "Yes"
+                } else {
+                    "No"
+                }
+
+                row(profile.id, activeText, profile.apiSecret)
             }
         }
     }

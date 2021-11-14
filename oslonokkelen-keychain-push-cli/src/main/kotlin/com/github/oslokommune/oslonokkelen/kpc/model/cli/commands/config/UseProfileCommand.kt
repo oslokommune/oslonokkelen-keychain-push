@@ -7,19 +7,19 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.ProfileOptionGroup
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 import io.ktor.client.HttpClient
 
-class RemoveProfileCommand(
+class UseProfileCommand(
     private val out: CliOutput,
     private val configurationHandle: ConfigurationHandle,
     httpClient: HttpClient
 ) : CliktCommand(
-    help = "Remove local profile",
-    name = "rm"
+    help = "Select profile",
+    name = "use"
 ) {
 
     private val profileOptions by ProfileOptionGroup(configurationHandle, httpClient)
 
     override fun run() {
-        out.stderr("Removing profile ${profileOptions.profileId}")
-        configurationHandle.removeProfile(profileOptions.profileId)
+        out.stderr("Selecting profile ${profileOptions.profileId}")
+        configurationHandle.useProfile(profileOptions.profileId)
     }
 }

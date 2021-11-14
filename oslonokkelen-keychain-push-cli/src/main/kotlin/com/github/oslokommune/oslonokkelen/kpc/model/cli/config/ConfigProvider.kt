@@ -9,12 +9,14 @@ import kotlin.text.Charsets.UTF_8
 
 object ConfigProvider {
 
-    fun readConfig(out: CliOutput): ConfigurationHandle {
-        val path = defaultConfigFile()
+    const val filename = "keychain-pusher.yaml"
+
+    fun readConfig(out: CliOutput, folder: Path = defaultConfigFolder()): ConfigurationHandle {
+        val path = folder.resolve(filename)
 
         val config = if (!Files.exists(path)) {
-            out.print("Configuration file not found.")
-            out.print("Generating default configuration file: $path")
+            out.stderr("Configuration file not found.")
+            out.stderr("Generating default configuration file: $path")
             val config = Configuration.default
             write(path, config)
             config
@@ -31,8 +33,8 @@ object ConfigProvider {
         Files.write(path, yaml.toByteArray(UTF_8))
     }
 
-    private fun defaultConfigFile(): Path {
+    private fun defaultConfigFolder(): Path {
         val userHome = System.getProperty("user.home")
-        return Paths.get(userHome, ".config/oslonokkelen/keychain-pusher.yaml")
+        return Paths.get(userHome, ".config/oslonokkelen")
     }
 }

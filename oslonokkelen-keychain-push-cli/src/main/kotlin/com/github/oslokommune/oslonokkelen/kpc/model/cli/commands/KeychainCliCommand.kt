@@ -19,7 +19,6 @@ class KeychainCliCommand : CliktCommand(
         | profiles for different environments (prod, test, local..).  
         | ```
         | keychain-pusher config add 
-        |     --profile-id <prod:your-system> \ 
         |     --backend-uri <https://....> \
         |     --system-id <your-system-id> \
         |     --api-secret <your-secret> 

@@ -1,5 +1,6 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.config
 
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliException
 import java.nio.file.Path
 
 class ConfigurationHandle(
@@ -10,26 +11,36 @@ class ConfigurationHandle(
     val profileIds: Set<String>
         get() = configuration.profiles.map { it.id }.toSet()
 
+    val activeProfileId : String?
+        get() = configuration.activeProfileId
+
     fun removeProfile(profileId: String) {
         mutateConfiguration {
-            configuration.copy(profiles = configuration.profiles.filterNot { it.id == profileId })
+            val filteredProfiles = configuration.profiles.filterNot { it.id == profileId }
+
+            configuration.copy(
+                profiles = filteredProfiles,
+                activeProfileId = filteredProfiles.firstOrNull()?.id
+            )
         }
     }
 
-    fun addProfile(profileId: String, systemId: String, apiSecret: String, backendUri: String) {
-        if (configuration.profiles.any { it.id == profileId }) {
-            throw IllegalStateException("Already have profile with id: $profileId")
+    fun addProfile(systemId: String, apiSecret: String, backendUri: String) {
+        if (configuration.profiles.any { it.systemId == systemId && it.backendUri == backendUri }) {
+            throw CliException("Already have profile for system $systemId @ $backendUri")
         }
 
         val newProfile = Configuration.Profile(
-            id = profileId,
-            systemId = systemId,
+            backendUri = backendUri,
             apiSecret = apiSecret,
-            backendUri = backendUri
+            systemId = systemId
         )
 
         mutateConfiguration {
-            configuration.copy(profiles = configuration.profiles + newProfile)
+            configuration.copy(
+                profiles = configuration.profiles + newProfile,
+                activeProfileId = newProfile.id
+            )
         }
     }
 
@@ -37,16 +48,16 @@ class ConfigurationHandle(
         return configuration.profiles.firstOrNull { it.id == id } ?: throw IllegalStateException("No profile: $id")
     }
 
-    fun replaceProfile(updatedProfile: Configuration.Profile): Configuration.Profile {
-        val other = configuration.profiles.filterNot { it.id == updatedProfile.id }
+    fun useProfile(id: String) {
+        if (!profileIds.contains(id)) {
+            throw CliException("No profile with id: $id")
+        }
 
         mutateConfiguration {
             configuration.copy(
-                profiles = other + updatedProfile
+                activeProfileId = id
             )
         }
-
-        return updatedProfile
     }
 
     private fun mutateConfiguration(block: () -> Configuration) {

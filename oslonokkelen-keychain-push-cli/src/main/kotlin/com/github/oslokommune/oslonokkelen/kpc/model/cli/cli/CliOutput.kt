@@ -2,12 +2,12 @@ package com.github.oslokommune.oslonokkelen.kpc.model.cli.cli
 
 class CliOutput {
 
-    fun print(str: String) {
+    fun stderr(str: String) {
         System.err.println(str)
     }
 
-    fun warn(str: String) {
-        System.err.println("Warning: $str")
+    fun stdout(str: String) {
+        System.err.println(str)
     }
 
     fun keyValues(block: KeyValuesDsl.() -> Unit) {
