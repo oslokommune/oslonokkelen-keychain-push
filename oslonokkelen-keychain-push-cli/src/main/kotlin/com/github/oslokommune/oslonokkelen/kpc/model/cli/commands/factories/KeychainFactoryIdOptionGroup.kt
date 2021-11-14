@@ -2,8 +2,10 @@ package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories
 
 import com.github.ajalt.clikt.completion.CompletionCandidates
 import com.github.ajalt.clikt.parameters.groups.OptionGroup
+import com.github.ajalt.clikt.parameters.options.convert
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
+import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 
 class KeychainFactoryIdOptionGroup : OptionGroup(
     name = "Keychain factory id",
@@ -15,6 +17,7 @@ class KeychainFactoryIdOptionGroup : OptionGroup(
         help = "The profile / system you want to use",
         completionCandidates = CompletionCandidates.Custom.fromStdout("keychain-pusher auto --autocomplete KEYCHAIN_FACTORY_IDS")
     )
+        .convert { KeychainFactoryId(it) }
         .required()
 
 }

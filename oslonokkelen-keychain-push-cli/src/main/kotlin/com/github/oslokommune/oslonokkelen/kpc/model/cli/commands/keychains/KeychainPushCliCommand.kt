@@ -6,41 +6,47 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainPushRequest
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.ProfileOptionGroup
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
-import io.ktor.client.HttpClient
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit.MINUTES
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.KeychainFactoryIdOptionGroup
 
 class KeychainPushCliCommand(private val cliService: CliService) : CliktCommand(
     help = "Push a keychain",
     name = "push"
 ) {
 
-    private val now = LocalDateTime.now().truncatedTo(MINUTES)
+    private val keychainFactoryId by KeychainFactoryIdOptionGroup()
 
-    private val keychainFactoryIdStr by option("--keychain-factory-id", help = "Identifies the keychain factory. This will factory will decide what the keychain can unlock.").required()
-    private val keychainIdStr by option("--keychain-id", help = "Identifies the keychain within a factory. This could be something like a booking reference.").required()
-    private val title by option("--title", help = "Human readable title. Ideally something that makes the user remember what this is").required()
-    private val recipientPhoneNumber by option("--recipient-phone-number", help = "Recipient norwegian phone number (eight digits)").required()
-    private val from by option("--from", help = "From (example: $now)").required()
-    private val until by option("--until", help = "Until (example: ${now.plusDays(2)})").required()
+    private val keychainIdStr by option(
+        "--keychain-id",
+        help = "Identifies the keychain within a factory. This could be something like a booking reference."
+    ).required()
+
+    private val title by option(
+        "--title",
+        help = "Human readable title. Ideally something that makes the user remember what this is"
+    ).required()
+
+    private val recipientPhoneNumber by option(
+        "--recipient-phone-number",
+        help = "Recipient norwegian phone number (eight digits)"
+    ).required()
+
+    private val interval by IntervalOptionGroup()
 
     override fun run() {
-        echo("Pushing keychain $keychainFactoryIdStr/$keychainIdStr")
+        echo("Pushing keychain ${keychainFactoryId.id.value}/$keychainIdStr")
 
         cliService.withSession { pushClient ->
-            val info = pushClient.pullFactoryInfo(KeychainFactoryId(keychainFactoryIdStr))
+            val info = pushClient.pullFactoryInfo(keychainFactoryId.id)
             val keychainId = info.id.createKeychainId(keychainIdStr)
 
             pushClient.push(keychainId, KeychainPushRequest.build(title) {
                 information("No information for you")
-                accessBetween(from, until)
+                accessBetween(interval.from, interval.until)
                 recipientByPhoneNumber("47", recipientPhoneNumber)
             })
         }
     }
 
 }
+

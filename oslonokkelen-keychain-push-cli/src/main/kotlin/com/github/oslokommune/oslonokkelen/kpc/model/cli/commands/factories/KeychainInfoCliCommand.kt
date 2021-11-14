@@ -2,7 +2,6 @@ package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.groups.provideDelegate
-import com.github.oslokommune.oslonokkelen.kpc.model.KeychainFactoryId
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
 
@@ -20,12 +19,11 @@ class KeychainInfoCliCommand(
         echo("Fetching keychain information for: ${factoryIdOptionsGroup.id}")
 
         cliService.withSession { pushClient ->
-            val factoryId = KeychainFactoryId(factoryIdOptionsGroup.id)
-            val info = pushClient.pullFactoryInfo(factoryId)
+            val info = pushClient.pullFactoryInfo(factoryIdOptionsGroup.id)
 
             out.table {
                 headers("Factory id", "Timezone")
-                row(factoryId.value, info.timezone.id)
+                row(factoryIdOptionsGroup.id.value, info.timezone.id)
             }
         }
     }
