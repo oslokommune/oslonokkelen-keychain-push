@@ -4,11 +4,11 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.ajalt.clikt.parameters.types.enum
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.autocomplete.AutocompleteCommand.Autocomplete.PROFILE_IDS
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 
 class AutocompleteCommand(
-    private val configurationHandle: ConfigurationHandle
+    private val service: CliService
 ) : CliktCommand(
     help = "Autocomplete",
     name = "auto"
@@ -26,7 +26,7 @@ class AutocompleteCommand(
     private fun findAutocompleteValuesFor(): Set<String> {
         return when (autocomplete) {
             PROFILE_IDS -> {
-                configurationHandle.profileIds
+                service.profileIds
             }
         }
     }

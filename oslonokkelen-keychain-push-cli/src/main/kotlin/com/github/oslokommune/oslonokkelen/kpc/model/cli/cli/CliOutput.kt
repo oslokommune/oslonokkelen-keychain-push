@@ -6,10 +6,6 @@ class CliOutput {
         System.err.println(str)
     }
 
-    fun stdout(str: String) {
-        System.err.println(str)
-    }
-
     fun keyValues(block: KeyValuesDsl.() -> Unit) {
         val dsl = KeyValuesDsl()
         block(dsl)

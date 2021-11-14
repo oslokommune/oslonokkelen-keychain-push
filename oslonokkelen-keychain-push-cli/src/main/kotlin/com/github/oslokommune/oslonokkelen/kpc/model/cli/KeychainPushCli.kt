@@ -29,20 +29,20 @@ fun main(args: Array<String>) {
     KeychainCliCommand()
         .subcommands(
             KeychainCommand().subcommands(
-                KeychainPushCliCommand(out, service)
+                KeychainPushCliCommand(service)
             ),
             KeychainFactoryCommand().subcommands(
                 KeychainInfoCliCommand(out, service),
                 ListKeychainFactoriesCommand(out, service)
             ),
             ConfigCommand().subcommands(
-                AddProfileCommand(out, configurationHandle),
+                AddProfileCommand(configurationHandle),
                 ListProfilesCommand(out, configurationHandle),
-                RemoveProfileCommand(out, configurationHandle, httpClient),
-                CurrentProfileCommand(out, configurationHandle),
-                UseProfileCommand(out, configurationHandle, httpClient)
+                RemoveProfileCommand(configurationHandle),
+                CurrentProfileCommand(configurationHandle),
+                UseProfileCommand(configurationHandle)
             ),
-            AutocompleteCommand(configurationHandle)
+            AutocompleteCommand(service)
         )
         .main(args)
 }

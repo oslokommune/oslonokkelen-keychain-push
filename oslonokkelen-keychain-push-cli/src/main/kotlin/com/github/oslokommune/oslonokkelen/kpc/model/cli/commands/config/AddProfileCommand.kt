@@ -7,10 +7,7 @@ import com.github.ajalt.clikt.parameters.options.required
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 
-class AddProfileCommand(
-    private val out: CliOutput,
-    private val configurationHandle: ConfigurationHandle
-) : CliktCommand(
+class AddProfileCommand(private val configurationHandle: ConfigurationHandle) : CliktCommand(
     help = "Add new third party system profile. Get in touch with the Oslonøkkelen team to get the a system id and api key.",
     name = "add"
 ) {
@@ -24,7 +21,7 @@ class AddProfileCommand(
     private val apiSecret by option("--api-secret", help = "Your secret api key").required()
 
     override fun run() {
-        out.stderr("Adding profile for $systemId at $backendUri")
+        echo("Adding profile for $systemId at $backendUri")
 
         configurationHandle.addProfile(
             systemId = systemId,

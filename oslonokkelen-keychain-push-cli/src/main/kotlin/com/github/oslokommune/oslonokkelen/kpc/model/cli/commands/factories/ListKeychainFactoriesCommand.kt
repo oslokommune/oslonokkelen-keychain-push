@@ -1,12 +1,8 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories
 
 import com.github.ajalt.clikt.core.CliktCommand
-import com.github.ajalt.clikt.parameters.groups.provideDelegate
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.ProfileOptionGroup
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
-import io.ktor.client.HttpClient
 
 class ListKeychainFactoriesCommand(
     private val out: CliOutput,
@@ -18,7 +14,7 @@ class ListKeychainFactoriesCommand(
 
 
     override fun run() {
-        out.stderr("Listing keychain factories...")
+        echo("Listing keychain factories...")
 
         cliService.withSession { client ->
             val factories = client.listFactories()
@@ -32,7 +28,7 @@ class ListKeychainFactoriesCommand(
                     }
                 }
             } else {
-                out.stderr("No keychain factories found")
+                echo("No keychain factories found", err = true)
             }
         }
     }

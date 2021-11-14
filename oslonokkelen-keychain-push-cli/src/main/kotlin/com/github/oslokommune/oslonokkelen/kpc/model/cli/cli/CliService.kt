@@ -13,6 +13,9 @@ class CliService(
     private val httpClient: HttpClient
 ) {
 
+    val profileIds : Set<String>
+        get() = configurationHandle.profileIds
+
     fun withSession(block: suspend (OslonokkelenKeychainPushClient) -> Unit) {
         val activeProfileId = configurationHandle.activeProfileId ?: throw CliException(
             """No profiles defined. 

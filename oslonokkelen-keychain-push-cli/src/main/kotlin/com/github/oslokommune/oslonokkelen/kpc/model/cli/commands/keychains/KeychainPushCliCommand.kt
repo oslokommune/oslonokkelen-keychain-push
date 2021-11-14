@@ -14,10 +14,7 @@ import io.ktor.client.HttpClient
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit.MINUTES
 
-class KeychainPushCliCommand(
-    private val out: CliOutput,
-    private val cliService: CliService
-) : CliktCommand(
+class KeychainPushCliCommand(private val cliService: CliService) : CliktCommand(
     help = "Push a keychain",
     name = "push"
 ) {
@@ -32,7 +29,7 @@ class KeychainPushCliCommand(
     private val until by option("--until", help = "Until (example: ${now.plusDays(2)})").required()
 
     override fun run() {
-        out.stderr("Pushing keychain $keychainFactoryIdStr/$keychainIdStr")
+        echo("Pushing keychain $keychainFactoryIdStr/$keychainIdStr")
 
         cliService.withSession { pushClient ->
             val info = pushClient.pullFactoryInfo(KeychainFactoryId(keychainFactoryIdStr))

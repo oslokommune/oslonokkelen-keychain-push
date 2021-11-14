@@ -5,10 +5,7 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 import io.ktor.client.HttpClient
 
-class CurrentProfileCommand(
-    private val out: CliOutput,
-    private val configurationHandle: ConfigurationHandle
-) : CliktCommand(
+class CurrentProfileCommand(private val configurationHandle: ConfigurationHandle) : CliktCommand(
     help = "Get current profile",
     name = "current"
 ) {
@@ -17,9 +14,9 @@ class CurrentProfileCommand(
         val current = configurationHandle.activeProfileId
 
         if (current != null) {
-            out.stdout(current)
+            echo(current)
         } else {
-            out.stderr("No profiles")
+            echo("No profiles", err = true)
         }
     }
 }

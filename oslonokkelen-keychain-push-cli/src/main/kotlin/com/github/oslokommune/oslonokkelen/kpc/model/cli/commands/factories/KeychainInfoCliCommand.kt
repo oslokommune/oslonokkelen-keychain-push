@@ -22,7 +22,7 @@ class KeychainInfoCliCommand(
     private val keychainFactoryId by option("--keychain-factory-id", help = "The keychain factory you want to pull information for").required()
 
     override fun run() {
-        out.stderr("Fetching keychain information for: $keychainFactoryId")
+        echo("Fetching keychain information for: $keychainFactoryId")
 
         cliService.withSession { pushClient ->
             val factoryId = KeychainFactoryId(keychainFactoryId)

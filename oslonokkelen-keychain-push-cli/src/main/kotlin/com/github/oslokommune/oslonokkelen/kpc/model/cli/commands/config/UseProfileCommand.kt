@@ -7,19 +7,15 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.ProfileOptionGroup
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 import io.ktor.client.HttpClient
 
-class UseProfileCommand(
-    private val out: CliOutput,
-    private val configurationHandle: ConfigurationHandle,
-    httpClient: HttpClient
-) : CliktCommand(
+class UseProfileCommand(private val configurationHandle: ConfigurationHandle) : CliktCommand(
     help = "Select profile",
     name = "use"
 ) {
 
-    private val profileOptions by ProfileOptionGroup(configurationHandle, httpClient)
+    private val profileOptions by ProfileOptionGroup(configurationHandle)
 
     override fun run() {
-        out.stderr("Selecting profile ${profileOptions.profileId}")
+        echo("Selecting profile ${profileOptions.profileId}")
         configurationHandle.useProfile(profileOptions.profileId)
     }
 }

@@ -13,7 +13,7 @@ class ListProfilesCommand(
 ) {
 
     override fun run() {
-        out.stderr("Listing configured profiles...")
+        echo("Listing configured profiles...")
 
         out.table {
             headers("Profile id (system-id @ backend-uri)", "Active", "Secret")

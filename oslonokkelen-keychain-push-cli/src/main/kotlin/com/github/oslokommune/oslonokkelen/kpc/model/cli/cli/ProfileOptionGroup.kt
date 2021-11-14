@@ -16,10 +16,7 @@ import io.ktor.client.HttpClient
 import kotlinx.coroutines.runBlocking
 import java.net.URI
 
-class ProfileOptionGroup(
-    private val configurationHandle: ConfigurationHandle,
-    private val httpClient: HttpClient
-) : OptionGroup(
+class ProfileOptionGroup(private val configurationHandle: ConfigurationHandle) : OptionGroup(
     name = "Profile options",
     help = "Selects target profile (environment)"
 ) {
@@ -40,32 +37,5 @@ class ProfileOptionGroup(
                 }
             }
         }
-
-
-    fun withSession(block: suspend (OslonokkelenKeychainPushClient) -> Unit) {
-        val profile: Configuration.Profile = configurationHandle.requireProfile(profileId)
-        withClient(profile, httpClient, block)
-    }
-
-    companion object {
-        fun withClient(
-            profile: Configuration.Profile,
-            httpClient: HttpClient,
-            block: suspend (OslonokkelenKeychainPushClient) -> Unit
-        ) {
-            val client = OslonokkelenKeychainPushKtorClient(
-                client = httpClient,
-                config = OslonokkelenKeychainPushClient.Config(
-                    baseUri = URI.create(profile.backendUri),
-                    systemId = profile.systemId,
-                    apiSecret = profile.apiSecret
-                )
-            )
-
-            runBlocking {
-                block(client)
-            }
-        }
-    }
 
 }
