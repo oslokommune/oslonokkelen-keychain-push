@@ -36,7 +36,11 @@ interface OslonokkelenKeychainPushClient {
             return URI.create("$baseUriStr/api/keychainfactory/${id.value}")
         }
 
-        fun formatKeychainUri(id: KeychainId): URI {
+        fun formatKeychainDeleteUri(id: KeychainId): URI {
+            return URI.create("$baseUriStr/api/keychainfactory/${id.factoryId.value}/${id.value}/delete")
+        }
+
+        fun formatKeychainPushUri(id: KeychainId): URI {
             return URI.create("$baseUriStr/api/keychainfactory/${id.factoryId.value}/${id.value}")
         }
 

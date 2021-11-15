@@ -15,7 +15,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.features.expectSuccess
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
-import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -70,7 +69,7 @@ class OslonokkelenKeychainPushKtorClient(
 
     override suspend fun push(keychainId: KeychainId, request: KeychainPushRequest) {
         try {
-            val uri = config.formatKeychainUri(keychainId).toString()
+            val uri = config.formatKeychainPushUri(keychainId).toString()
             val ktorRequest = client.post<HttpStatement>(uri) {
                 body = KeychainPushSerializer.toProtobuf(request).toByteArray()
                 requestBuilder(this)
@@ -130,8 +129,8 @@ class OslonokkelenKeychainPushKtorClient(
 
     override suspend fun delete(keychainId: KeychainId, request: KeychainDeleteRequest) {
         try {
-            val uri = config.formatKeychainUri(keychainId).toString()
-            val ktorRequest = client.delete<HttpStatement>(uri) {
+            val uri = config.formatKeychainDeleteUri(keychainId).toString()
+            val ktorRequest = client.post<HttpStatement>(uri) {
                 body = KeychainDeleteSerializer.toProtobuf(request).toByteArray()
                 requestBuilder(this)
             }

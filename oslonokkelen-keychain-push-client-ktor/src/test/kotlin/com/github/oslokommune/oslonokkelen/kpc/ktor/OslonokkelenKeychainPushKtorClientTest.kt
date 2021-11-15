@@ -180,7 +180,7 @@ internal class OslonokkelenKeychainPushKtorClientTest {
 
     @Test
     fun `Can delete keychain`() {
-        HttpMock("/api/keychainfactory/test-factory/ref-123") {
+        HttpMock("/api/keychainfactory/test-factory/ref-123/delete") {
             respond(
                 status = HttpStatusCode.OK,
                 content = KeychainPushApi.KeychainDeleteRequest.OkResponse.getDefaultInstance().toByteArray(),
