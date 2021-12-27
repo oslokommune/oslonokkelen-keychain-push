@@ -33,7 +33,7 @@ dependencies {
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
     testImplementation("org.assertj:assertj-core:3.21.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
 application {
