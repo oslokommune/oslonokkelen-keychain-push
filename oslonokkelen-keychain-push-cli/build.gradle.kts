@@ -26,7 +26,7 @@ dependencies {
     implementation("com.github.ajalt.clikt:clikt-jvm:3.3.0")
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
     implementation("org.slf4j:slf4j-nop:$slf4jVersion")
-    implementation("io.ktor:ktor-client-cio:1.6.6")
+    implementation("io.ktor:ktor-client-cio:1.6.7")
 
     implementation("com.charleskorn.kaml:kaml:0.38.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.1")
