@@ -11,7 +11,7 @@ plugins {
 
     kotlin("plugin.serialization") version "1.6.10"
     id("com.github.johnrengelman.shadow") version "7.1.0"
-    id("org.graalvm.buildtools.native") version "0.9.7.1"
+    id("org.graalvm.buildtools.native") version "0.9.9"
     id("org.jetbrains.kotlin.jvm")
     id("com.adarshr.test-logger")
     id("java")
@@ -26,9 +26,9 @@ dependencies {
     implementation("com.github.ajalt.clikt:clikt-jvm:3.3.0")
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
     implementation("org.slf4j:slf4j-nop:$slf4jVersion")
-    implementation("io.ktor:ktor-client-cio:1.6.5")
+    implementation("io.ktor:ktor-client-cio:1.6.6")
 
-    implementation("com.charleskorn.kaml:kaml:0.37.0")
+    implementation("com.charleskorn.kaml:kaml:0.38.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.1")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
