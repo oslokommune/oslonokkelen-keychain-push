@@ -9,7 +9,7 @@ plugins {
     application
     idea
 
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("plugin.serialization") version "1.6.10"
     id("com.github.johnrengelman.shadow") version "7.1.0"
     id("org.graalvm.buildtools.native") version "0.9.7.1"
     id("org.jetbrains.kotlin.jvm")
@@ -28,12 +28,12 @@ dependencies {
     implementation("org.slf4j:slf4j-nop:$slf4jVersion")
     implementation("io.ktor:ktor-client-cio:1.6.5")
 
-    implementation("com.charleskorn.kaml:kaml:0.37.0")
+    implementation("com.charleskorn.kaml:kaml:0.38.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.1")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
     testImplementation("org.assertj:assertj-core:3.21.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
 application {
