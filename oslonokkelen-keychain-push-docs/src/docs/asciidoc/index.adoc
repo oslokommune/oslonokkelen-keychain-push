@@ -224,8 +224,8 @@ val ktorHttpClient = HttpClient(CIO)
 // Configure credentials needed for authentication
 val config = OslonokkelenKeychainPushClient.Config(
         baseUri = URI.create("https://citykey-api.k8s.oslo.kommune.no"),
-        clientApiKey = "pepperkake-pepperkake-123",
-        clientId = "your-system-id"
+        apiSecret = "pepperkake-pepperkake-123",
+        systemId = "your-system-id"
 )
 
 // Finally create a keychain push client using your configured ktor client + configuration

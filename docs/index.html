@@ -677,8 +677,8 @@ val ktorHttpClient = HttpClient(CIO)
 // Configure credentials needed for authentication
 val config = OslonokkelenKeychainPushClient.Config(
         baseUri = URI.create("https://citykey-api.k8s.oslo.kommune.no"),
-        clientApiKey = "pepperkake-pepperkake-123",
-        clientId = "your-system-id"
+        apiSecret = "pepperkake-pepperkake-123",
+        systemId = "your-system-id"
 )
 
 // Finally create a keychain push client using your configured ktor client + configuration
@@ -828,6 +828,20 @@ message KeychainDeleteRequest {
 
 }
 
+// Content-Type: application/protobuf;type=factories-ls
+message ListKeychainFactoriesRequest {
+
+  // Content-Type: application/protobuf;type=factory-list
+  message ListResponse {
+    repeated FactorySummary summary = 1;
+  }
+
+  message FactorySummary {
+    string id = 1;
+    string title = 2;
+  }
+}
+
 // Content-Type: application/protobuf;type=error
 message ErrorResponse {
 
@@ -965,7 +979,7 @@ keychain-pusher --help</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2021-11-11 09:23:26 +0100
+Last updated 2022-01-03 12:13:28 +0100
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
