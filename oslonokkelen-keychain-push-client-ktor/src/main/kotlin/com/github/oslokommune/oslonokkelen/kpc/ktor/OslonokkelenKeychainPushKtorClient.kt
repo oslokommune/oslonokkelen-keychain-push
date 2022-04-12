@@ -12,12 +12,13 @@ import com.github.oslokommune.oslonokkelen.kpc.serialization.KeychainDeleteSeria
 import com.github.oslokommune.oslonokkelen.kpc.serialization.KeychainPushSerializer
 import com.google.protobuf.GeneratedMessageV3
 import io.ktor.client.HttpClient
-import io.ktor.client.features.expectSuccess
+import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readBytes
@@ -46,7 +47,7 @@ class OslonokkelenKeychainPushKtorClient(
     override suspend fun pullFactoryInfo(factoryId: KeychainFactoryId): KeychainFactoryInfo {
         return try {
             val uri = config.formatKeychainFactoryInfoUri(factoryId).toString()
-            val httpResponse = client.get<HttpStatement>(uri, requestBuilder).execute()
+            val httpResponse = client.get(uri, requestBuilder)
             val info = readSuccessfulResponsePayload(
                     factory = KeychainPushApi.KeychainFactoryPushInfo::parseFrom,
                     expectedType = "keychain-factory-info",
@@ -70,12 +71,10 @@ class OslonokkelenKeychainPushKtorClient(
     override suspend fun push(keychainId: KeychainId, request: KeychainPushRequest) {
         try {
             val uri = config.formatKeychainPushUri(keychainId).toString()
-            val ktorRequest = client.post<HttpStatement>(uri) {
-                body = KeychainPushSerializer.toProtobuf(request).toByteArray()
+            val httpResponse = client.post(uri) {
+                setBody(KeychainPushSerializer.toProtobuf(request).toByteArray())
                 requestBuilder(this)
             }
-
-            val httpResponse = ktorRequest.execute()
 
             readSuccessfulResponsePayload(
                     factory = KeychainPushApi.PushKeychainRequest.OkResponse::parseFrom,
@@ -95,15 +94,14 @@ class OslonokkelenKeychainPushKtorClient(
     override suspend fun listFactories(): List<KeychainFactorySummary> {
         return try  {
             val uri = config.formatKeychainFactoryListUri().toString()
-            val ktorRequest = client.post<HttpStatement>(uri) {
-                body = KeychainPushApi.ListKeychainFactoriesRequest.newBuilder()
+            val httpResponse = client.post(uri) {
+                setBody(KeychainPushApi.ListKeychainFactoriesRequest.newBuilder()
                     .build()
                     .toByteArray()
+                )
 
                 requestBuilder(this)
             }
-
-            val httpResponse = ktorRequest.execute()
 
             val response = readSuccessfulResponsePayload(
                 factory = KeychainPushApi.ListKeychainFactoriesRequest.ListResponse::parseFrom,
@@ -130,12 +128,10 @@ class OslonokkelenKeychainPushKtorClient(
     override suspend fun delete(keychainId: KeychainId, request: KeychainDeleteRequest) {
         try {
             val uri = config.formatKeychainDeleteUri(keychainId).toString()
-            val ktorRequest = client.post<HttpStatement>(uri) {
-                body = KeychainDeleteSerializer.toProtobuf(request).toByteArray()
+            val httpResponse = client.post(uri) {
+                setBody(KeychainDeleteSerializer.toProtobuf(request).toByteArray())
                 requestBuilder(this)
             }
-
-            val httpResponse = ktorRequest.execute()
 
             readSuccessfulResponsePayload(
                 factory = KeychainPushApi.PushKeychainRequest.OkResponse::parseFrom,
