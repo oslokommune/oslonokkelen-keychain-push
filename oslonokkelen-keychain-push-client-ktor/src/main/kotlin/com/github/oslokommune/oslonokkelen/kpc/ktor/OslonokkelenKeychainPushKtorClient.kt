@@ -21,6 +21,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpStatement
+import io.ktor.client.statement.bodyAsText
 import io.ktor.client.statement.readBytes
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -189,7 +190,7 @@ class OslonokkelenKeychainPushKtorClient(
         )
     }
 
-    private fun getApplicationResponseType(httpResponse: HttpResponse, oslonokkelenTraceId: String?): String? {
+    private suspend fun getApplicationResponseType(httpResponse: HttpResponse, oslonokkelenTraceId: String?): String? {
         val responseContentType = httpResponse.contentType()
                 ?: throw OslonokkelenKeychainPushClient.ClientException.ErrorResponse(
                         traceId = oslonokkelenTraceId,
@@ -201,7 +202,8 @@ class OslonokkelenKeychainPushKtorClient(
             throw OslonokkelenKeychainPushClient.ClientException.ErrorResponse(
                     traceId = oslonokkelenTraceId,
                     errorCode = KeychainPushApi.ErrorResponse.ErrorCode.UNKNOWN,
-                    technicalDebugMessage = "Expected protobuf response, not $responseContentType"
+                    technicalDebugMessage = "Expected protobuf response, not $responseContentType",
+                    responseBody = if(responseContentType.match(ContentType.Text.Any)) httpResponse.bodyAsText() else null
             )
         }
 

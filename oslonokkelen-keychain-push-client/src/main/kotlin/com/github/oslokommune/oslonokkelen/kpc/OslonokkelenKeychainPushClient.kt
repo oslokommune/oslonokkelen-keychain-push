@@ -67,8 +67,9 @@ interface OslonokkelenKeychainPushClient {
         class ErrorResponse(
                 val errorCode: KeychainPushApi.ErrorResponse.ErrorCode,
                 val technicalDebugMessage: String,
-                val traceId: String?
-        ) : ClientException("Error response ${errorCode}: $technicalDebugMessage [traceid: ${traceId ?: "none"}]")
+                val traceId: String?,
+                val responseBody: String? = null
+        ) : ClientException("Error response ${errorCode}: $technicalDebugMessage [traceid: ${traceId ?: "none"}]${if(responseBody!=null) "- $responseBody" else ""}")
 
     }
 
