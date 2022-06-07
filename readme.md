@@ -50,3 +50,8 @@ Kotlin / Ktor client implementation.
 
 ### :oslonokkelen-keychain-push-cli
 Simple cli application for testing the api. 
+
+### Upgrading the gradle wrapper
+Find the newest version of gradle here: https://gradle.org/releases/ Then run this command:
+
+```./gradlew wrapper --gradle-version $gradleVersjon```
