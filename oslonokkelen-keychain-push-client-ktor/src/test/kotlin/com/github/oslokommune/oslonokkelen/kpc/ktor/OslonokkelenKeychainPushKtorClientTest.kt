@@ -1,6 +1,7 @@
 package com.github.oslokommune.oslonokkelen.kpc.ktor
 
 import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi
+import com.github.oslokommune.oslonokkelen.keychainpush.proto.KeychainPushApi.ErrorResponse
 import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
 import com.github.oslokommune.oslonokkelen.kpc.model.InformationForUser
 import com.github.oslokommune.oslonokkelen.kpc.model.KeychainDeleteRequest
@@ -16,6 +17,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.net.URI
@@ -151,7 +154,7 @@ internal class OslonokkelenKeychainPushKtorClientTest {
     fun `Can push request`() {
         HttpMock("/api/keychainfactory/test-factory/ref-123") {
             respond(
-                status = HttpStatusCode.OK,
+                status = HttpStatusCode.Created,
                 content = KeychainPushApi.PushKeychainRequest.OkResponse.getDefaultInstance().toByteArray(),
                 headers = headersOf("Content-Type", "application/protobuf; type=push-ok")
             )
@@ -174,6 +177,45 @@ internal class OslonokkelenKeychainPushKtorClientTest {
                         )
                     )
                 )
+            }
+        }
+    }
+
+    @Test
+    fun `Push returning http 200 and no-profile error`() {
+        HttpMock("/api/keychainfactory/test-factory/ref-123") {
+            respond(
+                status = HttpStatusCode.OK,
+                content = KeychainPushApi.ErrorResponse.newBuilder()
+                    .setErrorCode(KeychainPushApi.ErrorResponse.ErrorCode.MISSING_PROFILE)
+                    .setTechnicalDebugMessage("Missing profile")
+                    .build()
+                    .toByteArray(),
+                headers = headersOf("Content-Type", "application/protobuf; type=error")
+            )
+        }.use { mock ->
+            val client = OslonokkelenKeychainPushKtorClient(
+                client = mock.client,
+                config = config
+            )
+
+            runBlocking {
+                val factoryId = KeychainFactoryId("test-factory")
+                val keychainId = factoryId.createKeychainId("ref-123")
+
+                val ex= assertThrows<OslonokkelenKeychainPushClient.ClientException.ErrorResponse> {
+                    client.push(
+                        keychainId, KeychainPushRequest(
+                            recipients = listOf(ProfileLookupKey.PhoneNumber("47", "12312123")),
+                            periods = listOf(Period(LocalDateTime.now(), LocalDateTime.now().plusDays(2))),
+                            informationForUser = InformationForUser(
+                                title = "Some booking"
+                            )
+                        )
+                    )
+                }
+
+                assertEquals(ErrorResponse.ErrorCode.MISSING_PROFILE, ex.errorCode)
             }
         }
     }
