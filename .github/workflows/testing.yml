@@ -9,21 +9,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Cache gradle
-        uses: actions/cache@v3.0.4
-        with:
-          path: ~/.gradle
-          key: ${{ runner.os }}-gradle-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/build.gradle.kts') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Install Java
+      - name: "Configure Java"
         uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
-          java-version: 15
+          distribution: "temurin"
+          java-version: 16
 
-      - name: Build with Gradle
-        run: ./gradlew test
+      - name: "Gradle - Tests"
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test --no-watch-fs --parallel --stacktrace --max-workers=4
 
 
