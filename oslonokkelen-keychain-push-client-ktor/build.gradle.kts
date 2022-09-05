@@ -15,11 +15,12 @@ plugins {
 description = "Oslonøkkelen - Keychain push client - Ktor"
 
 val ktorVersion = "2.1.0"
+val slf4jVersion = "1.7.36"
 
 dependencies {
     api(project(":oslonokkelen-keychain-push-client"))
 
-    implementation("org.slf4j:slf4j-api:1.7.36")
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
 
     api("io.ktor:ktor-client-core:$ktorVersion")
     api("io.ktor:ktor-client-core-jvm:$ktorVersion")
@@ -30,7 +31,7 @@ dependencies {
     testImplementation("io.ktor:ktor-client-cio:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 
-    testImplementation("org.slf4j:slf4j-simple:1.7.36")
+    testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
     testImplementation("org.assertj:assertj-core:3.23.1")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
 }
