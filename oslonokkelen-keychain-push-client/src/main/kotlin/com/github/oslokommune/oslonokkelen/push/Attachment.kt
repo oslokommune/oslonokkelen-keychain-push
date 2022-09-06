@@ -1,4 +1,4 @@
-package com.github.oslokommune.oslonokkelen.push.permission
+package com.github.oslokommune.oslonokkelen.push
 
 import java.net.URI
 

@@ -1,4 +1,4 @@
-package com.github.oslokommune.oslonokkelen.push.permission
+package com.github.oslokommune.oslonokkelen.push
 
 /**
  * Oslonøkkelen identifies recipients by their phone number.
