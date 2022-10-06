@@ -11,7 +11,7 @@ plugins {
 
     kotlin("plugin.serialization") version "1.7.10"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("org.graalvm.buildtools.native") version "0.9.13"
+    id("org.graalvm.buildtools.native") version "0.9.14"
     id("org.jetbrains.kotlin.jvm")
     id("com.adarshr.test-logger")
     id("java")
@@ -19,7 +19,7 @@ plugins {
 
 description = "Oslonøkkelen - Keychain push client - Cli"
 
-val slf4jVersion = "2.0.2"
+val slf4jVersion = "2.0.3"
 
 dependencies {
     api(project(":oslonokkelen-keychain-push-client-ktor"))
@@ -28,7 +28,7 @@ dependencies {
     implementation("org.slf4j:slf4j-nop:$slf4jVersion")
     implementation("io.ktor:ktor-client-cio:2.1.1")
 
-    implementation("com.charleskorn.kaml:kaml:0.48.0")
+    implementation("com.charleskorn.kaml:kaml:0.49.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.4.0")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
