@@ -7,9 +7,6 @@ import java.net.URI
  */
 sealed class Attachment {
 
-    /**
-     * This can be
-     */
     data class Link(
         val link: URI,
         val title: String

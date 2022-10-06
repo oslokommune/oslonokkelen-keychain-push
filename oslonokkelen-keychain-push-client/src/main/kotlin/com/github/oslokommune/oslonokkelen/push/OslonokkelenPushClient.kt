@@ -1,16 +1,15 @@
 package com.github.oslokommune.oslonokkelen.push
 
+/**
+ * This is the v2 version of the push api.
+ */
 interface OslonokkelenPushClient {
 
-    suspend fun push(request: PushRequest)
-
-    suspend fun delete(id: PermissionListId)
-
-    suspend fun pull(id: PermissionListId, knownVersion: Long? = null)
-
     /**
+     * This method can be used both for the original push and later to sync any updates.
      *
+     * @param request Push request describing what to grant and whom to grant it.
      */
-    suspend fun fetchIndex(knownVersion: Long? = null)
+    suspend fun push(request: PushRequest)
 
 }
