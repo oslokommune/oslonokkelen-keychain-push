@@ -27,14 +27,6 @@ submitting pull requests to this repository.
     ./gradlew addKtlintFormatGitPreCommitHook
 
 
-Terminology 
------------
-
-### Permission 
-
-
-
-### Grant
 
 
 Modules

@@ -31,11 +31,14 @@ message ErrorResponse {
   enum ErrorCode {
 
     // Unexpected error.
-    X = 0;
+    UNKNOWN = 0;
 
     // Id or key is wrong. Please don't try again without
     // fixing the credentials.
     INVALID_CREDENTIALS = 1;
+
+    // Something is wrong with the response from Oslonøkkelen
+    INVALID_RESPONSE = 2;
 
   }
 

@@ -12,4 +12,9 @@ interface OslonokkelenPushClient {
      */
     suspend fun push(request: PushRequest)
 
+    /**
+     * @return A description of your client / system
+     */
+    suspend fun describeSystem() : SystemInfo
+
 }
