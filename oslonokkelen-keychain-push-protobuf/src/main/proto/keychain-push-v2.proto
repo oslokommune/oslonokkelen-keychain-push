@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package com.github.oslokommune.oslonokkelen.push.proto;
+
+option java_outer_classname = "KeychainPushApiV2";
+option java_multiple_files = false;
+
+
+// Content-Type: application/protobuf;type=system-description
+message SystemDescriptionResponse {
+
+  // List off assets your system is allowed to hand out permissions for
+  repeated Asset assets = 1;
+
+  message Asset {
+    string id = 1;
+  }
+
+}
+
+// Content-Type: application/protobuf;type=error
+message ErrorResponse {
+
+  // Says something about what went wrong and what can be done about it.
+  ErrorCode errorCode = 1;
+
+  // Optional debug message. This is _not_ intended for the end user, but it can
+  // contain useful technical information for debugging problems.
+  string technicalDebugMessage = 2;
+
+  enum ErrorCode {
+
+    // Unexpected error.
+    X = 0;
+
+    // Id or key is wrong. Please don't try again without
+    // fixing the credentials.
+    INVALID_CREDENTIALS = 1;
+
+  }
+
+}
