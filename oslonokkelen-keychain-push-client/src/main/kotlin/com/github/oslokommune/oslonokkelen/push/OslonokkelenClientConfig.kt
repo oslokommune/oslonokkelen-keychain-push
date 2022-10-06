@@ -13,6 +13,6 @@ class OslonokkelenClientConfig(
     val apiSecret: String
 ) {
 
-    val systemInfoUri = "$baseUri/api/v2/info"
+    val systemInfoUri = "$baseUri/api/push/info"
 
 }
