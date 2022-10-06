@@ -9,9 +9,9 @@ plugins {
     application
     idea
 
-    kotlin("plugin.serialization") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.20"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("org.graalvm.buildtools.native") version "0.9.13"
+    id("org.graalvm.buildtools.native") version "0.9.14"
     id("org.jetbrains.kotlin.jvm")
     id("com.adarshr.test-logger")
     id("java")
@@ -19,7 +19,7 @@ plugins {
 
 description = "Oslonøkkelen - Keychain push client - Cli"
 
-val slf4jVersion = "2.0.2"
+val slf4jVersion = "2.0.3"
 
 dependencies {
     api(project(":oslonokkelen-keychain-push-client-ktor"))
