@@ -25,7 +25,7 @@ interface OslonokkelenKeychainPushClient {
      * @param apiSecret Keep this secret
      */
     class Config(
-        val baseUri: URI = URI.create("https://citykey-api.k8s.oslo.kommune.no"),
+        val baseUri: URI = URI.create("https://api.prod.citykey.oslo.systems"),
         val systemId: String,
         val apiSecret: String
     ) {

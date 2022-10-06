@@ -9,8 +9,12 @@ option java_multiple_files = false;
 // Content-Type: application/protobuf;type=system-description
 message SystemDescriptionResponse {
 
+  string name = 1;
+
+  string information = 2;
+
   // List off assets your system is allowed to hand out permissions for
-  repeated Asset assets = 1;
+  repeated Asset assets = 3;
 
   message Asset {
     string id = 1;
