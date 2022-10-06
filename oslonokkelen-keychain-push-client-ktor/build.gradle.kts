@@ -15,7 +15,7 @@ plugins {
 description = "Oslonøkkelen - Keychain push client - Ktor"
 
 val ktorVersion = "2.1.1"
-val slf4jVersion = "2.0.2"
+val slf4jVersion = "2.0.3"
 
 dependencies {
     api(project(":oslonokkelen-keychain-push-client"))
