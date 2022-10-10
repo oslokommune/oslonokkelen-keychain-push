@@ -54,7 +54,8 @@ class OslonokkelenPushKtorClient(
                 information = protobufMessage.information,
                 assetIds = protobufMessage.assetsList.map { asset ->
                     AssetId(asset.id)
-                }
+                },
+                id = protobufMessage.id
             )
         } catch (ex: OslonokkelenClientException) {
             throw ex

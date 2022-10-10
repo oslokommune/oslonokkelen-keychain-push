@@ -8,7 +8,7 @@ import java.net.URI
  * @param apiSecret Keep this secret
  */
 class OslonokkelenClientConfig(
-    val baseUri: URI = URI.create("https://api.prod.citykey.oslo.systems"),
+    val baseUri: URI,
     val systemId: String,
     val apiSecret: String
 ) {

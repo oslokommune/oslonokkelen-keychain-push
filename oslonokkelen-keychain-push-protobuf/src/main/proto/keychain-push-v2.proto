@@ -16,6 +16,9 @@ message SystemDescriptionResponse {
   // List off assets your system is allowed to hand out permissions for
   repeated Asset assets = 3;
 
+  // The system id
+  string id = 4;
+
   message Asset {
     string id = 1;
   }

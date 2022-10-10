@@ -7,6 +7,7 @@ package com.github.oslokommune.oslonokkelen.push
  */
 data class SystemInfo(
     val name: String,
+    val id: String,
     val information: String,
     val assetIds: List<AssetId>
 )
