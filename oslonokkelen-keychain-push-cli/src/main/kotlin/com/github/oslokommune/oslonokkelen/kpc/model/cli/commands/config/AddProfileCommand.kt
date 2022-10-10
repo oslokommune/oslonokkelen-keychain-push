@@ -14,7 +14,12 @@ class AddProfileCommand(private val configurationHandle: ConfigurationHandle) : 
 
     private val backendUri by option(
         "--backend-uri",
-        help = "Oslonøkkelen backend uri"
+        help = "Oslonøkkelen backend http uri"
+    ).default("https://oslonokkelen-backend-api.k8s.oslo.kommune.no")
+
+    private val grpcUri by option(
+        "--grpc-uri",
+        help = "Oslonøkkelen backend grpc uri"
     ).default("https://oslonokkelen-backend-api.k8s.oslo.kommune.no")
 
     private val systemId by option("--system-id", help = "Your system id").required()
@@ -26,7 +31,8 @@ class AddProfileCommand(private val configurationHandle: ConfigurationHandle) : 
         configurationHandle.addProfile(
             systemId = systemId,
             apiSecret = apiSecret,
-            backendUri = backendUri
+            backendUri = backendUri,
+            grpcUri = grpcUri,
         )
     }
 }

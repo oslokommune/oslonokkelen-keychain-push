@@ -149,7 +149,6 @@ class OslonokkelenKeychainPushKtorClient(
         }
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun <M : GeneratedMessageV3> readSuccessfulResponsePayload(httpResponse: HttpResponse, expectedType: String, factory: (ByteArray) -> M): M {
         val oslonokkelenTraceId = httpResponse.headers[OslonokkelenKeychainPushClient.traceIdHeaderName]
         val responseApplicationType = getApplicationResponseType(httpResponse, oslonokkelenTraceId)
@@ -178,7 +177,6 @@ class OslonokkelenKeychainPushKtorClient(
         }
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun handleStructuredErrorResponse(httpResponse: HttpResponse, oslonokkelenTraceId: String?) {
         val bytes = httpResponse.readBytes()
         val error = KeychainPushApi.ErrorResponse.parseFrom(bytes)

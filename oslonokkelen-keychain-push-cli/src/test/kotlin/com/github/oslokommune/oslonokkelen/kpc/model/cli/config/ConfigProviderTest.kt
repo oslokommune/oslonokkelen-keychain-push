@@ -37,7 +37,8 @@ internal class ConfigProviderTest {
         configuration.addProfile(
             systemId = "test-system",
             apiSecret = "don't-tell-anyone",
-            backendUri = "https://backend.example.com"
+            backendUri = "https://backend.example.com",
+            grpcUri = "https://backend.example.com"
         )
 
         assertThat(configuration.activeProfileId).isEqualTo("test-system@https://backend.example.com")
@@ -50,13 +51,15 @@ internal class ConfigProviderTest {
         configuration.addProfile(
             systemId = "test-system",
             apiSecret = "don't-tell-anyone",
-            backendUri = "https://backend.example.com"
+            backendUri = "https://backend.example.com",
+            grpcUri = "https://backend.example.com"
         )
 
         configuration.addProfile(
             systemId = "test-system-2",
             apiSecret = "don't-tell-anyone",
-            backendUri = "https://backend.example.com"
+            backendUri = "https://backend.example.com",
+            grpcUri = "https://backend.example.com"
         )
 
         assertThat(configuration.activeProfileId).isEqualTo("test-system-2@https://backend.example.com")
@@ -69,13 +72,15 @@ internal class ConfigProviderTest {
         configuration.addProfile(
             systemId = "test-system",
             apiSecret = "don't-tell-anyone",
-            backendUri = "https://backend.example.com"
+            backendUri = "https://backend.example.com",
+            grpcUri = "https://backend.example.com"
         )
 
         configuration.addProfile(
             systemId = "test-system-2",
             apiSecret = "don't-tell-anyone",
-            backendUri = "https://backend.example.com"
+            backendUri = "https://backend.example.com",
+            grpcUri = "https://backend.example.com"
         )
 
         configuration.useProfile("test-system@https://backend.example.com")
@@ -101,7 +106,8 @@ internal class ConfigProviderTest {
         configuration.addProfile(
             systemId = "test-system",
             apiSecret = "don't-tell-anyone",
-            backendUri = "https://backend.example.com"
+            backendUri = "https://backend.example.com",
+            grpcUri = "https://backend.example.com"
         )
 
         configuration.removeProfile("test-system@https://backend.example.com")
@@ -117,12 +123,14 @@ internal class ConfigProviderTest {
         configuration.addProfile(
             systemId = "test-system",
             apiSecret = "don't-tell-anyone",
-            backendUri = "https://backend.example.com"
+            backendUri = "https://backend.example.com",
+            grpcUri = "https://backend.example.com"
         )
         configuration.addProfile(
             systemId = "test-system-2",
             apiSecret = "don't-tell-anyone",
-            backendUri = "https://backend.example.com"
+            backendUri = "https://backend.example.com",
+            grpcUri = "https://backend.example.com"
         )
 
         configuration.removeProfile("test-system@https://backend.example.com")
@@ -138,14 +146,16 @@ internal class ConfigProviderTest {
         configuration.addProfile(
             systemId = "test-system",
             apiSecret = "don't-tell-anyone",
-            backendUri = "https://backend.example.com"
+            backendUri = "https://backend.example.com",
+            grpcUri = "https://backend.example.com"
         )
 
         val ex = assertThrows<CliException>() {
             configuration.addProfile(
                 systemId = "test-system",
                 apiSecret = "don't-tell-anyone",
-                backendUri = "https://backend.example.com"
+                backendUri = "https://backend.example.com",
+                grpcUri = "https://backend.example.com"
             )
         }
 
