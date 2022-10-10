@@ -20,6 +20,7 @@ class KeychainCliCommand : CliktCommand(
         | ```
         | keychain-pusher config add 
         |     --backend-uri <https://....> \
+        |     --grpc-uri <https://....> \
         |     --system-id <your-system-id> \
         |     --api-secret <your-secret> 
         | ```

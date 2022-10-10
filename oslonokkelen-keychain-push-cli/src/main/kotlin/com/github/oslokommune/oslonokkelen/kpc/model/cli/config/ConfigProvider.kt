@@ -21,8 +21,12 @@ object ConfigProvider {
             write(path, config)
             config
         } else {
-            val yaml = Files.readString(path, UTF_8)
-            Yaml.default.decodeFromString(Configuration.serializer(), yaml)
+            try {
+                val yaml = Files.readString(path, UTF_8)
+                Yaml.default.decodeFromString(Configuration.serializer(), yaml)
+            } catch (ex: Exception) {
+                throw IllegalStateException("Failed to read configuration from: $path", ex)
+            }
         }
 
         return ConfigurationHandle(config, path)

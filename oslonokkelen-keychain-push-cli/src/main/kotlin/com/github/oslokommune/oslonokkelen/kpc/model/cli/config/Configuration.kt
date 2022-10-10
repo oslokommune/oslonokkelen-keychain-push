@@ -13,7 +13,8 @@ data class Configuration(
     data class Profile(
         val systemId: String,
         val apiSecret: String,
-        val backendUri: String
+        val backendUri: String,
+        val grpcUri: String
     ) {
 
         @Transient

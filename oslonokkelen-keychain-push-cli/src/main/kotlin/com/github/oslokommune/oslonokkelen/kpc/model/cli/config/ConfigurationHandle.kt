@@ -25,13 +25,14 @@ class ConfigurationHandle(
         }
     }
 
-    fun addProfile(systemId: String, apiSecret: String, backendUri: String) {
+    fun addProfile(systemId: String, apiSecret: String, backendUri: String, grpcUri: String) {
         if (configuration.profiles.any { it.systemId == systemId && it.backendUri == backendUri }) {
             throw CliException("Already have profile for system $systemId @ $backendUri")
         }
 
         val newProfile = Configuration.Profile(
             backendUri = backendUri,
+            grpcUri = grpcUri,
             apiSecret = apiSecret,
             systemId = systemId
         )
