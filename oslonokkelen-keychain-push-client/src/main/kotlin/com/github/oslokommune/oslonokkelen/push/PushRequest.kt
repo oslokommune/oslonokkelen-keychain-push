@@ -23,4 +23,36 @@ data class PushRequest(
             throw java.lang.IllegalArgumentException("Must have at least one permission")
         }
     }
+
+
+    companion object {
+        fun build(id: String, block: Builder.() -> Unit) : PushRequest {
+            val builder = Builder()
+            block(builder)
+
+            return PushRequest(
+                id = PermissionListId(id),
+                permissions = builder.permissions,
+                recipients = builder.recipients,
+                attachments = builder.attachments
+            )
+        }
+    }
+
+
+    class Builder {
+        val permissions = mutableListOf<Permission>()
+        val recipients = mutableListOf<Recipient>()
+        val attachments = mutableListOf<Attachment>()
+
+        fun addRecipientByPhoneNumber(countryCode: String, number: String) {
+            recipients.add(Recipient(PhoneNumber(countryCode, number)))
+        }
+
+        fun addPermission(interval: TimeInterval, assetIds: List<String>) {
+            permissions.add(Permission(interval, assetIds.map(::AssetId)))
+        }
+
+    }
+
 }

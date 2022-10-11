@@ -39,7 +39,7 @@ message PushRequest {
 
 
   message Permission {
-    LocalDateTime timeInterval = 1;
+    LocalDateTimeInterval timeInterval = 1;
     repeated string assetIds = 2;
   }
 
