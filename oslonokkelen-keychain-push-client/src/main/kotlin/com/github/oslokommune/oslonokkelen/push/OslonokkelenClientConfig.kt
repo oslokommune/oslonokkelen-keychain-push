@@ -13,7 +13,9 @@ class OslonokkelenClientConfig(
     val apiSecret: String
 ) {
 
-    val systemInfoUri = "$baseUri/api/push/info"
-    val pushUri = "$baseUri/api/push/sync"
+    private val normalizedUri = baseUri.toString().removeSuffix("/")
+
+    val systemInfoUri = "$normalizedUri/api/push/info"
+    val pushUri = "$normalizedUri/api/push/sync"
 
 }
