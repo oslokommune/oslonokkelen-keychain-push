@@ -58,6 +58,10 @@ message PushRequest {
 
 }
 
+// Content-Type: application/protobuf;type=push-response
+message PushResponse {
+
+}
 
 message Link {
   string title = 1;
