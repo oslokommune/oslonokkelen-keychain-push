@@ -33,6 +33,7 @@ internal class ProtoMarshallerTest {
     fun `Can re-create request without link and additional information`() {
         val request = PushRequest.build("booking-123") {
             addRecipientByPhoneNumber("47", "12345789")
+            addRecipientByPhoneNumber("47", "32132321")
 
             addPermission(
                 interval = TimeInterval.parse("2022-01-02", "12:00", "2022-01-05", "13:15"),
