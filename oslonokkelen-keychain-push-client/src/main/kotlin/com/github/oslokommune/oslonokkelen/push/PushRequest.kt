@@ -37,6 +37,9 @@ data class PushRequest(
             builder.link?.let { link ->
                 attachments.add(link)
             }
+            builder.additionalInformation?.let { info ->
+                attachments.add(info)
+            }
 
             return PushRequest(
                 id = PermissionListId(id),
@@ -53,6 +56,7 @@ data class PushRequest(
         val recipients = mutableListOf<Recipient>()
 
         var link : Attachment.Link? = null
+        var additionalInformation : Attachment.AdditionalInformation? = null
 
         fun addRecipientByPhoneNumber(countryCode: String, number: String) {
             recipients.add(Recipient(PhoneNumber(countryCode, number)))
@@ -64,6 +68,14 @@ data class PushRequest(
 
         fun externalLink(title: String, uri: URI) {
             link = Attachment.Link(uri, title)
+        }
+
+        fun additionalPlainTextInformation(content: String) {
+            additionalInformation(content, Attachment.AdditionalInformation.Type.PLAIN_TEXT)
+        }
+
+        fun additionalInformation(content: String, type: Attachment.AdditionalInformation.Type) {
+            additionalInformation = Attachment.AdditionalInformation(content, type)
         }
 
     }

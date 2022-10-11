@@ -62,6 +62,24 @@ object ProtoMarshaller {
                             .build()
                     )
                 }
+
+                is Attachment.AdditionalInformation -> {
+                    builder.addAttachments(
+                        KeychainPushApiV2.PushRequest.Attachment.newBuilder()
+                            .setAdditionalInformation(
+                                KeychainPushApiV2.AdditionalInformation.newBuilder()
+                                    .setContent(attachment.content)
+                                    .setType(
+                                        when (attachment.type) {
+                                            Attachment.AdditionalInformation.Type.PLAIN_TEXT -> KeychainPushApiV2.AdditionalInformation.Type.PLAIN_TEXT
+                                            Attachment.AdditionalInformation.Type.MARKDOWN -> KeychainPushApiV2.AdditionalInformation.Type.MARKDOWN
+                                        }
+                                    )
+                                    .build()
+                            )
+                            .build()
+                    )
+                }
             }
         }
 
@@ -97,7 +115,30 @@ object ProtoMarshaller {
                     KeychainPushApiV2.PushRequest.Attachment.TypeCase.LINK -> {
                         externalLink(attachment.link.title, URI.create(attachment.link.uri))
                     }
-                    KeychainPushApiV2.PushRequest.Attachment.TypeCase.ADDITIONALINFORMATION -> TODO()
+
+                    KeychainPushApiV2.PushRequest.Attachment.TypeCase.ADDITIONALINFORMATION -> {
+                        additionalInformation(
+                            content = attachment.additionalInformation.content,
+                            type = when (attachment.additionalInformation.type) {
+                                KeychainPushApiV2.AdditionalInformation.Type.PLAIN_TEXT -> {
+                                    Attachment.AdditionalInformation.Type.PLAIN_TEXT
+                                }
+
+                                KeychainPushApiV2.AdditionalInformation.Type.MARKDOWN -> {
+                                    Attachment.AdditionalInformation.Type.MARKDOWN
+                                }
+
+                                KeychainPushApiV2.AdditionalInformation.Type.UNRECOGNIZED, null -> {
+                                    log.warn(
+                                        "Interpreting unsupported content type {} as plain text",
+                                        attachment.additionalInformation.type
+                                    )
+                                    Attachment.AdditionalInformation.Type.PLAIN_TEXT
+                                }
+                            }
+                        )
+                    }
+
                     KeychainPushApiV2.PushRequest.Attachment.TypeCase.TYPE_NOT_SET, null -> {
                         log.warn("Skipping unknown attachment: {}", attachment.typeCase)
                     }

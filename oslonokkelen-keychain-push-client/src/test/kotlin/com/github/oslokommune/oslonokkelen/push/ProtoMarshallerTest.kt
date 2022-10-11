@@ -11,6 +11,7 @@ internal class ProtoMarshallerTest {
         val request = PushRequest.build("test") {
             addRecipientByPhoneNumber("47", "12345789")
             externalLink("More information", URI.create("https://vg.no"))
+            additionalPlainTextInformation("Enjoy!")
 
             addPermission(
                 interval = TimeInterval.parse("2022-01-01", "12:00", "2022-01-05", "13:15"),
