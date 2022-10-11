@@ -1,10 +1,12 @@
 package com.github.oslokommune.oslonokkelen.push.ktor
 
 import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
+import com.github.oslokommune.oslonokkelen.kpc.serialization.KeychainPushSerializer
 import com.github.oslokommune.oslonokkelen.push.AssetId
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientConfig
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientException
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenPushClient
+import com.github.oslokommune.oslonokkelen.push.ProtoMarshaller
 import com.github.oslokommune.oslonokkelen.push.PushRequest
 import com.github.oslokommune.oslonokkelen.push.SystemInfo
 import com.github.oslokommune.oslonokkelen.push.proto.KeychainPushApiV2
@@ -16,6 +18,7 @@ import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readBytes
 import io.ktor.http.ContentType
@@ -37,6 +40,7 @@ class OslonokkelenPushKtorClient(
     override suspend fun push(request: PushRequest) {
         try {
             val httpResponse = client.post(config.pushUri) {
+                setBody(ProtoMarshaller.toProtobuf(request).toByteArray())
                 requestBuilder(this)
             }
 
