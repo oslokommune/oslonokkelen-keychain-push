@@ -12,4 +12,15 @@ sealed class Attachment {
         val title: String
     ) : Attachment()
 
+    data class AdditionalInformation(
+        val content: String,
+        val type: Type
+    ) : Attachment() {
+
+        enum class Type {
+            PLAIN_TEXT, MARKDOWN
+        }
+
+    }
+
 }

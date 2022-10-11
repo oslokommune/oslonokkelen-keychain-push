@@ -8,7 +8,17 @@ package com.github.oslokommune.oslonokkelen.push
  */
 @JvmInline
 value class PermissionListId(val id: String) {
+    init {
+        if (!id.matches(pattern)) {
+            throw IllegalArgumentException("Invalid permission id: $id")
+        }
+    }
+
     override fun toString(): String {
         return "Permission id: $id"
+    }
+
+    companion object {
+        private val pattern = Regex("^[a-z0-9\\-_]{1,40}$")
     }
 }

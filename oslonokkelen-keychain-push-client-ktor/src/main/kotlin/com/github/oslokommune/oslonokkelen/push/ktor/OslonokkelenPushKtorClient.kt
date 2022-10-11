@@ -15,6 +15,7 @@ import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readBytes
 import io.ktor.http.ContentType
@@ -34,7 +35,25 @@ class OslonokkelenPushKtorClient(
     }
 
     override suspend fun push(request: PushRequest) {
-        TODO("Implement me!")
+        try {
+            val httpResponse = client.post(config.pushUri) {
+                requestBuilder(this)
+            }
+
+            readSuccessfulResponsePayload(
+                factory = KeychainPushApiV2.PushResponse::parseFrom,
+                httpResponse = httpResponse,
+                expectedType = "push-response"
+            )
+        } catch (ex: OslonokkelenClientException) {
+            throw ex
+        } catch (ex: Exception) {
+            throw OslonokkelenClientException(
+                errorCode = KeychainPushApiV2.ErrorResponse.ErrorCode.UNKNOWN,
+                technicalDebugMessage = "Unexpected error while pushing permission",
+                cause = ex
+            )
+        }
     }
 
     override suspend fun describeSystem(): SystemInfo {

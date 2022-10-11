@@ -14,5 +14,6 @@ class OslonokkelenClientConfig(
 ) {
 
     val systemInfoUri = "$baseUri/api/push/info"
+    val pushUri = "$baseUri/api/push/sync"
 
 }

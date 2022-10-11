@@ -25,6 +25,76 @@ message SystemDescriptionResponse {
 
 }
 
+// Used both to push the original permission as well as updating
+message PushRequest {
+
+  // Identifies the permission. Client side generated to avoid issues related to double posting.
+  string id = 1;
+
+  repeated Permission permissions = 2;
+
+  repeated Recipient recipients = 3;
+
+  repeated Attachment attachments = 4;
+
+
+  message Permission {
+    LocalDateTimeInterval timeInterval = 1;
+    repeated string assetIds = 2;
+  }
+
+  message Recipient {
+    oneof recipient {
+      PhoneNumber phoneNumber = 1;
+    }
+  }
+
+  message Attachment {
+    oneof type {
+      Link link = 1;
+      AdditionalInformation additionalInformation = 2;
+    }
+  }
+
+}
+
+// Content-Type: application/protobuf;type=push-response
+message PushResponse {
+
+}
+
+message Link {
+  string title = 1;
+  string uri = 2 ;
+}
+
+message AdditionalInformation {
+  string content = 1;
+  Type type = 2 ;
+
+  enum Type {
+    PLAIN_TEXT = 0 ;
+    MARKDOWN = 1;
+  }
+}
+
+
+message PhoneNumber {
+  string countryCode = 1;
+  string number = 2;
+}
+
+message LocalDateTimeInterval {
+  LocalDateTime from = 1;
+  LocalDateTime until = 2;
+}
+
+message LocalDateTime {
+  string date = 1;
+  string time = 2;
+}
+
+
 // Content-Type: application/protobuf;type=error
 message ErrorResponse {
 
