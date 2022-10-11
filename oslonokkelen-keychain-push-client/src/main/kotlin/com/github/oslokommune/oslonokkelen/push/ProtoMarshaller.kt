@@ -14,12 +14,7 @@ object ProtoMarshaller {
         for (recipient in request.recipients) {
             builder.addRecipients(
                 KeychainPushApiV2.PushRequest.Recipient.newBuilder()
-                    .setPhoneNumber(
-                        KeychainPushApiV2.PhoneNumber.newBuilder()
-                            .setCountryCode(recipient.phoneNumber.countryCode)
-                            .setNumber(recipient.phoneNumber.phoneNumber)
-                            .build()
-                    )
+                    .setPhoneNumber(toProtobuf(recipient.phoneNumber))
                     .build()
             )
         }
@@ -146,6 +141,50 @@ object ProtoMarshaller {
             }
         }
     }
+
+    fun fromProtobuf(message: KeychainPushApiV2.StateResponse): PermissionState {
+        return PermissionState(
+            pendingRecipients = message.pendingRecipientsList.map { pending ->
+                PermissionState.PendingRecipient(
+                    phoneNumber = PhoneNumber(
+                        countryCode = pending.phoneNumber.countryCode,
+                        phoneNumber = pending.phoneNumber.number
+                    )
+                )
+            },
+            confirmedRecipients = message.confirmedRecipientsList.map { confirmed ->
+                PermissionState.ConfirmedRecipient(
+                    phoneNumber = PhoneNumber(
+                        countryCode = confirmed.phoneNumber.countryCode,
+                        phoneNumber = confirmed.phoneNumber.number
+                    ),
+                    usageCounter = confirmed.usageCounter
+                )
+            }
+        )
+    }
+
+    fun toProtobuf(state: PermissionState): KeychainPushApiV2.StateResponse {
+        return KeychainPushApiV2.StateResponse.newBuilder()
+            .addAllPendingRecipients(state.pendingRecipients.map { pending ->
+                KeychainPushApiV2.StateResponse.PendingRecipient.newBuilder()
+                    .setPhoneNumber(toProtobuf(pending.phoneNumber))
+                    .build()
+            })
+            .addAllConfirmedRecipients(state.confirmedRecipients.map { confirmed ->
+                KeychainPushApiV2.StateResponse.ConfirmedRecipient.newBuilder()
+                    .setPhoneNumber(toProtobuf(confirmed.phoneNumber))
+                    .setUsageCounter(confirmed.usageCounter)
+                    .build()
+            })
+            .build()
+    }
+
+    private fun toProtobuf(phoneNumber: PhoneNumber): KeychainPushApiV2.PhoneNumber? =
+        KeychainPushApiV2.PhoneNumber.newBuilder()
+            .setCountryCode(phoneNumber.countryCode)
+            .setNumber(phoneNumber.phoneNumber)
+            .build()
 
     private val log: Logger = LoggerFactory.getLogger(ProtoMarshaller::class.java)
 

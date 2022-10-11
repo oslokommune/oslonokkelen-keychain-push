@@ -6,6 +6,8 @@ import com.github.oslokommune.oslonokkelen.push.AssetId
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientConfig
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientException
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenPushClient
+import com.github.oslokommune.oslonokkelen.push.PermissionListId
+import com.github.oslokommune.oslonokkelen.push.PermissionState
 import com.github.oslokommune.oslonokkelen.push.ProtoMarshaller
 import com.github.oslokommune.oslonokkelen.push.PushRequest
 import com.github.oslokommune.oslonokkelen.push.SystemInfo
@@ -35,6 +37,30 @@ class OslonokkelenPushKtorClient(
         header(OslonokkelenKeychainPushClient.clientApiKeyHeaderName, config.apiSecret)
         accept(ContentType.Application.ProtoBuf)
         expectSuccess = false
+    }
+
+    override suspend fun queryState(id: PermissionListId): PermissionState {
+        return try {
+            val httpResponse = client.get(config.stateUri(id)) {
+                requestBuilder(this)
+            }
+
+            val message = readSuccessfulResponsePayload(
+                factory = KeychainPushApiV2.StateResponse::parseFrom,
+                httpResponse = httpResponse,
+                expectedType = "state"
+            )
+
+            ProtoMarshaller.fromProtobuf(message)
+        } catch (ex: OslonokkelenClientException) {
+            throw ex
+        } catch (ex: Exception) {
+            throw OslonokkelenClientException(
+                errorCode = KeychainPushApiV2.ErrorResponse.ErrorCode.UNKNOWN,
+                technicalDebugMessage = "Unexpected error while fetching permission state",
+                cause = ex
+            )
+        }
     }
 
     override suspend fun push(request: PushRequest) {

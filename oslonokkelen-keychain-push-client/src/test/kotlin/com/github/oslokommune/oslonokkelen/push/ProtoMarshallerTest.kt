@@ -47,4 +47,32 @@ internal class ProtoMarshallerTest {
         assertEquals(request, recreatedRequest)
     }
 
+    @Test
+    fun `Can restore state message`() {
+        val state = PermissionState(
+            pendingRecipients = listOf(
+                PermissionState.PendingRecipient(
+                    phoneNumber = PhoneNumber(
+                        countryCode = "47",
+                        phoneNumber = "12345789"
+                    )
+                )
+            ),
+            confirmedRecipients = listOf(
+                PermissionState.ConfirmedRecipient(
+                    phoneNumber = PhoneNumber(
+                        countryCode = "47",
+                        phoneNumber = "32154987"
+                    ),
+                    usageCounter = 2
+                )
+            )
+        )
+
+        val message = ProtoMarshaller.toProtobuf(state)
+        val restoredState = ProtoMarshaller.fromProtobuf(message)
+
+        assertEquals(state, restoredState)
+    }
+
 }

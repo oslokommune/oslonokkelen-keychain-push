@@ -18,4 +18,8 @@ class OslonokkelenClientConfig(
     val systemInfoUri = "$normalizedUri/api/push/info"
     val pushUri = "$normalizedUri/api/push/sync"
 
+    fun stateUri(id: PermissionListId) : String {
+        return "$normalizedUri/api/push/state/${id.id}"
+    }
+
 }

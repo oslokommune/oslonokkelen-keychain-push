@@ -120,3 +120,25 @@ message ErrorResponse {
   }
 
 }
+
+// Content-Type: application/protobuf;type=state
+message StateResponse {
+
+  repeated PendingRecipient pendingRecipients = 1;
+  repeated ConfirmedRecipient confirmedRecipients = 2;
+
+  message PendingRecipient {
+    PhoneNumber phoneNumber = 1;
+  }
+
+  message ConfirmedRecipient {
+
+    // The phone number used assigning the permission
+    PhoneNumber phoneNumber = 1;
+
+    // How many times the permission has been used by the recipient
+    int32 usageCounter = 2;
+
+  }
+
+}
