@@ -1,5 +1,7 @@
 package com.github.oslokommune.oslonokkelen.push
 
+import java.net.URI
+
 /**
  * @param id The permission id is generated on the client side. It has to be unique per client.
  *  We recommend using a reservation number or any other identifier that already exists in your system.
@@ -30,11 +32,17 @@ data class PushRequest(
             val builder = Builder()
             block(builder)
 
+            val attachments = mutableListOf<Attachment>()
+
+            builder.link?.let { link ->
+                attachments.add(link)
+            }
+
             return PushRequest(
                 id = PermissionListId(id),
                 permissions = builder.permissions,
                 recipients = builder.recipients,
-                attachments = builder.attachments
+                attachments = attachments
             )
         }
     }
@@ -43,7 +51,8 @@ data class PushRequest(
     class Builder {
         val permissions = mutableListOf<Permission>()
         val recipients = mutableListOf<Recipient>()
-        val attachments = mutableListOf<Attachment>()
+
+        var link : Attachment.Link? = null
 
         fun addRecipientByPhoneNumber(countryCode: String, number: String) {
             recipients.add(Recipient(PhoneNumber(countryCode, number)))
@@ -51,6 +60,10 @@ data class PushRequest(
 
         fun addPermission(interval: TimeInterval, assetIds: List<String>) {
             permissions.add(Permission(interval, assetIds.map(::AssetId)))
+        }
+
+        fun externalLink(title: String, uri: URI) {
+            link = Attachment.Link(uri, title)
         }
 
     }

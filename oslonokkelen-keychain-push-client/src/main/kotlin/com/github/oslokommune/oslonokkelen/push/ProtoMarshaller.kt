@@ -1,6 +1,9 @@
 package com.github.oslokommune.oslonokkelen.push
 
 import com.github.oslokommune.oslonokkelen.push.proto.KeychainPushApiV2
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import java.net.URI
 
 object ProtoMarshaller {
 
@@ -45,6 +48,23 @@ object ProtoMarshaller {
             )
         }
 
+        for (attachment in request.attachments) {
+            when (attachment) {
+                is Attachment.Link -> {
+                    builder.addAttachments(
+                        KeychainPushApiV2.PushRequest.Attachment.newBuilder()
+                            .setLink(
+                                KeychainPushApiV2.Link.newBuilder()
+                                    .setTitle(attachment.title)
+                                    .setUri(attachment.link.toString())
+                                    .build()
+                            )
+                            .build()
+                    )
+                }
+            }
+        }
+
         return builder.build()
     }
 
@@ -72,7 +92,20 @@ object ProtoMarshaller {
                     assetIds = permission.assetIdsList
                 )
             }
+            for (attachment in protobuf.attachmentsList) {
+                when (attachment.typeCase) {
+                    KeychainPushApiV2.PushRequest.Attachment.TypeCase.LINK -> {
+                        externalLink(attachment.link.title, URI.create(attachment.link.uri))
+                    }
+                    KeychainPushApiV2.PushRequest.Attachment.TypeCase.ADDITIONALINFORMATION -> TODO()
+                    KeychainPushApiV2.PushRequest.Attachment.TypeCase.TYPE_NOT_SET, null -> {
+                        log.warn("Skipping unknown attachment: {}", attachment.typeCase)
+                    }
+                }
+            }
         }
     }
+
+    private val log: Logger = LoggerFactory.getLogger(ProtoMarshaller::class.java)
 
 }
