@@ -18,6 +18,7 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.Keyc
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainDeleteCliCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainPushCliCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.describe.DescribeSystemCommand
+import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.sync.SyncCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigProvider
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -46,6 +47,7 @@ fun main(args: Array<String>) {
                 UseProfileCommand(configurationHandle)
             ),
             DescribeSystemCommand(out, service),
+            SyncCommand(out, service),
             AutocompleteCommand(service)
         )
         .main(args)
