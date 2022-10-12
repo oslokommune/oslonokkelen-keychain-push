@@ -1,0 +1,14 @@
+id: permission-x
+recipients:
+    - countryCode: 47
+      phoneNumber: 12312123
+    - countryCode: 47
+      phoneNumber: 32132321
+permissions:
+    - assetIds:
+          - origo
+          - uke
+      fromDate: 2022-10-01
+      untilDate: 2022-10-30
+      fromTime: 20:00
+      untilTime: 14:30
