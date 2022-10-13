@@ -9,6 +9,7 @@ object ProtoMarshaller {
 
     fun toProtobuf(request: PushRequest): KeychainPushApiV2.PushRequest {
         val builder = KeychainPushApiV2.PushRequest.newBuilder()
+        builder.title = request.title
         builder.id = request.id.id
 
         for (recipient in request.recipients) {
@@ -83,7 +84,7 @@ object ProtoMarshaller {
     }
 
     fun fromProtobuf(protobuf: KeychainPushApiV2.PushRequest): PushRequest {
-        return PushRequest.build(protobuf.id) {
+        return PushRequest.build(protobuf.id, protobuf.title) {
             for (recipient in protobuf.recipientsList) {
                 when (recipient.recipientCase) {
                     KeychainPushApiV2.PushRequest.Recipient.RecipientCase.PHONENUMBER -> {

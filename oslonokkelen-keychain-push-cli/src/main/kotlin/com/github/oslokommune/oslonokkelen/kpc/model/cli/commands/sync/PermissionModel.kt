@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PermissionModel(
     val id: String,
+    val title: String,
     val recipients: List<PhoneNumber>,
     val permissions: List<Permission>,
     val additionalInformation: AdditionalInformation? = null,

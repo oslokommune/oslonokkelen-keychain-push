@@ -31,11 +31,14 @@ message PushRequest {
   // Identifies the permission. Client side generated to avoid issues related to double posting.
   string id = 1;
 
-  repeated Permission permissions = 2;
+  // Human readable title. Will show up in the app.
+  string title = 2;
 
-  repeated Recipient recipients = 3;
+  repeated Permission permissions = 3;
 
-  repeated Attachment attachments = 4;
+  repeated Recipient recipients = 4;
+
+  repeated Attachment attachments = 5;
 
 
   message Permission {

@@ -1,4 +1,5 @@
 id: permission-x
+title: Test permission
 recipients:
     - countryCode: 47
       phoneNumber: 12312123

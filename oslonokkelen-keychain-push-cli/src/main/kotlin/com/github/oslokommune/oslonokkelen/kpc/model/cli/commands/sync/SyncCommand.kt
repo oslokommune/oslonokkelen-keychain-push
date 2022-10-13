@@ -32,7 +32,7 @@ class SyncCommand(
         out.debug("Pushing $file")
 
         val model = readModel()
-        val request = PushRequest.build(model.id) {
+        val request = PushRequest.build(model.id, model.title) {
             for (recipient in model.recipients) {
                 addRecipientByPhoneNumber(recipient.countryCode, recipient.phoneNumber)
             }

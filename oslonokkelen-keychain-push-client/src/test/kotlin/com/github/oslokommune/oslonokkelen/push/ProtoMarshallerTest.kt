@@ -8,7 +8,7 @@ internal class ProtoMarshallerTest {
 
     @Test
     fun `Can re-create requests`() {
-        val request = PushRequest.build("booking-123") {
+        val request = PushRequest.build("booking-123", "Booking #123") {
             addRecipientByPhoneNumber("47", "12345789")
             externalLink("More information", URI.create("https://vg.no")) // Optional
             additionalPlainTextInformation("Tørk av deg på beina før du går inn!") // Optional
@@ -31,7 +31,7 @@ internal class ProtoMarshallerTest {
 
     @Test
     fun `Can re-create request without link and additional information`() {
-        val request = PushRequest.build("booking-123") {
+        val request = PushRequest.build("booking-123", "Booking #123") {
             addRecipientByPhoneNumber("47", "12345789")
             addRecipientByPhoneNumber("47", "32132321")
 
