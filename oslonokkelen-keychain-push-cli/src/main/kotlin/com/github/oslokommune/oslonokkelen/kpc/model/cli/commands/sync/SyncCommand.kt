@@ -6,8 +6,10 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
+import com.github.oslokommune.oslonokkelen.push.Attachment
 import com.github.oslokommune.oslonokkelen.push.PushRequest
 import com.github.oslokommune.oslonokkelen.push.TimeInterval
+import java.net.URI
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.time.LocalDate
@@ -42,6 +44,12 @@ class SyncCommand(
                         end = LocalDate.parse(permission.untilDate).atTime(LocalTime.parse(permission.untilTime)),
                     )
                 )
+            }
+            if (model.link != null) {
+                externalLink(model.link.title, URI.create(model.link.uri))
+            }
+            if (model.additionalInformation != null) {
+                additionalInformation(model.additionalInformation.content, Attachment.AdditionalInformation.Type.valueOf(model.additionalInformation.type))
             }
         }
 

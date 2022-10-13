@@ -6,13 +6,27 @@ import kotlinx.serialization.Serializable
 data class PermissionModel(
     val id: String,
     val recipients: List<PhoneNumber>,
-    val permissions: List<Permission>
+    val permissions: List<Permission>,
+    val additionalInformation: AdditionalInformation? = null,
+    val link: Link? = null
 ) {
 
     @Serializable
     data class PhoneNumber(
         val countryCode: String,
         val phoneNumber: String
+    )
+
+    @Serializable
+    data class AdditionalInformation(
+        val type: String,
+        val content: String
+    )
+
+    @Serializable
+    data class Link(
+        val title: String,
+        val uri: String
     )
 
     @Serializable
