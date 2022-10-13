@@ -153,6 +153,7 @@ object ProtoMarshaller {
 
     fun fromProtobuf(message: KeychainPushApiV2.StateResponse): PermissionState {
         return PermissionState(
+            version = message.version,
             pendingRecipients = message.pendingRecipientsList.map { pending ->
                 PermissionState.PendingRecipient(
                     phoneNumber = PhoneNumber(
@@ -187,6 +188,7 @@ object ProtoMarshaller {
                     .setUsageCounter(confirmed.usageCounter)
                     .build()
             })
+            .setVersion(state.version)
             .addAllAttachments(state.attachments.map { a -> toProtobuf(a) })
             .build()
     }

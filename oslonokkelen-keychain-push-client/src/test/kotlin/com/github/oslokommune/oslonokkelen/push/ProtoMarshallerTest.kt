@@ -70,7 +70,8 @@ internal class ProtoMarshallerTest {
             attachments = listOf(
                 Attachment.Link(URI.create("https://vg.no"), "VG"),
                 Attachment.AdditionalInformation("Halla", Attachment.AdditionalInformation.Type.PLAIN_TEXT)
-            )
+            ),
+            version = 2
         )
 
         val message = ProtoMarshaller.toProtobuf(state)
