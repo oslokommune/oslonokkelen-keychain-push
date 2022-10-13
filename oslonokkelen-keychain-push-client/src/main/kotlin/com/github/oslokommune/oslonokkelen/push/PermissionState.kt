@@ -2,7 +2,8 @@ package com.github.oslokommune.oslonokkelen.push
 
 data class PermissionState(
     val pendingRecipients: List<PendingRecipient>,
-    val confirmedRecipients: List<ConfirmedRecipient>
+    val confirmedRecipients: List<ConfirmedRecipient>,
+    val attachments: List<Attachment>,
 ) {
 
 

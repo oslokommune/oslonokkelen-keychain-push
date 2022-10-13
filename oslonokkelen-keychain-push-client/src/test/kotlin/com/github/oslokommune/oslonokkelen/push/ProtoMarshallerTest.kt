@@ -66,6 +66,10 @@ internal class ProtoMarshallerTest {
                     ),
                     usageCounter = 2
                 )
+            ),
+            attachments = listOf(
+                Attachment.Link(URI.create("https://vg.no"), "VG"),
+                Attachment.AdditionalInformation("Halla", Attachment.AdditionalInformation.Type.PLAIN_TEXT)
             )
         )
 

@@ -49,13 +49,13 @@ message PushRequest {
     }
   }
 
-  message Attachment {
-    oneof type {
-      Link link = 1;
-      AdditionalInformation additionalInformation = 2;
-    }
-  }
+}
 
+message Attachment {
+  oneof type {
+    Link link = 1;
+    AdditionalInformation additionalInformation = 2;
+  }
 }
 
 // Content-Type: application/protobuf;type=push-response
@@ -126,6 +126,7 @@ message StateResponse {
 
   repeated PendingRecipient pendingRecipients = 1;
   repeated ConfirmedRecipient confirmedRecipients = 2;
+  repeated Attachment attachments = 3;
 
   message PendingRecipient {
     PhoneNumber phoneNumber = 1;
