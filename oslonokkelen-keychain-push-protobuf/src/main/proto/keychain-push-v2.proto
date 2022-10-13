@@ -49,13 +49,13 @@ message PushRequest {
     }
   }
 
-  message Attachment {
-    oneof type {
-      Link link = 1;
-      AdditionalInformation additionalInformation = 2;
-    }
-  }
+}
 
+message Attachment {
+  oneof type {
+    Link link = 1;
+    AdditionalInformation additionalInformation = 2;
+  }
 }
 
 // Content-Type: application/protobuf;type=push-response
@@ -124,8 +124,11 @@ message ErrorResponse {
 // Content-Type: application/protobuf;type=state
 message StateResponse {
 
-  repeated PendingRecipient pendingRecipients = 1;
-  repeated ConfirmedRecipient confirmedRecipients = 2;
+  int32 version = 1;
+
+  repeated PendingRecipient pendingRecipients = 2;
+  repeated ConfirmedRecipient confirmedRecipients = 3;
+  repeated Attachment attachments = 4;
 
   message PendingRecipient {
     PhoneNumber phoneNumber = 1;

@@ -32,20 +32,11 @@ data class PushRequest(
             val builder = Builder()
             block(builder)
 
-            val attachments = mutableListOf<Attachment>()
-
-            builder.link?.let { link ->
-                attachments.add(link)
-            }
-            builder.additionalInformation?.let { info ->
-                attachments.add(info)
-            }
-
             return PushRequest(
                 id = PermissionListId(id),
                 permissions = builder.permissions,
                 recipients = builder.recipients,
-                attachments = attachments
+                attachments = builder.attachments
             )
         }
     }
@@ -54,9 +45,8 @@ data class PushRequest(
     class Builder {
         val permissions = mutableListOf<Permission>()
         val recipients = mutableListOf<Recipient>()
+        val attachments = mutableListOf<Attachment>()
 
-        var link : Attachment.Link? = null
-        var additionalInformation : Attachment.AdditionalInformation? = null
 
         fun addRecipientByPhoneNumber(countryCode: String, number: String) {
             recipients.add(Recipient(PhoneNumber(countryCode, number)))
@@ -67,15 +57,19 @@ data class PushRequest(
         }
 
         fun externalLink(title: String, uri: URI) {
-            link = Attachment.Link(uri, title)
+            attachment(Attachment.Link(uri, title))
         }
 
         fun additionalPlainTextInformation(content: String) {
-            additionalInformation(content, Attachment.AdditionalInformation.Type.PLAIN_TEXT)
+            attachment(Attachment.AdditionalInformation(content, Attachment.AdditionalInformation.Type.PLAIN_TEXT))
         }
 
         fun additionalInformation(content: String, type: Attachment.AdditionalInformation.Type) {
-            additionalInformation = Attachment.AdditionalInformation(content, type)
+            attachment(Attachment.AdditionalInformation(content, type))
+        }
+
+        fun attachment(attachment: Attachment) {
+            attachments.add(attachment)
         }
 
     }
