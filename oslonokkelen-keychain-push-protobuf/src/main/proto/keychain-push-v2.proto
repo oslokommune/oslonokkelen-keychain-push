@@ -83,6 +83,7 @@ message AdditionalInformation {
 
 
 message PhoneNumber {
+  // Two digits
   string countryCode = 1;
   string number = 2;
 }
@@ -133,6 +134,7 @@ message StateResponse {
   repeated ConfirmedRecipient confirmedRecipients = 3;
   repeated Attachment attachments = 4;
 
+  // Recipient waiting to be associated with a profile in Oslonøkkelen.
   message PendingRecipient {
     PhoneNumber phoneNumber = 1;
   }
@@ -144,6 +146,9 @@ message StateResponse {
 
     // How many times the permission has been used by the recipient
     int32 usageCounter = 2;
+
+    // When the recipient was associated with a profile
+    int64 confirmedAtEpochSeconds = 3;
 
   }
 

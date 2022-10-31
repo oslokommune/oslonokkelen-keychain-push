@@ -3,6 +3,9 @@ package com.github.oslokommune.oslonokkelen.push
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.net.URI
+import java.time.Instant
+import java.time.temporal.ChronoUnit
+import java.time.temporal.ChronoUnit.SECONDS
 
 internal class ProtoMarshallerTest {
 
@@ -64,7 +67,8 @@ internal class ProtoMarshallerTest {
                         countryCode = "47",
                         phoneNumber = "32154987"
                     ),
-                    usageCounter = 2
+                    usageCounter = 2,
+                    confirmedAt = Instant.now().truncatedTo(SECONDS)
                 )
             ),
             attachments = listOf(

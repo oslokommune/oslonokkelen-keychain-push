@@ -1,5 +1,7 @@
 package com.github.oslokommune.oslonokkelen.push
 
+import java.time.Instant
+
 /**
  * @param version This version will be incremented for every change to the permission.
  * @param pendingRecipients Recipients we don't have a profile for. These people will have to confirm their phone number in the app.
@@ -19,7 +21,8 @@ data class PermissionState(
 
     data class ConfirmedRecipient(
         val phoneNumber: PhoneNumber,
-        val usageCounter: Int
+        val usageCounter: Int,
+        val confirmedAt: Instant
     )
 
 }

@@ -4,6 +4,7 @@ import com.github.oslokommune.oslonokkelen.push.proto.KeychainPushApiV2
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.net.URI
+import java.time.Instant
 
 object ProtoMarshaller {
 
@@ -165,11 +166,12 @@ object ProtoMarshaller {
             },
             confirmedRecipients = message.confirmedRecipientsList.map { confirmed ->
                 PermissionState.ConfirmedRecipient(
+                    confirmedAt = Instant.ofEpochSecond(confirmed.confirmedAtEpochSeconds),
+                    usageCounter = confirmed.usageCounter,
                     phoneNumber = PhoneNumber(
                         countryCode = confirmed.phoneNumber.countryCode,
                         phoneNumber = confirmed.phoneNumber.number
-                    ),
-                    usageCounter = confirmed.usageCounter
+                    )
                 )
             },
             attachments = message.attachmentsList.mapNotNull(::fromProtobuf)
@@ -185,6 +187,7 @@ object ProtoMarshaller {
             })
             .addAllConfirmedRecipients(state.confirmedRecipients.map { confirmed ->
                 KeychainPushApiV2.StateResponse.ConfirmedRecipient.newBuilder()
+                    .setConfirmedAtEpochSeconds(confirmed.confirmedAt.epochSecond)
                     .setPhoneNumber(toProtobuf(confirmed.phoneNumber))
                     .setUsageCounter(confirmed.usageCounter)
                     .build()
