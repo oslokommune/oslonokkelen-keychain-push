@@ -45,43 +45,33 @@ object ProtoMarshaller {
             )
         }
 
-        for (attachment in request.attachments) {
-            val protobuf = toProtobuf(attachment)
-            builder.addAttachments(protobuf)
+        if (request.informationLink != null) {
+            builder.informationLink = toProtobuf(request.informationLink)
+        }
+        if (request.additionalInformation != null) {
+            builder.additionalInformation = toProtobuf(request.additionalInformation)
         }
 
         return builder.build()
     }
 
-    private fun toProtobuf(attachment: Attachment): KeychainPushApiV2.Attachment {
-        return when (attachment) {
-            is Attachment.Link -> {
-                KeychainPushApiV2.Attachment.newBuilder()
-                    .setLink(
-                        KeychainPushApiV2.Link.newBuilder()
-                            .setTitle(attachment.title)
-                            .setUri(attachment.link.toString())
-                            .build()
-                    )
-                    .build()
-            }
+    private fun toProtobuf(informationLink: InformationLink): KeychainPushApiV2.Link {
+        return KeychainPushApiV2.Link.newBuilder()
+            .setTitle(informationLink.title)
+            .setUri(informationLink.link.toString())
+            .build()
+    }
 
-            is Attachment.AdditionalInformation -> {
-                KeychainPushApiV2.Attachment.newBuilder()
-                    .setAdditionalInformation(
-                        KeychainPushApiV2.AdditionalInformation.newBuilder()
-                            .setContent(attachment.content)
-                            .setType(
-                                when (attachment.type) {
-                                    Attachment.AdditionalInformation.Type.PLAIN_TEXT -> KeychainPushApiV2.AdditionalInformation.Type.PLAIN_TEXT
-                                    Attachment.AdditionalInformation.Type.MARKDOWN -> KeychainPushApiV2.AdditionalInformation.Type.MARKDOWN
-                                }
-                            )
-                            .build()
-                    )
-                    .build()
-            }
-        }
+    private fun toProtobuf(additionalInformation: AdditionalInformation): KeychainPushApiV2.AdditionalInformation {
+        return KeychainPushApiV2.AdditionalInformation.newBuilder()
+            .setContent(additionalInformation.content)
+            .setType(
+                when (additionalInformation.type) {
+                    AdditionalInformation.Type.PLAIN_TEXT -> KeychainPushApiV2.AdditionalInformation.Type.PLAIN_TEXT
+                    AdditionalInformation.Type.MARKDOWN -> KeychainPushApiV2.AdditionalInformation.Type.MARKDOWN
+                }
+            )
+            .build()
     }
 
     fun fromProtobuf(protobuf: KeychainPushApiV2.PushRequest): PushRequest {
@@ -108,50 +98,46 @@ object ProtoMarshaller {
                     assetIds = permission.assetIdsList
                 )
             }
-            for (attachment in protobuf.attachmentsList) {
-                val a = fromProtobuf(attachment)
 
-                if (a != null) {
-                    attachment(a)
-                }
+            if (protobuf.hasAdditionalInformation()) {
+                additionalInformation(fromProtobuf(protobuf.additionalInformation))
+            }
+            if (protobuf.hasInformationLink()) {
+                externalLink(fromProtobuf(protobuf.informationLink))
             }
         }
     }
 
-    private fun fromProtobuf(attachment: KeychainPushApiV2.Attachment) =
-        when (attachment.typeCase) {
-            KeychainPushApiV2.Attachment.TypeCase.LINK -> {
-                Attachment.Link(URI.create(attachment.link.uri), attachment.link.title)
+    private fun fromProtobuf(informationLink: KeychainPushApiV2.Link): InformationLink {
+        return InformationLink(
+            title = informationLink.title,
+            link = URI.create(informationLink.uri)
+        )
+    }
+
+    private fun fromProtobuf(additionalInformation: KeychainPushApiV2.AdditionalInformation): AdditionalInformation {
+        return AdditionalInformation(
+            content = additionalInformation.content,
+            type = when (additionalInformation.type) {
+                KeychainPushApiV2.AdditionalInformation.Type.PLAIN_TEXT -> {
+                    AdditionalInformation.Type.PLAIN_TEXT
+                }
+
+                KeychainPushApiV2.AdditionalInformation.Type.MARKDOWN -> {
+                    AdditionalInformation.Type.MARKDOWN
+                }
+
+                KeychainPushApiV2.AdditionalInformation.Type.UNRECOGNIZED, null -> {
+                    log.warn(
+                        "Interpreting unsupported content type {} as plain text",
+                        additionalInformation.type
+                    )
+                    AdditionalInformation.Type.PLAIN_TEXT
+                }
             }
+        )
+    }
 
-            KeychainPushApiV2.Attachment.TypeCase.ADDITIONALINFORMATION -> {
-                Attachment.AdditionalInformation(
-                    content = attachment.additionalInformation.content,
-                    type = when (attachment.additionalInformation.type) {
-                        KeychainPushApiV2.AdditionalInformation.Type.PLAIN_TEXT -> {
-                            Attachment.AdditionalInformation.Type.PLAIN_TEXT
-                        }
-
-                        KeychainPushApiV2.AdditionalInformation.Type.MARKDOWN -> {
-                            Attachment.AdditionalInformation.Type.MARKDOWN
-                        }
-
-                        KeychainPushApiV2.AdditionalInformation.Type.UNRECOGNIZED, null -> {
-                            log.warn(
-                                "Interpreting unsupported content type {} as plain text",
-                                attachment.additionalInformation.type
-                            )
-                            Attachment.AdditionalInformation.Type.PLAIN_TEXT
-                        }
-                    }
-                )
-            }
-
-            KeychainPushApiV2.Attachment.TypeCase.TYPE_NOT_SET, null -> {
-                log.warn("Skipping unknown attachment: {}", attachment.typeCase)
-                null
-            }
-        }
 
     fun fromProtobuf(message: KeychainPushApiV2.StateResponse): PermissionState {
         return PermissionState(
@@ -174,12 +160,21 @@ object ProtoMarshaller {
                     )
                 )
             },
-            attachments = message.attachmentsList.mapNotNull(::fromProtobuf)
+            additionalInformation = if (message.hasAdditionalInformation()) {
+                fromProtobuf(message.additionalInformation)
+            } else {
+                null
+            },
+            informationLink = if (message.hasInformationLink()) {
+                fromProtobuf(message.informationLink)
+            } else {
+                null
+            }
         )
     }
 
     fun toProtobuf(state: PermissionState): KeychainPushApiV2.StateResponse {
-        return KeychainPushApiV2.StateResponse.newBuilder()
+        val builder = KeychainPushApiV2.StateResponse.newBuilder()
             .addAllPendingRecipients(state.pendingRecipients.map { pending ->
                 KeychainPushApiV2.StateResponse.PendingRecipient.newBuilder()
                     .setPhoneNumber(toProtobuf(pending.phoneNumber))
@@ -193,8 +188,15 @@ object ProtoMarshaller {
                     .build()
             })
             .setVersion(state.version)
-            .addAllAttachments(state.attachments.map { a -> toProtobuf(a) })
-            .build()
+
+        if (state.informationLink != null) {
+            builder.informationLink = toProtobuf(state.informationLink)
+        }
+        if (state.additionalInformation != null) {
+            builder.additionalInformation = toProtobuf(state.additionalInformation)
+        }
+
+        return builder.build()
     }
 
     private fun toProtobuf(phoneNumber: PhoneNumber): KeychainPushApiV2.PhoneNumber? =
