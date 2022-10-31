@@ -11,14 +11,16 @@ import java.net.URI
  *  Each permission contains a time interval and asset identifiers. The asset ids determine what the recipients
  *  will be granted access to.
  * @param recipients List of the recipients identified by phone number.
- * @param attachments Optional information.
+ * @param informationLink Optional link
+ * @param additionalInformation Optional information
  */
 data class PushRequest(
     val id: PermissionListId,
     val title: String,
     val permissions: List<Permission>,
     val recipients: List<Recipient>,
-    val attachments: List<Attachment> = emptyList()
+    val informationLink: InformationLink?,
+    val additionalInformation: AdditionalInformation?
 ) {
     init {
         if (title.isBlank()) {
@@ -50,7 +52,8 @@ data class PushRequest(
                 title = title,
                 permissions = builder.permissions,
                 recipients = builder.recipients,
-                attachments = builder.attachments
+                informationLink = builder.informationLink,
+                additionalInformation = builder.additionalInformation
             )
         }
     }
@@ -59,7 +62,9 @@ data class PushRequest(
     class Builder {
         val permissions = mutableListOf<Permission>()
         val recipients = mutableListOf<Recipient>()
-        val attachments = mutableListOf<Attachment>()
+
+        var informationLink: InformationLink? = null
+        var additionalInformation: AdditionalInformation? = null
 
 
         fun addRecipientByPhoneNumber(countryCode: String, number: String) {
@@ -71,19 +76,32 @@ data class PushRequest(
         }
 
         fun externalLink(title: String, uri: URI) {
-            attachment(Attachment.Link(uri, title))
+            informationLink = InformationLink(
+                title = title,
+                link = uri
+            )
+        }
+
+        fun externalLink(link: InformationLink) {
+            informationLink = link
         }
 
         fun additionalPlainTextInformation(content: String) {
-            attachment(Attachment.AdditionalInformation(content, Attachment.AdditionalInformation.Type.PLAIN_TEXT))
+            additionalInformation = AdditionalInformation(
+                type = AdditionalInformation.Type.PLAIN_TEXT,
+                content = content
+            )
         }
 
-        fun additionalInformation(content: String, type: Attachment.AdditionalInformation.Type) {
-            attachment(Attachment.AdditionalInformation(content, type))
+        fun additionalInformation(content: String, type: AdditionalInformation.Type) {
+            additionalInformation = AdditionalInformation(
+                content = content,
+                type = type
+            )
         }
 
-        fun attachment(attachment: Attachment) {
-            attachments.add(attachment)
+        fun additionalInformation(info: AdditionalInformation) {
+            additionalInformation = info
         }
 
     }

@@ -6,7 +6,7 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
-import com.github.oslokommune.oslonokkelen.push.Attachment
+import com.github.oslokommune.oslonokkelen.push.AdditionalInformation
 import com.github.oslokommune.oslonokkelen.push.PushRequest
 import com.github.oslokommune.oslonokkelen.push.TimeInterval
 import java.net.URI
@@ -49,7 +49,7 @@ class SyncCommand(
                 externalLink(model.link.title, URI.create(model.link.uri))
             }
             if (model.additionalInformation != null) {
-                additionalInformation(model.additionalInformation.content, Attachment.AdditionalInformation.Type.valueOf(model.additionalInformation.type))
+                additionalInformation(model.additionalInformation.content, AdditionalInformation.Type.valueOf(model.additionalInformation.type))
             }
         }
 

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.net.URI
 import java.time.Instant
-import java.time.temporal.ChronoUnit
 import java.time.temporal.ChronoUnit.SECONDS
 
 internal class ProtoMarshallerTest {
@@ -71,11 +70,9 @@ internal class ProtoMarshallerTest {
                     confirmedAt = Instant.now().truncatedTo(SECONDS)
                 )
             ),
-            attachments = listOf(
-                Attachment.Link(URI.create("https://vg.no"), "VG"),
-                Attachment.AdditionalInformation("Halla", Attachment.AdditionalInformation.Type.PLAIN_TEXT)
-            ),
-            version = 2
+            version = 2,
+            informationLink = InformationLink(URI.create("https://vg.no"), "VG"),
+            additionalInformation = AdditionalInformation("Halla", AdditionalInformation.Type.PLAIN_TEXT)
         )
 
         val message = ProtoMarshaller.toProtobuf(state)

@@ -38,7 +38,11 @@ message PushRequest {
 
   repeated Recipient recipients = 4;
 
-  repeated Attachment attachments = 5;
+  // Optional
+  AdditionalInformation additionalInformation = 5;
+
+  // Optional
+  Link informationLink = 6;
 
 
   message Permission {
@@ -52,13 +56,6 @@ message PushRequest {
     }
   }
 
-}
-
-message Attachment {
-  oneof type {
-    Link link = 1;
-    AdditionalInformation additionalInformation = 2;
-  }
 }
 
 // Content-Type: application/protobuf;type=push-response
@@ -132,7 +129,13 @@ message StateResponse {
 
   repeated PendingRecipient pendingRecipients = 2;
   repeated ConfirmedRecipient confirmedRecipients = 3;
-  repeated Attachment attachments = 4;
+
+  // Optional
+  AdditionalInformation additionalInformation = 5;
+
+  // Optional
+  Link informationLink = 6;
+
 
   // Recipient waiting to be associated with a profile in Oslonøkkelen.
   message PendingRecipient {
