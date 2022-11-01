@@ -118,6 +118,9 @@ message ErrorResponse {
     // Something is wrong with the response from Oslonøkkelen
     INVALID_RESPONSE = 2;
 
+    // The permission you asked for does not exist. 
+    UNKNOWN_PERMISSION = 3;
+
   }
 
 }
