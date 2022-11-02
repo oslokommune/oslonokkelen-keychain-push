@@ -13,7 +13,7 @@ internal class ProtoMarshallerTest {
         val request = PushRequest.build("booking-123", "Booking #123") {
             addRecipientByPhoneNumber("47", "12345789")
             externalLink("More information", URI.create("https://vg.no")) // Optional
-            additionalPlainTextInformation("Tørk av deg på beina før du går inn!") // Optional
+            additionalInformation("Tørk av deg på beina før du går inn!") // Optional
 
             addPermission(
                 interval = TimeInterval.parse("2022-01-01", "12:00", "2022-01-05", "13:15"),
@@ -72,7 +72,7 @@ internal class ProtoMarshallerTest {
             ),
             version = 2,
             link = Link("VG", URI.create("https://vg.no")),
-            additionalInformation = AdditionalInformation("Halla", AdditionalInformation.Type.PLAIN_TEXT)
+            information = Information("Halla")
         )
 
         val message = ProtoMarshaller.toProtobuf(state)

@@ -1,8 +1,6 @@
 package com.github.oslokommune.oslonokkelen.push
 
 import com.github.oslokommune.oslonokkelen.push.proto.KeychainPushApiV2
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import java.net.URI
 import java.time.Instant
 
@@ -46,10 +44,10 @@ object ProtoMarshaller {
         }
 
         if (request.link != null) {
-            builder.informationLink = toProtobuf(request.link)
+            builder.link = toProtobuf(request.link)
         }
-        if (request.additionalInformation != null) {
-            builder.additionalInformation = toProtobuf(request.additionalInformation)
+        if (request.information != null) {
+            builder.information = toProtobuf(request.information)
         }
 
         return builder.build()
@@ -62,15 +60,9 @@ object ProtoMarshaller {
             .build()
     }
 
-    private fun toProtobuf(additionalInformation: AdditionalInformation): KeychainPushApiV2.AdditionalInformation {
-        return KeychainPushApiV2.AdditionalInformation.newBuilder()
-            .setContent(additionalInformation.content)
-            .setType(
-                when (additionalInformation.type) {
-                    AdditionalInformation.Type.PLAIN_TEXT -> KeychainPushApiV2.AdditionalInformation.Type.PLAIN_TEXT
-                    AdditionalInformation.Type.MARKDOWN -> KeychainPushApiV2.AdditionalInformation.Type.MARKDOWN
-                }
-            )
+    private fun toProtobuf(information: Information): KeychainPushApiV2.Information {
+        return KeychainPushApiV2.Information.newBuilder()
+            .setContent(information.content)
             .build()
     }
 
@@ -99,43 +91,22 @@ object ProtoMarshaller {
                 )
             }
 
-            if (protobuf.hasAdditionalInformation()) {
-                additionalInformation(fromProtobuf(protobuf.additionalInformation))
+            if (protobuf.hasInformation()) {
+                additionalInformation(
+                    Information(
+                        content = protobuf.information.content
+                    )
+                )
             }
-            if (protobuf.hasInformationLink()) {
-                externalLink(fromProtobuf(protobuf.informationLink))
+            if (protobuf.hasLink()) {
+                externalLink(
+                    Link(
+                        title = protobuf.link.title,
+                        uri = URI.create(protobuf.link.uri)
+                    )
+                )
             }
         }
-    }
-
-    private fun fromProtobuf(informationLink: KeychainPushApiV2.Link): Link {
-        return Link(
-            title = informationLink.title,
-            uri = URI.create(informationLink.uri)
-        )
-    }
-
-    private fun fromProtobuf(additionalInformation: KeychainPushApiV2.AdditionalInformation): AdditionalInformation {
-        return AdditionalInformation(
-            content = additionalInformation.content,
-            type = when (additionalInformation.type) {
-                KeychainPushApiV2.AdditionalInformation.Type.PLAIN_TEXT -> {
-                    AdditionalInformation.Type.PLAIN_TEXT
-                }
-
-                KeychainPushApiV2.AdditionalInformation.Type.MARKDOWN -> {
-                    AdditionalInformation.Type.MARKDOWN
-                }
-
-                KeychainPushApiV2.AdditionalInformation.Type.UNRECOGNIZED, null -> {
-                    log.warn(
-                        "Interpreting unsupported content type {} as plain text",
-                        additionalInformation.type
-                    )
-                    AdditionalInformation.Type.PLAIN_TEXT
-                }
-            }
-        )
     }
 
 
@@ -160,13 +131,18 @@ object ProtoMarshaller {
                     )
                 )
             },
-            additionalInformation = if (message.hasAdditionalInformation()) {
-                fromProtobuf(message.additionalInformation)
+            information = if (message.hasAdditionalInformation()) {
+                Information(
+                    content = message.additionalInformation.content
+                )
             } else {
                 null
             },
             link = if (message.hasInformationLink()) {
-                fromProtobuf(message.informationLink)
+                Link(
+                    title = message.informationLink.title,
+                    uri = URI.create(message.informationLink.uri)
+                )
             } else {
                 null
             }
@@ -192,8 +168,8 @@ object ProtoMarshaller {
         if (state.link != null) {
             builder.informationLink = toProtobuf(state.link)
         }
-        if (state.additionalInformation != null) {
-            builder.additionalInformation = toProtobuf(state.additionalInformation)
+        if (state.information != null) {
+            builder.additionalInformation = toProtobuf(state.information)
         }
 
         return builder.build()
@@ -204,7 +180,5 @@ object ProtoMarshaller {
             .setCc(phoneNumber.countryCode)
             .setNumber(phoneNumber.phoneNumber)
             .build()
-
-    private val log: Logger = LoggerFactory.getLogger(ProtoMarshaller::class.java)
 
 }

@@ -1,6 +1,5 @@
 package com.github.oslokommune.oslonokkelen.push
 
-import com.github.oslokommune.oslonokkelen.kpc.model.InformationForUser
 import java.net.URI
 
 /**
@@ -12,7 +11,7 @@ import java.net.URI
  *  will be granted access to.
  * @param recipients List of the recipients identified by phone number.
  * @param link Optional link
- * @param additionalInformation Optional information
+ * @param information Optional information
  */
 data class PushRequest(
     val id: PermissionListId,
@@ -20,14 +19,14 @@ data class PushRequest(
     val permissions: List<Permission>,
     val recipients: List<Recipient>,
     val link: Link?,
-    val additionalInformation: AdditionalInformation?
+    val information: Information?
 ) {
     init {
         if (title.isBlank()) {
             throw IllegalArgumentException("Title can't be blank")
         }
-        if (title.length > InformationForUser.TITLE_MAX_LENGTH) {
-            throw IllegalArgumentException("Title can't be longer then ${InformationForUser.TITLE_MAX_LENGTH} characters")
+        if (title.length > TITLE_MAX_LENGTH) {
+            throw IllegalArgumentException("Title can't be longer then ${TITLE_MAX_LENGTH} characters")
         }
         if (recipients.isEmpty()) {
             throw IllegalArgumentException("Must have at least one recipient")
@@ -53,7 +52,7 @@ data class PushRequest(
                 permissions = builder.permissions,
                 recipients = builder.recipients,
                 link = builder.link,
-                additionalInformation = builder.additionalInformation
+                information = builder.information
             )
         }
     }
@@ -64,7 +63,7 @@ data class PushRequest(
         val recipients = mutableListOf<Recipient>()
 
         var link: Link? = null
-        var additionalInformation: AdditionalInformation? = null
+        var information: Information? = null
 
 
         fun addRecipientByPhoneNumber(countryCode: String, number: String) {
@@ -86,22 +85,14 @@ data class PushRequest(
             this.link = link
         }
 
-        fun additionalPlainTextInformation(content: String) {
-            additionalInformation = AdditionalInformation(
-                type = AdditionalInformation.Type.PLAIN_TEXT,
+        fun additionalInformation(content: String) {
+            information = Information(
                 content = content
             )
         }
 
-        fun additionalInformation(content: String, type: AdditionalInformation.Type) {
-            additionalInformation = AdditionalInformation(
-                content = content,
-                type = type
-            )
-        }
-
-        fun additionalInformation(info: AdditionalInformation) {
-            additionalInformation = info
+        fun additionalInformation(info: Information) {
+            information = info
         }
 
     }

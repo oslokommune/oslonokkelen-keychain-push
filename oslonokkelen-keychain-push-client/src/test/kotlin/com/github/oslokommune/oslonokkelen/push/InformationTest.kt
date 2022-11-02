@@ -4,13 +4,12 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-internal class AdditionalInformationTest {
+internal class InformationTest {
 
     @Test
     fun `Too long`() {
         val ex = assertThrows<IllegalArgumentException> {
-            AdditionalInformation(
-                type = AdditionalInformation.Type.PLAIN_TEXT,
+            Information(
                 content = " ".repeat(PushRequest.INFORMATION_MAX_LENGTH+1)
             )
         }

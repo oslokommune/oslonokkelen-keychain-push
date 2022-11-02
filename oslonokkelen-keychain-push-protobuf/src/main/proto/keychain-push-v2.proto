@@ -47,11 +47,11 @@ message PushRequest {
   // Optional
   // Any additional information that should be presented to the user in the app.
   // Keep it short and to the point.
-  AdditionalInformation additionalInformation = 5;
+  Information information = 5;
 
   // Optional.
   // Use this to point a user to a page where they can see details and modify their booking etc.
-  Link informationLink = 6;
+  Link link = 6;
 
 
   message Permission {
@@ -77,14 +77,9 @@ message Link {
   string uri = 2 ;
 }
 
-message AdditionalInformation {
+// Human readable information the user needs to know.
+message Information {
   string content = 1;
-  Type type = 2 ;
-
-  enum Type {
-    PLAIN_TEXT = 0 ;
-    MARKDOWN = 1;
-  }
 }
 
 
@@ -146,7 +141,7 @@ message StateResponse {
   repeated ConfirmedRecipient confirmedRecipients = 3;
 
   // Optional
-  AdditionalInformation additionalInformation = 5;
+  Information additionalInformation = 5;
 
   // Optional
   Link informationLink = 6;

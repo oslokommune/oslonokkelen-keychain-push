@@ -8,7 +8,7 @@ data class PermissionModel(
     val title: String,
     val recipients: List<PhoneNumber>,
     val permissions: List<Permission>,
-    val additionalInformation: AdditionalInformation? = null,
+    val information: Information? = null,
     val link: Link? = null
 ) {
 
@@ -19,8 +19,7 @@ data class PermissionModel(
     )
 
     @Serializable
-    data class AdditionalInformation(
-        val type: String,
+    data class Information(
         val content: String
     )
 
