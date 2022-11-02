@@ -18,12 +18,14 @@ data class PermissionState(
 ) {
 
     data class PendingRecipient(
-        val phoneNumber: PhoneNumber
+        val phoneNumber: PhoneNumber,
+        val pushedAt: Instant
     )
 
     data class ConfirmedRecipient(
         val phoneNumber: PhoneNumber,
         val usageCounter: Int,
+        val pushedAt: Instant,
         val confirmedAt: Instant
     )
 

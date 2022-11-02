@@ -57,7 +57,8 @@ internal class ProtoMarshallerTest {
                     phoneNumber = PhoneNumber(
                         countryCode = "47",
                         phoneNumber = "12345789"
-                    )
+                    ),
+                    pushedAt = Instant.now().truncatedTo(SECONDS)
                 )
             ),
             confirmedRecipients = listOf(
@@ -67,7 +68,8 @@ internal class ProtoMarshallerTest {
                         phoneNumber = "32154987"
                     ),
                     usageCounter = 2,
-                    confirmedAt = Instant.now().truncatedTo(SECONDS)
+                    confirmedAt = Instant.now().truncatedTo(SECONDS),
+                    pushedAt = Instant.now().truncatedTo(SECONDS)
                 )
             ),
             version = 2,

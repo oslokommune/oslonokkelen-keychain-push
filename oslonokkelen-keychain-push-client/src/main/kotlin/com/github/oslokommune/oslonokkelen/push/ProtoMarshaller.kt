@@ -118,7 +118,8 @@ object ProtoMarshaller {
                     phoneNumber = PhoneNumber(
                         countryCode = pending.phoneNumber.cc,
                         phoneNumber = pending.phoneNumber.number
-                    )
+                    ),
+                    pushedAt = Instant.ofEpochSecond(pending.pushedAtEpochSeconds)
                 )
             },
             confirmedRecipients = message.confirmedRecipientsList.map { confirmed ->
@@ -128,7 +129,8 @@ object ProtoMarshaller {
                     phoneNumber = PhoneNumber(
                         countryCode = confirmed.phoneNumber.cc,
                         phoneNumber = confirmed.phoneNumber.number
-                    )
+                    ),
+                    pushedAt = Instant.ofEpochSecond(confirmed.pushedAtEpochSeconds)
                 )
             },
             information = if (message.hasAdditionalInformation()) {
@@ -154,11 +156,13 @@ object ProtoMarshaller {
             .addAllPendingRecipients(state.pendingRecipients.map { pending ->
                 KeychainPushApiV2.StateResponse.PendingRecipient.newBuilder()
                     .setPhoneNumber(toProtobuf(pending.phoneNumber))
+                    .setPushedAtEpochSeconds(pending.pushedAt.epochSecond)
                     .build()
             })
             .addAllConfirmedRecipients(state.confirmedRecipients.map { confirmed ->
                 KeychainPushApiV2.StateResponse.ConfirmedRecipient.newBuilder()
                     .setConfirmedAtEpochSeconds(confirmed.confirmedAt.epochSecond)
+                    .setPushedAtEpochSeconds(confirmed.pushedAt.epochSecond)
                     .setPhoneNumber(toProtobuf(confirmed.phoneNumber))
                     .setUsageCounter(confirmed.usageCounter)
                     .build()

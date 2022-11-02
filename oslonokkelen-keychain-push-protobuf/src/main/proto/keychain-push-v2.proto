@@ -149,7 +149,14 @@ message StateResponse {
 
   // Recipient waiting to be associated with a profile in Oslonøkkelen.
   message PendingRecipient {
+
+    // The phone number used to connect the permission to a user profile.
+    // This must be verified in the app.
     PhoneNumber phoneNumber = 1;
+
+    // When was the first time this phone number was pushed.
+    int64 pushedAtEpochSeconds = 2;
+
   }
 
   message ConfirmedRecipient {
@@ -162,6 +169,9 @@ message StateResponse {
 
     // When the recipient was associated with a profile
     int64 confirmedAtEpochSeconds = 3;
+
+    // When was the first time this phone number was pushed.
+    int64 pushedAtEpochSeconds = 4;
 
   }
 
