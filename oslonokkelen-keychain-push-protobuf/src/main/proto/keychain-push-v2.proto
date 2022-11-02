@@ -9,8 +9,10 @@ option java_multiple_files = false;
 // Content-Type: application/protobuf;type=system-description
 message SystemDescriptionResponse {
 
+  // Short system name
   string name = 1;
 
+  // A short text describing useful data like contact information etc.
   string information = 2;
 
   // List off assets your system is allowed to hand out permissions for
@@ -29,19 +31,26 @@ message SystemDescriptionResponse {
 message PushRequest {
 
   // Identifies the permission. Client side generated to avoid issues related to double posting.
+  // You will use this id later to query the state of a permission or post updates.
   string id = 1;
 
   // Human readable title. Will show up in the app.
   string title = 2;
 
+  // Determines what the recipients will be granted access to and when.
   repeated Permission permissions = 3;
 
+  // Who will get the permissions. They will have to verify their phone numbers in
+  // Oslonøkkelen before the permission you have pushed can be associated with their profiles.
   repeated Recipient recipients = 4;
 
   // Optional
+  // Any additional information that should be presented to the user in the app.
+  // Keep it short and to the point.
   AdditionalInformation additionalInformation = 5;
 
-  // Optional
+  // Optional.
+  // Use this to point a user to a page where they can see details and modify their booking etc.
   Link informationLink = 6;
 
 
