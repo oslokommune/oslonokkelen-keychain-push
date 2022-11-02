@@ -79,7 +79,7 @@ object ProtoMarshaller {
             for (recipient in protobuf.recipientsList) {
                 when (recipient.recipientCase) {
                     KeychainPushApiV2.PushRequest.Recipient.RecipientCase.PHONENUMBER -> {
-                        addRecipientByPhoneNumber(recipient.phoneNumber.countryCode, recipient.phoneNumber.number)
+                        addRecipientByPhoneNumber(recipient.phoneNumber.cc, recipient.phoneNumber.number)
                     }
 
                     KeychainPushApiV2.PushRequest.Recipient.RecipientCase.RECIPIENT_NOT_SET, null -> {
@@ -145,7 +145,7 @@ object ProtoMarshaller {
             pendingRecipients = message.pendingRecipientsList.map { pending ->
                 PermissionState.PendingRecipient(
                     phoneNumber = PhoneNumber(
-                        countryCode = pending.phoneNumber.countryCode,
+                        countryCode = pending.phoneNumber.cc,
                         phoneNumber = pending.phoneNumber.number
                     )
                 )
@@ -155,7 +155,7 @@ object ProtoMarshaller {
                     confirmedAt = Instant.ofEpochSecond(confirmed.confirmedAtEpochSeconds),
                     usageCounter = confirmed.usageCounter,
                     phoneNumber = PhoneNumber(
-                        countryCode = confirmed.phoneNumber.countryCode,
+                        countryCode = confirmed.phoneNumber.cc,
                         phoneNumber = confirmed.phoneNumber.number
                     )
                 )
@@ -201,7 +201,7 @@ object ProtoMarshaller {
 
     private fun toProtobuf(phoneNumber: PhoneNumber): KeychainPushApiV2.PhoneNumber? =
         KeychainPushApiV2.PhoneNumber.newBuilder()
-            .setCountryCode(phoneNumber.countryCode)
+            .setCc(phoneNumber.countryCode)
             .setNumber(phoneNumber.phoneNumber)
             .build()
 

@@ -89,9 +89,13 @@ message AdditionalInformation {
 
 
 message PhoneNumber {
-  // Two digits
-  string countryCode = 1;
+
+  // Country code, not prefixed with zeros.
+  // Example: Norway 47
+  string cc = 1;
+
   string number = 2;
+
 }
 
 message LocalDateTimeInterval {
@@ -120,8 +124,7 @@ message ErrorResponse {
     // Unexpected error.
     UNKNOWN = 0;
 
-    // Id or key is wrong. Please don't try again without
-    // fixing the credentials.
+    // Id or key is wrong. Please don't try again without fixing the credentials.
     INVALID_CREDENTIALS = 1;
 
     // Something is wrong with the response from Oslonøkkelen
