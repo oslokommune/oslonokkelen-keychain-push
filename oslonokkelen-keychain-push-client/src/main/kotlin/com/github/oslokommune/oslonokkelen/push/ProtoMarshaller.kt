@@ -45,8 +45,8 @@ object ProtoMarshaller {
             )
         }
 
-        if (request.informationLink != null) {
-            builder.informationLink = toProtobuf(request.informationLink)
+        if (request.link != null) {
+            builder.informationLink = toProtobuf(request.link)
         }
         if (request.additionalInformation != null) {
             builder.additionalInformation = toProtobuf(request.additionalInformation)
@@ -55,10 +55,10 @@ object ProtoMarshaller {
         return builder.build()
     }
 
-    private fun toProtobuf(informationLink: InformationLink): KeychainPushApiV2.Link {
+    private fun toProtobuf(link: Link): KeychainPushApiV2.Link {
         return KeychainPushApiV2.Link.newBuilder()
-            .setTitle(informationLink.title)
-            .setUri(informationLink.link.toString())
+            .setTitle(link.title)
+            .setUri(link.uri.toString())
             .build()
     }
 
@@ -108,10 +108,10 @@ object ProtoMarshaller {
         }
     }
 
-    private fun fromProtobuf(informationLink: KeychainPushApiV2.Link): InformationLink {
-        return InformationLink(
+    private fun fromProtobuf(informationLink: KeychainPushApiV2.Link): Link {
+        return Link(
             title = informationLink.title,
-            link = URI.create(informationLink.uri)
+            uri = URI.create(informationLink.uri)
         )
     }
 
@@ -165,7 +165,7 @@ object ProtoMarshaller {
             } else {
                 null
             },
-            informationLink = if (message.hasInformationLink()) {
+            link = if (message.hasInformationLink()) {
                 fromProtobuf(message.informationLink)
             } else {
                 null
@@ -189,8 +189,8 @@ object ProtoMarshaller {
             })
             .setVersion(state.version)
 
-        if (state.informationLink != null) {
-            builder.informationLink = toProtobuf(state.informationLink)
+        if (state.link != null) {
+            builder.informationLink = toProtobuf(state.link)
         }
         if (state.additionalInformation != null) {
             builder.additionalInformation = toProtobuf(state.additionalInformation)

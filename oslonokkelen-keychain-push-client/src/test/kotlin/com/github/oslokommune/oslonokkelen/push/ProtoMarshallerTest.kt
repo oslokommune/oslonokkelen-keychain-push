@@ -71,7 +71,7 @@ internal class ProtoMarshallerTest {
                 )
             ),
             version = 2,
-            informationLink = InformationLink(URI.create("https://vg.no"), "VG"),
+            link = Link("VG", URI.create("https://vg.no")),
             additionalInformation = AdditionalInformation("Halla", AdditionalInformation.Type.PLAIN_TEXT)
         )
 

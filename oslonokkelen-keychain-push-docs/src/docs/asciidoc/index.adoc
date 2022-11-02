@@ -25,6 +25,11 @@ Oslonøkkelen supports multiple different types of such factories for push / pul
 | Your system have to identify the recipient of the keychain somehow. We call this lookup key in the api. Right now
 we only support looking up profiles based on phone numbers, but we are considering adding support for email.
 
+| Link
+| Systems pushing permissions to Oslonøkkelen will often have a web page where the user can see details and manage
+their booking or reservation. If your system has a page like this you should add a deep link to that page with each
+request you push to Oslonøkkkelen.
+
 |=======
 
 

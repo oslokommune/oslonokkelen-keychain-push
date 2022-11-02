@@ -11,7 +11,7 @@ import java.net.URI
  *  Each permission contains a time interval and asset identifiers. The asset ids determine what the recipients
  *  will be granted access to.
  * @param recipients List of the recipients identified by phone number.
- * @param informationLink Optional link
+ * @param link Optional link
  * @param additionalInformation Optional information
  */
 data class PushRequest(
@@ -19,7 +19,7 @@ data class PushRequest(
     val title: String,
     val permissions: List<Permission>,
     val recipients: List<Recipient>,
-    val informationLink: InformationLink?,
+    val link: Link?,
     val additionalInformation: AdditionalInformation?
 ) {
     init {
@@ -52,7 +52,7 @@ data class PushRequest(
                 title = title,
                 permissions = builder.permissions,
                 recipients = builder.recipients,
-                informationLink = builder.informationLink,
+                link = builder.link,
                 additionalInformation = builder.additionalInformation
             )
         }
@@ -63,7 +63,7 @@ data class PushRequest(
         val permissions = mutableListOf<Permission>()
         val recipients = mutableListOf<Recipient>()
 
-        var informationLink: InformationLink? = null
+        var link: Link? = null
         var additionalInformation: AdditionalInformation? = null
 
 
@@ -76,14 +76,14 @@ data class PushRequest(
         }
 
         fun externalLink(title: String, uri: URI) {
-            informationLink = InformationLink(
+            link = Link(
                 title = title,
-                link = uri
+                uri = uri
             )
         }
 
-        fun externalLink(link: InformationLink) {
-            informationLink = link
+        fun externalLink(link: Link) {
+            this.link = link
         }
 
         fun additionalPlainTextInformation(content: String) {
