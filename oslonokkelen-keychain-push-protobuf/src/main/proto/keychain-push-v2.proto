@@ -128,6 +128,10 @@ message ErrorResponse {
     // The permission you asked for does not exist. 
     UNKNOWN_PERMISSION = 3;
 
+    // Something is wrong with the permission you sent.
+    // Example: Trying to push permissions back in time.  
+    INVALID_PERMISSION = 4;
+
   }
 
 }
