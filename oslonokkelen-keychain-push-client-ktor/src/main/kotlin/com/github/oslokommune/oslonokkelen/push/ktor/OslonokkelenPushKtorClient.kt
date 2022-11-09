@@ -9,6 +9,7 @@ import com.github.oslokommune.oslonokkelen.push.PermissionListId
 import com.github.oslokommune.oslonokkelen.push.PermissionState
 import com.github.oslokommune.oslonokkelen.push.ProtoMarshaller
 import com.github.oslokommune.oslonokkelen.push.PermissionList
+import com.github.oslokommune.oslonokkelen.push.PermissionsIndex
 import com.github.oslokommune.oslonokkelen.push.SystemInfo
 import com.github.oslokommune.oslonokkelen.push.proto.KeychainPushApiV2
 import com.google.protobuf.GeneratedMessageV3
@@ -114,6 +115,14 @@ class OslonokkelenPushKtorClient(
                 cause = ex
             )
         }
+    }
+
+    override suspend fun index(): PermissionsIndex {
+        TODO("Not implemented")
+    }
+
+    override suspend fun delete(id: PermissionListId) {
+        TODO("Not implemented")
     }
 
     private suspend fun <M : GeneratedMessageV3> readSuccessfulResponsePayload(
