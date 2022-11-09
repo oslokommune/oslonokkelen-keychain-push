@@ -1,7 +1,6 @@
 package com.github.oslokommune.oslonokkelen.push.ktor
 
 import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
-import com.github.oslokommune.oslonokkelen.kpc.serialization.KeychainPushSerializer
 import com.github.oslokommune.oslonokkelen.push.AssetId
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientConfig
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientException
@@ -9,7 +8,7 @@ import com.github.oslokommune.oslonokkelen.push.OslonokkelenPushClient
 import com.github.oslokommune.oslonokkelen.push.PermissionListId
 import com.github.oslokommune.oslonokkelen.push.PermissionState
 import com.github.oslokommune.oslonokkelen.push.ProtoMarshaller
-import com.github.oslokommune.oslonokkelen.push.PushRequest
+import com.github.oslokommune.oslonokkelen.push.PermissionList
 import com.github.oslokommune.oslonokkelen.push.SystemInfo
 import com.github.oslokommune.oslonokkelen.push.proto.KeychainPushApiV2
 import com.google.protobuf.GeneratedMessageV3
@@ -63,10 +62,10 @@ class OslonokkelenPushKtorClient(
         }
     }
 
-    override suspend fun push(request: PushRequest) {
+    override suspend fun push(permissionList: PermissionList) {
         try {
             val httpResponse = client.post(config.pushUri) {
-                setBody(ProtoMarshaller.toProtobuf(request).toByteArray())
+                setBody(ProtoMarshaller.toProtobuf(permissionList).toByteArray())
                 requestBuilder(this)
             }
 

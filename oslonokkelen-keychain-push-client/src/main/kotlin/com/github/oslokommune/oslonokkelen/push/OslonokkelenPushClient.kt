@@ -8,9 +8,9 @@ interface OslonokkelenPushClient {
     /**
      * This method can be used both for the original push and later to sync any updates.
      *
-     * @param request Push request describing what to grant and whom to grant it.
+     * @param permissionList Push request describing what to grant and whom to grant it.
      */
-    suspend fun push(request: PushRequest)
+    suspend fun push(permissionList: PermissionList)
 
     /**
      * @return A description of your client / system
@@ -21,5 +21,7 @@ interface OslonokkelenPushClient {
      * Can be used to figure out if all recipients has received the permission.
      */
     suspend fun queryState(id: PermissionListId) : PermissionState
+
+
 
 }

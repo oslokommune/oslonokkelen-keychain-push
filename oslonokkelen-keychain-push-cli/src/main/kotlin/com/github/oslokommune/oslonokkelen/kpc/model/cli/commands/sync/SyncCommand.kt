@@ -6,7 +6,7 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
-import com.github.oslokommune.oslonokkelen.push.PushRequest
+import com.github.oslokommune.oslonokkelen.push.PermissionList
 import com.github.oslokommune.oslonokkelen.push.TimeInterval
 import java.net.URI
 import java.nio.file.Files
@@ -31,7 +31,7 @@ class SyncCommand(
         out.debug("Pushing $file")
 
         val model = readModel()
-        val request = PushRequest.build(model.id, model.title) {
+        val request = PermissionList.build(model.id, model.title) {
             for (recipient in model.recipients) {
                 addRecipientByPhoneNumber(recipient.countryCode, recipient.phoneNumber)
             }
