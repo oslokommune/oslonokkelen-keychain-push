@@ -180,3 +180,18 @@ message StateResponse {
   }
 
 }
+
+// Content-Type: application/protobuf;type=index
+message IndexResponse {
+  repeated Entry entries = 1 ;
+
+  message Entry {
+    string permissionId = 1;
+    int32 version = 2;
+  }
+}
+
+// Content-Type: application/protobuf;type=delete
+message DeleteResponse {
+
+}

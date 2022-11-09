@@ -13,7 +13,7 @@ import java.net.URI
  * @param link Optional link
  * @param information Optional information
  */
-data class PushRequest(
+data class PermissionList(
     val id: PermissionListId,
     val title: String,
     val permissions: List<Permission>,
@@ -26,7 +26,7 @@ data class PushRequest(
             throw IllegalArgumentException("Title can't be blank")
         }
         if (title.length > TITLE_MAX_LENGTH) {
-            throw IllegalArgumentException("Title can't be longer then ${TITLE_MAX_LENGTH} characters")
+            throw IllegalArgumentException("Title can't be longer then $TITLE_MAX_LENGTH characters")
         }
         if (recipients.isEmpty()) {
             throw IllegalArgumentException("Must have at least one recipient")
@@ -42,11 +42,11 @@ data class PushRequest(
         const val TITLE_MAX_LENGTH = 100
         const val INFORMATION_MAX_LENGTH = 2000
 
-        fun build(id: String, title: String, block: Builder.() -> Unit): PushRequest {
+        fun build(id: String, title: String, block: Builder.() -> Unit): PermissionList {
             val builder = Builder()
             block(builder)
 
-            return PushRequest(
+            return PermissionList(
                 id = PermissionListId(id),
                 title = title,
                 permissions = builder.permissions,

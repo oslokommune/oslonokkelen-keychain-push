@@ -6,7 +6,7 @@ import java.time.Instant
 
 object ProtoMarshaller {
 
-    fun toProtobuf(request: PushRequest): KeychainPushApiV2.PushRequest {
+    fun toProtobuf(request: PermissionList): KeychainPushApiV2.PushRequest {
         val builder = KeychainPushApiV2.PushRequest.newBuilder()
         builder.title = request.title
         builder.id = request.id.id
@@ -66,8 +66,8 @@ object ProtoMarshaller {
             .build()
     }
 
-    fun fromProtobuf(protobuf: KeychainPushApiV2.PushRequest): PushRequest {
-        return PushRequest.build(protobuf.id, protobuf.title) {
+    fun fromProtobuf(protobuf: KeychainPushApiV2.PushRequest): PermissionList {
+        return PermissionList.build(protobuf.id, protobuf.title) {
             for (recipient in protobuf.recipientsList) {
                 when (recipient.recipientCase) {
                     KeychainPushApiV2.PushRequest.Recipient.RecipientCase.PHONENUMBER -> {
@@ -184,5 +184,27 @@ object ProtoMarshaller {
             .setCc(phoneNumber.countryCode)
             .setNumber(phoneNumber.phoneNumber)
             .build()
+
+    fun toProtobuf(index: PermissionsIndex): KeychainPushApiV2.IndexResponse {
+        return KeychainPushApiV2.IndexResponse.newBuilder()
+            .addAllEntries(index.entries.map { e ->
+                KeychainPushApiV2.IndexResponse.Entry.newBuilder()
+                    .setPermissionId(e.id.id)
+                    .setVersion(e.version)
+                    .build()
+            })
+            .build()
+    }
+
+    fun fromProtobuf(message: KeychainPushApiV2.IndexResponse): PermissionsIndex {
+        return PermissionsIndex(
+            entries = message.entriesList.map { e ->
+                PermissionsIndex.Entry(
+                    id = PermissionListId(e.permissionId),
+                    version = e.version
+                )
+            }
+        )
+    }
 
 }

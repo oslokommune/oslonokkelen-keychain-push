@@ -10,7 +10,7 @@ internal class ProtoMarshallerTest {
 
     @Test
     fun `Can re-create requests`() {
-        val request = PushRequest.build("booking-123", "Booking #123") {
+        val request = PermissionList.build("booking-123", "Booking #123") {
             addRecipientByPhoneNumber("47", "12345789")
             externalLink("More information", URI.create("https://vg.no")) // Optional
             additionalInformation("Tørk av deg på beina før du går inn!") // Optional
@@ -33,7 +33,7 @@ internal class ProtoMarshallerTest {
 
     @Test
     fun `Can re-create request without link and additional information`() {
-        val request = PushRequest.build("booking-123", "Booking #123") {
+        val request = PermissionList.build("booking-123", "Booking #123") {
             addRecipientByPhoneNumber("47", "12345789")
             addRecipientByPhoneNumber("47", "32132321")
 
@@ -81,6 +81,27 @@ internal class ProtoMarshallerTest {
         val restoredState = ProtoMarshaller.fromProtobuf(message)
 
         assertEquals(state, restoredState)
+    }
+
+    @Test
+    fun `Can restore index message`() {
+        val index = PermissionsIndex(
+            entries = listOf(
+                PermissionsIndex.Entry(
+                    id = PermissionListId("123"),
+                    version = 2
+                ),
+                PermissionsIndex.Entry(
+                    id = PermissionListId("321"),
+                    version = 3
+                )
+            )
+        )
+
+        val message = ProtoMarshaller.toProtobuf(index)
+        val restoredIndex = ProtoMarshaller.fromProtobuf(message)
+
+        assertEquals(index, restoredIndex)
     }
 
 }

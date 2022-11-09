@@ -10,7 +10,7 @@ internal class InformationTest {
     fun `Too long`() {
         val ex = assertThrows<IllegalArgumentException> {
             Information(
-                content = " ".repeat(PushRequest.INFORMATION_MAX_LENGTH+1)
+                content = " ".repeat(PermissionList.INFORMATION_MAX_LENGTH+1)
             )
         }
 

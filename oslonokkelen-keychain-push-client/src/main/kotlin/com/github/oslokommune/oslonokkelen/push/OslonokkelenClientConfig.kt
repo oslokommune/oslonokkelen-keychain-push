@@ -15,11 +15,16 @@ class OslonokkelenClientConfig(
 
     private val normalizedUri = baseUri.toString().removeSuffix("/")
 
+    val systemIndexUri = "$normalizedUri/api/push/index"
     val systemInfoUri = "$normalizedUri/api/push/info"
     val pushUri = "$normalizedUri/api/push/sync"
 
     fun stateUri(id: PermissionListId) : String {
         return "$normalizedUri/api/push/state/${id.id}"
+    }
+
+    fun deleteUri(id: PermissionListId) : String {
+        return "$normalizedUri/api/push/delete/${id.id}"
     }
 
 }

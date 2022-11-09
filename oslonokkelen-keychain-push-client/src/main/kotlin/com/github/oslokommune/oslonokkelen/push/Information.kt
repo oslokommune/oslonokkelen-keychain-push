@@ -6,8 +6,8 @@ package com.github.oslokommune.oslonokkelen.push
  */
 data class Information(val content: String) {
     init {
-        if (content.length > PushRequest.INFORMATION_MAX_LENGTH) {
-            throw IllegalArgumentException("Information can't be longer then ${PushRequest.INFORMATION_MAX_LENGTH} characters")
+        if (content.length > PermissionList.INFORMATION_MAX_LENGTH) {
+            throw IllegalArgumentException("Information can't be longer then ${PermissionList.INFORMATION_MAX_LENGTH} characters")
         }
     }
 }
