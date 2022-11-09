@@ -5,11 +5,11 @@ import com.github.oslokommune.oslonokkelen.push.AssetId
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientConfig
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientException
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenPushClient
+import com.github.oslokommune.oslonokkelen.push.PermissionList
 import com.github.oslokommune.oslonokkelen.push.PermissionListId
 import com.github.oslokommune.oslonokkelen.push.PermissionState
-import com.github.oslokommune.oslonokkelen.push.ProtoMarshaller
-import com.github.oslokommune.oslonokkelen.push.PermissionList
 import com.github.oslokommune.oslonokkelen.push.PermissionsIndex
+import com.github.oslokommune.oslonokkelen.push.ProtoMarshaller
 import com.github.oslokommune.oslonokkelen.push.SystemInfo
 import com.github.oslokommune.oslonokkelen.push.proto.KeychainPushApiV2
 import com.google.protobuf.GeneratedMessageV3
@@ -17,6 +17,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -118,11 +119,49 @@ class OslonokkelenPushKtorClient(
     }
 
     override suspend fun index(): PermissionsIndex {
-        TODO("Not implemented")
+        return try {
+            val httpResponse = client.get(config.systemIndexUri) {
+                requestBuilder(this)
+            }
+
+            val protobufMessage = readSuccessfulResponsePayload(
+                factory = KeychainPushApiV2.IndexResponse::parseFrom,
+                httpResponse = httpResponse,
+                expectedType = "index"
+            )
+
+            ProtoMarshaller.fromProtobuf(protobufMessage)
+        } catch (ex: OslonokkelenClientException) {
+            throw ex
+        } catch (ex: Exception) {
+            throw OslonokkelenClientException(
+                errorCode = KeychainPushApiV2.ErrorResponse.ErrorCode.UNKNOWN,
+                technicalDebugMessage = "Unexpected exception while looking up permission index",
+                cause = ex
+            )
+        }
     }
 
     override suspend fun delete(id: PermissionListId) {
-        TODO("Not implemented")
+        try {
+            val httpResponse = client.delete(config.deleteUri(id)) {
+                requestBuilder(this)
+            }
+
+            readSuccessfulResponsePayload(
+                factory = KeychainPushApiV2.DeleteResponse::parseFrom,
+                httpResponse = httpResponse,
+                expectedType = "delete"
+            )
+        } catch (ex: OslonokkelenClientException) {
+            throw ex
+        } catch (ex: Exception) {
+            throw OslonokkelenClientException(
+                errorCode = KeychainPushApiV2.ErrorResponse.ErrorCode.UNKNOWN,
+                technicalDebugMessage = "Unexpected exception while looking up permission index",
+                cause = ex
+            )
+        }
     }
 
     private suspend fun <M : GeneratedMessageV3> readSuccessfulResponsePayload(
