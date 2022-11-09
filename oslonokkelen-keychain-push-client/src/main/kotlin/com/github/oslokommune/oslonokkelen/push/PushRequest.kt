@@ -26,7 +26,7 @@ data class PushRequest(
             throw IllegalArgumentException("Title can't be blank")
         }
         if (title.length > TITLE_MAX_LENGTH) {
-            throw IllegalArgumentException("Title can't be longer then ${TITLE_MAX_LENGTH} characters")
+            throw IllegalArgumentException("Title can't be longer then $TITLE_MAX_LENGTH characters")
         }
         if (recipients.isEmpty()) {
             throw IllegalArgumentException("Must have at least one recipient")
