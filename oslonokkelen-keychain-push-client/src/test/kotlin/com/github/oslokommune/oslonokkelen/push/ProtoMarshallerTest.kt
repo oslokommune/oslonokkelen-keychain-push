@@ -83,4 +83,25 @@ internal class ProtoMarshallerTest {
         assertEquals(state, restoredState)
     }
 
+    @Test
+    fun `Can restore index message`() {
+        val index = PermissionsIndex(
+            entries = listOf(
+                PermissionsIndex.Entry(
+                    id = PermissionListId("123"),
+                    version = 2
+                ),
+                PermissionsIndex.Entry(
+                    id = PermissionListId("321"),
+                    version = 3
+                )
+            )
+        )
+
+        val message = ProtoMarshaller.toProtobuf(index)
+        val restoredIndex = ProtoMarshaller.fromProtobuf(message)
+
+        assertEquals(index, restoredIndex)
+    }
+
 }

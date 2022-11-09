@@ -185,4 +185,26 @@ object ProtoMarshaller {
             .setNumber(phoneNumber.phoneNumber)
             .build()
 
+    fun toProtobuf(index: PermissionsIndex): KeychainPushApiV2.IndexResponse {
+        return KeychainPushApiV2.IndexResponse.newBuilder()
+            .addAllEntries(index.entries.map { e ->
+                KeychainPushApiV2.IndexResponse.Entry.newBuilder()
+                    .setPermissionId(e.id.id)
+                    .setVersion(e.version)
+                    .build()
+            })
+            .build()
+    }
+
+    fun fromProtobuf(message: KeychainPushApiV2.IndexResponse): PermissionsIndex {
+        return PermissionsIndex(
+            entries = message.entriesList.map { e ->
+                PermissionsIndex.Entry(
+                    id = PermissionListId(e.permissionId),
+                    version = e.version
+                )
+            }
+        )
+    }
+
 }
