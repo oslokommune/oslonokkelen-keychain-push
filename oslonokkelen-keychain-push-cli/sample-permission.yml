@@ -7,9 +7,8 @@ recipients:
       phoneNumber: 32132321
 permissions:
     - assetIds:
-          - origo
-          - uke
+          - happy
       fromDate: 2022-10-01
-      untilDate: 2022-10-30
+      untilDate: 2023-10-30
       fromTime: 20:00
       untilTime: 14:30
