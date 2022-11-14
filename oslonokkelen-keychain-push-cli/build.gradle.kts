@@ -9,7 +9,7 @@ plugins {
     application
     idea
 
-    kotlin("plugin.serialization") version "1.7.20"
+    kotlin("plugin.serialization") version "1.7.21"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("org.graalvm.buildtools.native") version "0.9.17"
     id("org.jetbrains.kotlin.jvm")
