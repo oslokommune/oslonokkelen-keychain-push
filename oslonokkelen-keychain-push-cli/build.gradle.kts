@@ -23,7 +23,7 @@ val slf4jVersion = "2.0.6"
 
 dependencies {
     api(project(":oslonokkelen-keychain-push-client-ktor"))
-    implementation("com.github.ajalt.clikt:clikt-jvm:3.5.0")
+    implementation("com.github.ajalt.clikt:clikt-jvm:3.5.1")
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
     implementation("org.slf4j:slf4j-nop:$slf4jVersion")
     implementation("io.ktor:ktor-client-cio:2.1.3")
