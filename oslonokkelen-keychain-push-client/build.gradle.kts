@@ -21,7 +21,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.6")
 
     testImplementation("org.slf4j:slf4j-simple:2.0.6")
-    testImplementation("org.assertj:assertj-core:3.23.1")
+    testImplementation("org.assertj:assertj-core:3.24.1")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 }
 
