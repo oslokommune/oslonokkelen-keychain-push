@@ -32,7 +32,7 @@ dependencies {
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
-    testImplementation("org.assertj:assertj-core:3.23.1")
+    testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 }
 
