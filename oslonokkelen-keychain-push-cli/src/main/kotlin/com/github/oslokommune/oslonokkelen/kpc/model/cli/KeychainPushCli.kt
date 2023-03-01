@@ -11,12 +11,6 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.Current
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.ListProfilesCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.RemoveProfileCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config.UseProfileCommand
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.KeychainFactoryCommand
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.KeychainInfoCliCommand
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.factories.ListKeychainFactoriesCommand
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainCommand
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainDeleteCliCommand
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.keychains.KeychainPushCliCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.describe.DescribeSystemCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.sync.SyncCommand
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigProvider
@@ -31,14 +25,6 @@ fun main(args: Array<String>) {
 
     KeychainCliCommand()
         .subcommands(
-            KeychainCommand().subcommands(
-                KeychainPushCliCommand(service),
-                KeychainDeleteCliCommand(service)
-            ),
-            KeychainFactoryCommand().subcommands(
-                KeychainInfoCliCommand(out, service),
-                ListKeychainFactoriesCommand(out, service)
-            ),
             ConfigCommand().subcommands(
                 AddProfileCommand(configurationHandle),
                 ListProfilesCommand(out, configurationHandle),

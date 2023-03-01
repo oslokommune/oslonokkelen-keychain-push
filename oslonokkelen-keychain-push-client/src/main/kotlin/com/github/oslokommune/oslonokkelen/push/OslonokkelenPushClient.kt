@@ -41,4 +41,10 @@ interface OslonokkelenPushClient {
      */
     suspend fun delete(id: PermissionListId)
 
+    companion object {
+        const val clientIdHeaderName: String = "X-System-Id"
+        const val clientApiKeyHeaderName: String = "X-System-Api-Key"
+        const val traceIdHeaderName: String = "X-Trace-Id"
+    }
+
 }

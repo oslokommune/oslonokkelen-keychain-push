@@ -1,10 +1,12 @@
 package com.github.oslokommune.oslonokkelen.push.ktor
 
-import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
 import com.github.oslokommune.oslonokkelen.push.AssetId
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientConfig
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientException
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenPushClient
+import com.github.oslokommune.oslonokkelen.push.OslonokkelenPushClient.Companion.clientApiKeyHeaderName
+import com.github.oslokommune.oslonokkelen.push.OslonokkelenPushClient.Companion.clientIdHeaderName
+import com.github.oslokommune.oslonokkelen.push.OslonokkelenPushClient.Companion.traceIdHeaderName
 import com.github.oslokommune.oslonokkelen.push.PermissionList
 import com.github.oslokommune.oslonokkelen.push.PermissionListId
 import com.github.oslokommune.oslonokkelen.push.PermissionState
@@ -34,8 +36,8 @@ class OslonokkelenPushKtorClient(
 ) : OslonokkelenPushClient {
 
     private val requestBuilder: HttpRequestBuilder.() -> Unit = {
-        header(OslonokkelenKeychainPushClient.clientIdHeaderName, config.systemId)
-        header(OslonokkelenKeychainPushClient.clientApiKeyHeaderName, config.apiSecret)
+        header(clientIdHeaderName, config.systemId)
+        header(clientApiKeyHeaderName, config.apiSecret)
         accept(ContentType.Application.ProtoBuf)
         expectSuccess = false
     }
@@ -169,7 +171,7 @@ class OslonokkelenPushKtorClient(
         expectedType: String,
         factory: (ByteArray) -> M
     ): M {
-        val oslonokkelenTraceId = httpResponse.headers[OslonokkelenKeychainPushClient.traceIdHeaderName]
+        val oslonokkelenTraceId = httpResponse.headers[traceIdHeaderName]
         val responseApplicationType = getApplicationResponseType(httpResponse, oslonokkelenTraceId)
 
         if (responseApplicationType == "error") {

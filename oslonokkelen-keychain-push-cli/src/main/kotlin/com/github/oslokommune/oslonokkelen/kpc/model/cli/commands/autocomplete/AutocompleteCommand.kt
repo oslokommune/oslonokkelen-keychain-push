@@ -5,7 +5,6 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.ajalt.clikt.parameters.types.enum
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.autocomplete.AutocompleteCommand.Autocomplete.KEYCHAIN_FACTORY_IDS
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.autocomplete.AutocompleteCommand.Autocomplete.PROFILE_IDS
 
 class AutocompleteCommand(
@@ -33,17 +32,11 @@ class AutocompleteCommand(
             PROFILE_IDS -> {
                 service.profileIds
             }
-            KEYCHAIN_FACTORY_IDS -> {
-                service.withSession { client ->
-                    client.listFactories().map { it.id.value }.toSet()
-                }
-            }
         }
     }
 
     enum class Autocomplete {
-        PROFILE_IDS,
-        KEYCHAIN_FACTORY_IDS
+        PROFILE_IDS
     }
 
 }

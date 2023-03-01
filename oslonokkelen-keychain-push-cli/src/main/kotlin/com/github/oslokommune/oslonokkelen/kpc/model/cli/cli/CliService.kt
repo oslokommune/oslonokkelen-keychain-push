@@ -1,7 +1,5 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.cli
 
-import com.github.oslokommune.oslonokkelen.kpc.OslonokkelenKeychainPushClient
-import com.github.oslokommune.oslonokkelen.kpc.ktor.OslonokkelenKeychainPushKtorClient
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.Configuration
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 import com.github.oslokommune.oslonokkelen.push.OslonokkelenClientConfig
@@ -19,31 +17,6 @@ class CliService(
     val profileIds: Set<String>
         get() = configurationHandle.profileIds
 
-    fun <R> withSession(block: suspend Session.(OslonokkelenKeychainPushClient) -> R): R {
-        val activeProfileId = configurationHandle.activeProfileId ?: throw CliException(
-            """No profiles defined. 
-            |See how you can add one by running 
-            |
-            |```
-            |keychain-pusher config --help
-            |```""".trimMargin()
-        )
-
-        val profile: Configuration.Profile = configurationHandle.requireProfile(activeProfileId)
-        val client = OslonokkelenKeychainPushKtorClient(
-            client = httpClient,
-            config = OslonokkelenKeychainPushClient.Config(
-                baseUri = URI.create(profile.backendUri),
-                systemId = profile.systemId,
-                apiSecret = profile.apiSecret
-            )
-        )
-
-        return runBlocking {
-            val session = Session(profile)
-            block(session, client)
-        }
-    }
 
     fun <R> withNewSession(block: suspend Session.(OslonokkelenPushClient) -> R): R {
         val activeProfileId = configurationHandle.activeProfileId ?: throw CliException(
