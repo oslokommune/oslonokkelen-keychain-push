@@ -19,6 +19,6 @@ data class PhoneNumber(
 
     companion object {
         private val countryCodePattern = Regex("^\\d{2,4}$")
-        private val phoneNumberPattern = Regex("^\\d{8,12}$")
+        private val phoneNumberPattern = Regex("^\\d{5,13}$")
     }
 }
