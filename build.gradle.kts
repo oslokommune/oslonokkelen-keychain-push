@@ -14,4 +14,12 @@ allprojects {
     repositories {
         mavenCentral()
     }
+
+    tasks.withType<JavaCompile>().configureEach {
+        sourceCompatibility = JavaVersion.VERSION_18.toString()
+        targetCompatibility = JavaVersion.VERSION_18.toString()
+    }
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_18.toString()
+    }
 }
