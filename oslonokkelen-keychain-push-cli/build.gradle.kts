@@ -29,7 +29,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:2.3.0")
 
     implementation("com.charleskorn.kaml:kaml:0.53.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
     testImplementation("org.assertj:assertj-core:3.24.2")
