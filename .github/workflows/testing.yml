@@ -5,6 +5,8 @@ jobs:
   build:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
+    permissions:
+        contents: write
 
     steps:
       - uses: actions/checkout@v3
@@ -16,8 +18,9 @@ jobs:
           java-version: 20
 
       - name: "Gradle - Tests"
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.7.0
         with:
+          dependency-graph: generate-and-submit
           arguments: test --no-watch-fs --parallel --stacktrace --max-workers=4
 
 
