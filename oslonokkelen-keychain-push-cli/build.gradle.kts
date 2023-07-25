@@ -2,7 +2,6 @@ import com.adarshr.gradle.testlogger.TestLoggerExtension
 import com.adarshr.gradle.testlogger.TestLoggerPlugin
 import com.adarshr.gradle.testlogger.theme.ThemeType
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
@@ -23,7 +22,7 @@ val slf4jVersion = "2.0.7"
 
 dependencies {
     api(project(":oslonokkelen-keychain-push-client-ktor"))
-    implementation("com.github.ajalt.clikt:clikt-jvm:3.5.2")
+    implementation("com.github.ajalt.clikt:clikt-jvm:4.1.0")
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
     implementation("org.slf4j:slf4j-nop:$slf4jVersion")
     implementation("io.ktor:ktor-client-cio:2.3.2")

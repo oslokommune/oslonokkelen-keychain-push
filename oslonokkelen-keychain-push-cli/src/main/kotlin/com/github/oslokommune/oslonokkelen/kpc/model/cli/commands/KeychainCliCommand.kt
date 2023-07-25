@@ -2,9 +2,7 @@ package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.context
-import com.github.ajalt.clikt.output.CliktHelpFormatter
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
-import io.ktor.client.HttpClient
+import com.github.ajalt.clikt.output.MordantHelpFormatter
 
 class KeychainCliCommand : CliktCommand(
     help = """A tool to simulate what Oslonøkkelen calls a "third party system" intended for experimenting / debugging. 
@@ -30,10 +28,13 @@ class KeychainCliCommand : CliktCommand(
 
     init {
         context {
-            helpFormatter = CliktHelpFormatter(
-                showDefaultValues = true,
-                showRequiredTag = true
-            )
+            helpFormatter = { context ->
+                MordantHelpFormatter (
+                    showDefaultValues = true,
+                    showRequiredTag = true,
+                    context = context
+                )
+            }
         }
     }
 
