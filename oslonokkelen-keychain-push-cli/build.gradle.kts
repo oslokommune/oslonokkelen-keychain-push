@@ -31,7 +31,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.2")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
-    testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation("org.assertj:assertj-core:3.25.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
 }
 
