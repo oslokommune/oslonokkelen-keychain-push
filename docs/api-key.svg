@@ -1,112 +1,120 @@
-<svg height='128' preserveAspectRatio='xMidYMid meet' viewBox='0 0 664 128' width='664' xmlns='http://www.w3.org/2000/svg'>
-    <style>line, path, circle,rect,polygon {
-                          stroke: black;
-                          stroke-width: 2;
-                          stroke-opacity: 1;
-                          fill-opacity: 1;
-                          stroke-linecap: round;
-                          stroke-linejoin: miter;
-                        }
+<svg class='svgbob' height='128' preserveAspectRatio='xMidYMid meet' viewBox='0 0 664 128' width='664' xmlns='http://www.w3.org/2000/svg'>
+  <style>.svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon {
+  stroke: black;
+  stroke-width: 2;
+  stroke-opacity: 1;
+  fill-opacity: 1;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+}
 
-                    text {
-                        fill: black;
-                        }
-                        rect.backdrop{
-                            stroke: none;
-                            fill: white;
-                        }
-                        .broken{
-                            stroke-dasharray: 8;
-                        }
-                        .filled{
-                            fill: black;
-                        }
-                        .bg_filled{
-                            fill: white;
-                        }
-                        .nofill{
-                            fill: white;
-                        }
+.svgbob text {
+  white-space: pre;
+  fill: black;
+  font-family: Iosevka Fixed, monospace;
+  font-size: 14px;
+}
 
-                        text {
-                         font-family: monospace;
-                         font-size: 14px;
-                        }
+.svgbob rect.backdrop {
+  stroke: none;
+  fill: white;
+}
 
-                        .end_marked_arrow{
-                            marker-end: url(#arrow);
-                         }
-                        .start_marked_arrow{
-                            marker-start: url(#arrow);
-                         }
+.svgbob .broken {
+  stroke-dasharray: 8;
+}
 
-                        .end_marked_diamond{
-                            marker-end: url(#diamond);
-                         }
-                        .start_marked_diamond{
-                            marker-start: url(#diamond);
-                         }
+.svgbob .filled {
+  fill: black;
+}
 
-                        .end_marked_circle{
-                            marker-end: url(#circle);
-                         }
-                        .start_marked_circle{
-                            marker-start: url(#circle);
-                         }
+.svgbob .bg_filled {
+  fill: white;
+  stroke-width: 1;
+}
 
-                        .end_marked_open_circle{
-                            marker-end: url(#open_circle);
-                         }
-                        .start_marked_open_circle{
-                            marker-start: url(#open_circle);
-                         }
+.svgbob .nofill {
+  fill: white;
+}
 
-                        .end_marked_big_open_circle{
-                            marker-end: url(#big_open_circle);
-                         }
-                        .start_marked_big_open_circle{
-                            marker-start: url(#big_open_circle);
-                         }
+.svgbob .end_marked_arrow {
+  marker-end: url(#arrow);
+}
 
-                         
-                        </style>
-    <defs>
-        <marker id='arrow' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='2' viewBox='-2 -2 8 8'>
-            <polygon points='0,0 0,4 4,2 0,0'/>
-        </marker>
-        <marker id='diamond' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='2' viewBox='-2 -2 8 8'>
-            <polygon points='0,2 2,0 4,2 2,4 0,2'/>
-        </marker>
-        <marker id='circle' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='4' viewBox='0 0 8 8'>
-            <circle class='filled' cx='4' cy='4' r='2'/>
-        </marker>
-        <marker id='open_circle' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='4' viewBox='0 0 8 8'>
-            <circle class='bg_filled' cx='4' cy='4' r='2'/>
-        </marker>
-        <marker id='big_open_circle' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='4' viewBox='0 0 8 8'>
-            <circle class='bg_filled' cx='4' cy='4' r='3'/>
-        </marker>
-    </defs>
-    <rect class='backdrop' height='128' width='664' x='0' y='0'/>
-    <rect class='solid nofill' height='48' rx='4' width='128' x='44' y='8'/>
-    <text x='58' y='44'>backend</text>
-    <text x='122' y='44'>api</text>
-    <polygon class='filled' points='184,20 176,24 184,28'/>
-    <line class='solid' x1='184' x2='320' y1='24' y2='24'/>
-    <text x='202' y='44'>Http</text>
-    <text x='242' y='44'>request</text>
-    <text x='306' y='44'>from</text>
-    <text x='202' y='60'>your</text>
-    <text x='242' y='60'>system</text>
-    <text x='298' y='60'>with</text>
-    <text x='338' y='60'>headers:</text>
-    <text x='650' y='28'>.</text>
-    <text x='210' y='92'>o</text>
-    <text x='210' y='108'>o</text>
-    <text x='226' y='92'>X-System-Id: your-amazing-system-id</text>
-    <text x='226' y='108'>X-System-Api-Key: pepperkake-pekkerkake-123</text>
-    <g>
-        <text x='58' y='28'>Oslonø</text>
-        <text x='106' y='28'>kkelen</text>
-    </g>
+.svgbob .start_marked_arrow {
+  marker-start: url(#arrow);
+}
+
+.svgbob .end_marked_diamond {
+  marker-end: url(#diamond);
+}
+
+.svgbob .start_marked_diamond {
+  marker-start: url(#diamond);
+}
+
+.svgbob .end_marked_circle {
+  marker-end: url(#circle);
+}
+
+.svgbob .start_marked_circle {
+  marker-start: url(#circle);
+}
+
+.svgbob .end_marked_open_circle {
+  marker-end: url(#open_circle);
+}
+
+.svgbob .start_marked_open_circle {
+  marker-start: url(#open_circle);
+}
+
+.svgbob .end_marked_big_open_circle {
+  marker-end: url(#big_open_circle);
+}
+
+.svgbob .start_marked_big_open_circle {
+  marker-start: url(#big_open_circle);
+}
+
+</style>
+  <defs>
+    <marker id='arrow' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='2' viewBox='-2 -2 8 8'>
+      <polygon points='0,0 0,4 4,2 0,0'/>
+    </marker>
+    <marker id='diamond' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='2' viewBox='-2 -2 8 8'>
+      <polygon points='0,2 2,0 4,2 2,4 0,2'/>
+    </marker>
+    <marker id='circle' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='4' viewBox='0 0 8 8'>
+      <circle class='filled' cx='4' cy='4' r='2'/>
+    </marker>
+    <marker id='open_circle' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='4' viewBox='0 0 8 8'>
+      <circle class='bg_filled' cx='4' cy='4' r='2'/>
+    </marker>
+    <marker id='big_open_circle' markerHeight='7' markerWidth='7' orient='auto-start-reverse' refX='4' refY='4' viewBox='0 0 8 8'>
+      <circle class='bg_filled' cx='4' cy='4' r='3'/>
+    </marker>
+  </defs>
+  <rect class='backdrop' height='128' width='664' x='0' y='0'/>
+  <rect class='solid nofill' height='48' rx='4' width='128' x='44' y='8'/>
+  <text x='58' y='44'>backend</text>
+  <text x='122' y='44'>api</text>
+  <polygon class='filled' points='184,20 176,24 184,28'/>
+  <line class='solid' x1='184' x2='320' y1='24' y2='24'/>
+  <text x='202' y='44'>Http</text>
+  <text x='242' y='44'>request</text>
+  <text x='306' y='44'>from</text>
+  <text x='202' y='60'>your</text>
+  <text x='242' y='60'>system</text>
+  <text x='298' y='60'>with</text>
+  <text x='338' y='60'>headers:</text>
+  <text x='650' y='28'>.</text>
+  <text x='210' y='92'>o</text>
+  <text x='210' y='108'>o</text>
+  <text x='226' y='92'>X-System-Id: your-amazing-system-id</text>
+  <text x='226' y='108'>X-System-Api-Key: pepperkake-pekkerkake-123</text>
+  <g>
+    <text x='58' y='28'>Oslonø</text>
+    <text x='106' y='28'>kkelen</text>
+  </g>
 </svg>

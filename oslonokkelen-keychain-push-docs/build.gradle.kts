@@ -3,9 +3,9 @@ import java.io.InputStream
 import java.util.concurrent.TimeUnit.SECONDS
 
 plugins {
-    id("org.asciidoctor.jvm.convert") version "3.3.2"
-    id("org.asciidoctor.jvm.pdf") version "3.3.2"
-    id("org.asciidoctor.jvm.gems") version "3.3.2"
+    id("org.asciidoctor.jvm.convert") version "4.0.1"
+    id("org.asciidoctor.jvm.pdf") version "4.0.1"
+    id("org.asciidoctor.jvm.gems") version "4.0.1"
 }
 
 repositories {
@@ -47,8 +47,8 @@ tasks {
 
 
 asciidoctorj {
-    setVersion("2.5.2")
-    modules.diagram.setVersion("2.2.1")
+    setVersion("2.5.11")
+    modules.diagram.setVersion("2.2.14")
     logLevel = LogLevel.INFO
 }
 
@@ -66,9 +66,9 @@ tasks.register<DefaultTask>("docs-verify-graphviz") {
 tasks.register<DefaultTask>("docs-verify-seqdiag") {
     doFirst {
         try {
-            ProcessUtil.execute("seqdiag", "--version")
+            ProcessUtil.execute("seqdiag3", "--version")
         } catch (ignored: Exception) {
-            throw GradleException("Unable to find 'seqdiag'. Please install seqdiag3.\nThis is required for generating documentation diagrams.\n\n\u001B[91msudo pip3 install seqdiag\u001B[0m")
+            throw GradleException("Unable to find 'seqdiag'. Please install seqdiag3.\nThis is required for generating documentation diagrams.\n\n\u001B[91msudo apt install python3-seqdiag\u001B[0m")
         }
     }
 }
@@ -76,9 +76,9 @@ tasks.register<DefaultTask>("docs-verify-seqdiag") {
 tasks.register<DefaultTask>("docs-verify-blockdiag") {
     doFirst {
         try {
-            ProcessUtil.execute("blockdiag", "--version")
+            ProcessUtil.execute("blockdiag3", "--version")
         } catch (ignored: Exception) {
-            throw GradleException("Unable to find 'blockdiagat '. Please install seqdiag3.\nThis is required for generating documentation diagrams.\n\n\u001B[91msudo pip3 install blockdiag\u001B[0m")
+            throw GradleException("Unable to find 'blockdiag3 '. Please install blockdiag3.\nThis is required for generating documentation diagrams.\n\n\u001B[91msudo apt install python3-blockdiag\u001B[0m")
         }
     }
 }
@@ -86,9 +86,9 @@ tasks.register<DefaultTask>("docs-verify-blockdiag") {
 tasks.register<DefaultTask>("docs-verify-bob") {
     doFirst {
         try {
-            ProcessUtil.execute("svgbob", "--help")
+            ProcessUtil.execute("svgbob_cli", "--help")
         } catch (ignored: Exception) {
-            throw GradleException("Unable to find 'svgbob'. Please install it.\nThis is required for generating documentation diagrams.\n\n\u001B[91mcargo install --git https://github.com/ivanceras/svgbob --rev 2bf94a2eddff2215b5f43e21658502c98d945941\u001B[0m")
+            throw GradleException("Unable to find 'svgbob'. Please install it.\nThis is required for generating documentation diagrams.\n\n\u001B[91mcargo install --git https://github.com/ivanceras/svgbob svgbob_cli\u001B[0m")
         }
     }
 }
