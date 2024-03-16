@@ -14,7 +14,7 @@ import com.github.oslokommune.oslonokkelen.push.PermissionsIndex
 import com.github.oslokommune.oslonokkelen.push.ProtoMarshaller
 import com.github.oslokommune.oslonokkelen.push.SystemInfo
 import com.github.oslokommune.oslonokkelen.push.proto.KeychainPushApiV2
-import com.google.protobuf.GeneratedMessageV3
+import com.google.protobuf.GeneratedMessage
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.request.HttpRequestBuilder
@@ -166,7 +166,7 @@ class OslonokkelenPushKtorClient(
         }
     }
 
-    private suspend fun <M : GeneratedMessageV3> readSuccessfulResponsePayload(
+    private suspend fun <M : GeneratedMessage> readSuccessfulResponsePayload(
         httpResponse: HttpResponse,
         expectedType: String,
         factory: (ByteArray) -> M
