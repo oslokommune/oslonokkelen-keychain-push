@@ -4,7 +4,7 @@ on: [push]
 jobs:
   build:
     timeout-minutes: 10
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     permissions:
         contents: write
 
@@ -18,7 +18,7 @@ jobs:
           java-version: 21
 
       - name: "Gradle - Tests"
-        uses: gradle/gradle-build-action@v3.0.0
+        uses: gradle/actions/setup-gradle@v3
         with:
           dependency-graph: generate-and-submit
           arguments: test --no-watch-fs --parallel --stacktrace --max-workers=4
