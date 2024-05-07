@@ -18,9 +18,9 @@ description = "Oslonøkkelen - Keychain push client"
 dependencies {
     api(project(":oslonokkelen-keychain-push-protobuf"))
 
-    implementation("org.slf4j:slf4j-api:2.0.12")
+    implementation("org.slf4j:slf4j-api:2.0.13")
 
-    testImplementation("org.slf4j:slf4j-simple:2.0.12")
+    testImplementation("org.slf4j:slf4j-simple:2.0.13")
     testImplementation("org.assertj:assertj-core:3.25.3")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
