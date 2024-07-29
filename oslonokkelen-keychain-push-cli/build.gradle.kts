@@ -27,7 +27,7 @@ dependencies {
     implementation("org.slf4j:slf4j-nop:$slf4jVersion")
     implementation("io.ktor:ktor-client-cio:2.3.12")
 
-    implementation("com.charleskorn.kaml:kaml:0.60.0")
+    implementation("com.charleskorn.kaml:kaml:0.61.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.1")
 
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
