@@ -18,7 +18,7 @@ jobs:
           java-version: 21
 
       - name: "Gradle - Tests"
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
           arguments: test --no-watch-fs --parallel --stacktrace --max-workers=4
 
