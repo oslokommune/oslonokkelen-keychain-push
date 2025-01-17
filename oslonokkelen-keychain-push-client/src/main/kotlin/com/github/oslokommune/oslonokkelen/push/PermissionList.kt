@@ -66,8 +66,8 @@ data class PermissionList(
         var information: Information? = null
 
 
-        fun addRecipientByPhoneNumber(countryCode: String, number: String) {
-            recipients.add(Recipient(PhoneNumber(countryCode, number)))
+        fun addRecipientByPhoneNumber(countryCode: String, number: String, canShare: Boolean) {
+            recipients.add(Recipient(PhoneNumber(countryCode, number),  canShare))
         }
 
         fun addPermission(interval: TimeInterval, assetIds: List<String>) {

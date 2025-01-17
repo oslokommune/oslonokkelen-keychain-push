@@ -26,6 +26,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readBytes
+import io.ktor.client.statement.readRawBytes
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
@@ -180,7 +181,7 @@ class OslonokkelenPushKtorClient(
 
         return if (httpResponse.status.isSuccess()) {
             if (responseApplicationType == expectedType) {
-                val bytes = httpResponse.readBytes()
+                val bytes = httpResponse.readRawBytes()
                 factory(bytes)
             } else {
                 throw OslonokkelenClientException(
@@ -200,7 +201,7 @@ class OslonokkelenPushKtorClient(
 
 
     private suspend fun handleStructuredErrorResponse(httpResponse: HttpResponse, oslonokkelenTraceId: String?) {
-        val bytes = httpResponse.readBytes()
+        val bytes = httpResponse.readRawBytes()
         val error = KeychainPushApiV2.ErrorResponse.parseFrom(bytes)
 
         throw OslonokkelenClientException(
