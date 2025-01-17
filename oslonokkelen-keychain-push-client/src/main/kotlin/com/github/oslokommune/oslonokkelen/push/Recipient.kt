@@ -6,5 +6,6 @@ package com.github.oslokommune.oslonokkelen.push
  * will have to verify their phone number in the app.
  */
 data class Recipient(
-    val phoneNumber: PhoneNumber
+    val phoneNumber: PhoneNumber,
+    val canShare: Boolean
 )

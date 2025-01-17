@@ -11,7 +11,7 @@ internal class ProtoMarshallerTest {
     @Test
     fun `Can re-create requests`() {
         val request = PermissionList.build("booking-123", "Booking #123") {
-            addRecipientByPhoneNumber("47", "12345789")
+            addRecipientByPhoneNumber("47", "12345789", false)
             externalLink("More information", URI.create("https://vg.no")) // Optional
             additionalInformation("Tørk av deg på beina før du går inn!") // Optional
 
@@ -34,8 +34,8 @@ internal class ProtoMarshallerTest {
     @Test
     fun `Can re-create request without link and additional information`() {
         val request = PermissionList.build("booking-123", "Booking #123") {
-            addRecipientByPhoneNumber("47", "12345789")
-            addRecipientByPhoneNumber("47", "32132321")
+            addRecipientByPhoneNumber("47", "12345789", true)
+            addRecipientByPhoneNumber("47", "32132321", false)
 
             addPermission(
                 interval = TimeInterval.parse("2022-01-02", "12:00", "2022-01-05", "13:15"),

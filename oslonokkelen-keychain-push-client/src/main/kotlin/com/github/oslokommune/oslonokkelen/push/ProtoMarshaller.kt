@@ -15,6 +15,7 @@ object ProtoMarshaller {
             builder.addRecipients(
                 KeychainPushApiV2.PushRequest.Recipient.newBuilder()
                     .setPhoneNumber(toProtobuf(recipient.phoneNumber))
+                    .setCanShare(recipient.canShare)
                     .build()
             )
         }
@@ -69,13 +70,13 @@ object ProtoMarshaller {
     fun fromProtobuf(protobuf: KeychainPushApiV2.PushRequest): PermissionList {
         return PermissionList.build(protobuf.id, protobuf.title) {
             for (recipient in protobuf.recipientsList) {
-                when (recipient.recipientCase) {
-                    KeychainPushApiV2.PushRequest.Recipient.RecipientCase.PHONENUMBER -> {
-                        addRecipientByPhoneNumber(recipient.phoneNumber.cc, recipient.phoneNumber.number)
+                when (recipient.contactInfoCase) {
+                    KeychainPushApiV2.PushRequest.Recipient.ContactInfoCase.PHONENUMBER -> {
+                        addRecipientByPhoneNumber(recipient.phoneNumber.cc, recipient.phoneNumber.number, recipient.canShare)
                     }
 
-                    KeychainPushApiV2.PushRequest.Recipient.RecipientCase.RECIPIENT_NOT_SET, null -> {
-                        throw IllegalStateException("Unsupported recipient type ${recipient.recipientCase}")
+                    KeychainPushApiV2.PushRequest.Recipient.ContactInfoCase.CONTACTINFO_NOT_SET, null -> {
+                        throw IllegalStateException("Unsupported recipient type ${recipient.contactInfoCase}")
                     }
                 }
             }

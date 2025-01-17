@@ -60,9 +60,12 @@ message PushRequest {
   }
 
   message Recipient {
-    oneof recipient {
+    oneof contactInfo {
       PhoneNumber phoneNumber = 1;
     }
+
+    // Whether the recipient can share the permissions they received
+    bool canShare = 2;
   }
 
 }
