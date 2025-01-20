@@ -33,7 +33,7 @@ class SyncCommand(
         val model = readModel()
         val request = PermissionList.build(model.id, model.title) {
             for (recipient in model.recipients) {
-                addRecipientByPhoneNumber(recipient.phoneNumber.countryCode, recipient.phoneNumber.phoneNumber, recipient.canShare)
+                addRecipientByPhoneNumber(recipient.phoneNumber.countryCode, recipient.phoneNumber.phoneNumber, recipient.canShare ?: false)
             }
             for (permission in model.permissions) {
                 addPermission(

@@ -164,6 +164,9 @@ message StateResponse {
     // When was the first time this phone number was pushed.
     int64 pushedAtEpochSeconds = 2;
 
+    // Whether the recipient can share the permissions they received
+    bool canShare = 3;
+
   }
 
   message ConfirmedRecipient {
@@ -179,6 +182,9 @@ message StateResponse {
 
     // When was the first time this phone number was pushed.
     int64 pushedAtEpochSeconds = 4;
+
+    // Whether the recipient can share the permissions they received
+    bool canShare = 5;
 
   }
 

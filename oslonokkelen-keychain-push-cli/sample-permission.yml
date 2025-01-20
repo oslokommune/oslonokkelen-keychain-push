@@ -5,6 +5,7 @@ recipients:
       phoneNumber: 12312123
     - countryCode: 47
       phoneNumber: 12345678
+      canShare: true
 permissions:
     - assetIds:
           - happy
