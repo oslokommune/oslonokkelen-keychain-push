@@ -15,7 +15,7 @@ data class PermissionModel(
     @Serializable
     data class Recipient(
         val phoneNumber: PhoneNumber,
-        val canShare: Boolean
+        val canShare: Boolean? = null
     ) {
         @Serializable
         data class PhoneNumber(
