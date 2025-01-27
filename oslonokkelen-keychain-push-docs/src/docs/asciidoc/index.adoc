@@ -167,6 +167,9 @@ reference that can be used.
       v
 ....
 
+==== Sharing keychains
+Oslonøkkelen supports sharing of keychains through the app. To allow this, you need to set the `canShare` attribute to `true` for each recipient you wish to be able to share their keychain. Right now, shared keychains are tied to the original keychain. If the original keychain is revoked, so will the shared keychains be. In the future, we will return information on which keychains have been shared, and you will be able to manage them separately.
+
 === Listening for event callbacks
 Oslonøkkelen supports pushing `KeychainEvent when something "interesting" happens to keychains created
 by factories owned by your system. It will work like illustrated in the sequence diagram below.
