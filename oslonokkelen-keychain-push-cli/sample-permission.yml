@@ -1,11 +1,10 @@
 id: permission-x2
 title: Test permission
 recipients:
-    - countryCode: 47
+  - phoneNumber:
+      countryCode: 47
       phoneNumber: 12312123
-    - countryCode: 47
-      phoneNumber: 12345678
-      canShare: true
+    canShare: false
 permissions:
     - assetIds:
           - happy
