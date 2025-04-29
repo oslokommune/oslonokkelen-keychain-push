@@ -10,7 +10,7 @@ plugins {
 
     kotlin("plugin.serialization") version "2.1.20"
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("org.graalvm.buildtools.native") version "0.10.4"
+    id("org.graalvm.buildtools.native") version "0.10.6"
     id("org.jetbrains.kotlin.jvm")
     id("com.adarshr.test-logger")
     id("java")
