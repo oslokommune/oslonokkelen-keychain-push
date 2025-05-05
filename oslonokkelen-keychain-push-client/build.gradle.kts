@@ -8,8 +8,8 @@ plugins {
     `maven-publish`
     idea
 
-    id("org.jetbrains.kotlin.jvm")
-    id("com.adarshr.test-logger")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.testLogger)
     id("java")
 }
 

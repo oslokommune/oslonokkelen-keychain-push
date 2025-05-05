@@ -1,5 +1,5 @@
 plugins {
-    id("com.google.protobuf")
+    alias(libs.plugins.protobuf)
     `java-library`
     `maven-publish`
     idea
