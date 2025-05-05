@@ -14,26 +14,24 @@ plugins {
 
 description = "Oslonøkkelen - Keychain push client - Ktor"
 
-val ktorVersion = "3.1.2"
-val slf4jVersion = "2.0.17"
-
 dependencies {
-    api(project(":oslonokkelen-keychain-push-client"))
+    api(projects.oslonokkelenKeychainPushClient)
 
-    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+    implementation(platform(libs.slf4j.bom))
+    implementation(libs.slf4j.api)
 
-    api("io.ktor:ktor-client-core:$ktorVersion")
-    api("io.ktor:ktor-client-core-jvm:$ktorVersion")
-    api("io.ktor:ktor-http:$ktorVersion") {
+    api(libs.ktor.client.core)
+    api(libs.ktor.client.jvm)
+    api(libs.ktor.http) {
         because("Intellij doesn't seem to resolve this transitive dependency on its own")
     }
 
-    testImplementation("io.ktor:ktor-client-cio:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
+    testImplementation(libs.ktor.client.cio)
+    testImplementation(libs.ktor.client.mock)
 
-    testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
-    testImplementation("org.assertj:assertj-core:3.27.3")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+    testImplementation(libs.slf4j.simple)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(libs.bundles.testing)
 }
 
 plugins.withType<TestLoggerPlugin> {
