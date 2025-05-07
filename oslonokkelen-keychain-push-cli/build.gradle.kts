@@ -8,31 +8,31 @@ plugins {
     application
     idea
 
-    kotlin("plugin.serialization") version "2.1.20"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("org.graalvm.buildtools.native") version "0.10.6"
-    id("org.jetbrains.kotlin.jvm")
-    id("com.adarshr.test-logger")
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.graalvm.buildtools)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.testLogger)
     id("java")
 }
 
 description = "Oslonøkkelen - Keychain push client - Cli"
 
-val slf4jVersion = "2.0.17"
-
 dependencies {
-    api(project(":oslonokkelen-keychain-push-client-ktor"))
-    implementation("com.github.ajalt.clikt:clikt-jvm:4.4.0")
-    implementation("org.slf4j:slf4j-api:$slf4jVersion")
-    implementation("org.slf4j:slf4j-nop:$slf4jVersion")
-    implementation("io.ktor:ktor-client-cio:3.1.2")
+    api(projects.oslonokkelenKeychainPushClientKtor)
+    implementation(platform(libs.slf4j.bom))
+    implementation(libs.slf4j.api)
+    implementation(libs.slf4j.nop)
 
-    implementation("com.charleskorn.kaml:kaml:0.77.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.8.1")
+    implementation(libs.clikt)
+    implementation(libs.ktor.client.cio)
 
-    testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
-    testImplementation("org.assertj:assertj-core:3.27.3")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+    implementation(libs.kaml)
+    implementation(libs.kotlinx.serialization.core)
+
+    testImplementation(libs.slf4j.simple)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(libs.bundles.testing)
 }
 
 application {

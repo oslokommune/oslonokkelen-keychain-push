@@ -8,21 +8,22 @@ plugins {
     `maven-publish`
     idea
 
-    id("org.jetbrains.kotlin.jvm")
-    id("com.adarshr.test-logger")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.testLogger)
     id("java")
 }
 
 description = "Oslonøkkelen - Keychain push client"
 
 dependencies {
-    api(project(":oslonokkelen-keychain-push-protobuf"))
+    api(projects.oslonokkelenKeychainPushProtobuf)
 
-    implementation("org.slf4j:slf4j-api:2.0.17")
+    implementation(platform(libs.slf4j.bom))
+    implementation(libs.slf4j.api)
 
-    testImplementation("org.slf4j:slf4j-simple:2.0.17")
-    testImplementation("org.assertj:assertj-core:3.27.3")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+    testImplementation(libs.slf4j.simple)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(libs.bundles.testing)
 }
 
 plugins.withType<TestLoggerPlugin> {
