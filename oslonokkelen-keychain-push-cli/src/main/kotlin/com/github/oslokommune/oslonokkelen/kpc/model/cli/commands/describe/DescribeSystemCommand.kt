@@ -1,6 +1,7 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.describe
 
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.Context
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService
 
@@ -8,9 +9,12 @@ class DescribeSystemCommand(
     private val out: CliOutput,
     private val cliService: CliService
 ) : CliktCommand(
-    help = "Describe your system",
     name = "describe"
 ) {
+
+    override fun help(context: Context): String {
+        return "Describe your system"
+    }
 
     override fun run() {
         cliService.withNewSession { pushClient ->

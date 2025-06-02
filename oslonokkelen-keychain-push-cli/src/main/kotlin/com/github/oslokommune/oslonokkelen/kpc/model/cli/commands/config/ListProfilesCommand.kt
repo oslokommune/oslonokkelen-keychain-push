@@ -1,6 +1,7 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.config
 
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.Context
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 
@@ -8,9 +9,12 @@ class ListProfilesCommand(
     private val out: CliOutput,
     private val configurationHandle: ConfigurationHandle
 ) : CliktCommand(
-    help = "List known profiles",
     name = "ls"
 ) {
+
+    override fun help(context: Context): String {
+        return "List known profiles"
+    }
 
     override fun run() {
         echo("Listing configured profiles...")

@@ -1,11 +1,16 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.Context
 import com.github.ajalt.clikt.core.context
 import com.github.ajalt.clikt.output.MordantHelpFormatter
 
 class KeychainCliCommand : CliktCommand(
-    help = """A tool to simulate what Oslonøkkelen calls a "third party system" intended for experimenting / debugging. 
+    name = "keychain-pusher"
+) {
+
+    override fun help(context: Context): String {
+        return """A tool to simulate what Oslonøkkelen calls a "third party system" intended for experimenting / debugging. 
         |In order to use this tool you need a few things from Oslonøkkelen: 
         | ```
         |  - A system id
@@ -22,14 +27,13 @@ class KeychainCliCommand : CliktCommand(
         |     --system-id <your-system-id> \
         |     --api-secret <your-secret> 
         | ```
-    """.trimMargin(),
-    name = "keychain-pusher"
-) {
+    """.trimMargin()
+    }
 
     init {
         context {
             helpFormatter = { context ->
-                MordantHelpFormatter (
+                MordantHelpFormatter(
                     showDefaultValues = true,
                     showRequiredTag = true,
                     context = context
