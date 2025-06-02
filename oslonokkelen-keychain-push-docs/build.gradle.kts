@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.asciidoc.pdf)
     alias(libs.plugins.asciidoc.gems)
     alias(libs.plugins.jrubyResolver) apply false
-
 }
 
 repositories {
@@ -49,9 +48,15 @@ tasks {
 
 
 asciidoctorj {
-    setVersion("2.5.11")
-    modules.diagram.setVersion("2.2.14")
+    setVersion(libs.versions.asciidocj)
+    modules.diagram.setVersion(libs.versions.asciidoc.diagrams)
     logLevel = LogLevel.INFO
+
+    modules {
+        grolifantOps {
+
+        }
+    }
 }
 
 
