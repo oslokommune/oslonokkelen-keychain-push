@@ -2,6 +2,7 @@ package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.sync
 
 import com.charleskorn.kaml.Yaml
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.Context
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
@@ -18,7 +19,6 @@ class SyncCommand(
     private val out: CliOutput,
     private val cliService: CliService
 ) : CliktCommand(
-    help = "Sync permission",
     name = "sync"
 ) {
 
@@ -26,6 +26,10 @@ class SyncCommand(
         "--file",
         help = "Yaml file containing the permission"
     ).required()
+
+    override fun help(context: Context): String {
+        return "Sync permission"
+    }
 
     override fun run() {
         out.debug("Pushing $file")

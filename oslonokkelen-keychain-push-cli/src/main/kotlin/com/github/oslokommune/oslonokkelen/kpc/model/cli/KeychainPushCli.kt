@@ -1,5 +1,6 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli
 
+import com.github.ajalt.clikt.core.main
 import com.github.ajalt.clikt.core.subcommands
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliService

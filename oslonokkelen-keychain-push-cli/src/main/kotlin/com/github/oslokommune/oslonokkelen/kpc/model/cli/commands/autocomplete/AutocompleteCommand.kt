@@ -1,6 +1,7 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.autocomplete
 
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.Context
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.ajalt.clikt.parameters.types.enum
@@ -10,9 +11,12 @@ import com.github.oslokommune.oslonokkelen.kpc.model.cli.commands.autocomplete.A
 class AutocompleteCommand(
     private val service: CliService
 ) : CliktCommand(
-    help = "Autocomplete",
     name = "auto"
 ) {
+
+    override fun help(context: Context): String {
+        return "Autocomplete"
+    }
 
     private val autocomplete: Autocomplete by option()
         .enum<Autocomplete>()
