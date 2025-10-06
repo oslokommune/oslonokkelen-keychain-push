@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.2.20"
-asciidoc = "4.0.4"
+asciidoc = "4.0.5"
 asciidocj = "3.0.0"
 asciidoc-diagrams = "2.3.2"
 protobuf-java = "4.32.1"
