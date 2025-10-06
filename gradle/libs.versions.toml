@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.1.21"
+kotlin = "2.2.20"
 asciidoc = "4.0.4"
 asciidocj = "3.0.0"
 asciidoc-diagrams = "2.3.2"
