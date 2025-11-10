@@ -43,4 +43,4 @@ asciidoc-pdf = { id = "org.asciidoctor.jvm.pdf", version.ref = "asciidoc" }
 asciidoc-gems = { id = "org.asciidoctor.jvm.gems", version.ref = "asciidoc" }
 jrubyResolver = { id = "org.ysb33r.jruby.resolver", version = "2.3.1" }
 shadow = { id = "com.gradleup.shadow", version = "9.2.2" }
-graalvm-buildtools = { id = "org.graalvm.buildtools.native", version = "0.11.1" }
+graalvm-buildtools = { id = "org.graalvm.buildtools.native", version = "0.11.2" }
