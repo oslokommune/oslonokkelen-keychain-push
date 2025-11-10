@@ -21,7 +21,7 @@ ktor-client-jvm = { group = "io.ktor", name = "ktor-client-core-jvm", version.re
 ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-client-mock = { group = "io.ktor", name = "ktor-client-mock", version.ref = "ktor" }
 
-junit = { group = "org.junit.jupiter", name = "junit-jupiter", version = "6.0.0" }
+junit = { group = "org.junit.jupiter", name = "junit-jupiter", version = "6.0.1" }
 assertj = { group = "org.assertj", name = "assertj-core", version = "3.27.6" }
 
 clikt = { group = "com.github.ajalt.clikt", name = "clikt-jvm", version = "5.0.3" }
