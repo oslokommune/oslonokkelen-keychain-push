@@ -3,7 +3,7 @@ kotlin = "2.3.0"
 asciidoc = "4.0.5"
 asciidocj = "3.0.0"
 asciidoc-diagrams = "2.3.2"
-protobuf-java = "4.33.0"
+protobuf-java = "4.33.2"
 ktor = "3.3.3"
 
 [libraries]
