@@ -9,7 +9,7 @@ jobs:
         contents: write
 
     steps:
-      - uses: actions/checkout@v6.0.3
+      - uses: actions/checkout@v7.0.0
 
       - name: "Configure Java"
         uses: actions/setup-java@v5.2.0
