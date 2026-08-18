@@ -18,7 +18,7 @@ interface OslonokkelenPushClient {
     suspend fun describeSystem() : SystemInfo
 
     /**
-     * Can be used to figure out if all recipients has received the permission.
+     * Can be used to figure out if all recipients have received the permission.
      */
     suspend fun queryState(id: PermissionListId) : PermissionState
 

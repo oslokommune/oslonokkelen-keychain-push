@@ -4,8 +4,8 @@ import java.time.Instant
 
 /**
  * @param version This version will be incremented for every change to the permission.
- * @param pendingRecipients Recipients we don't have a profile for. These people will have to confirm their phone number in the app.
- * @param confirmedRecipients Recipients we have found a profile for.
+ * @param pendingRecipients Recipients who have not used the code they receive on SMS in Oslonøkkelen.
+ * @param confirmedRecipients Recipients who have used the code they receive on SMS in the app.
  * @param link Optional link
  * @param information Optional information
  */

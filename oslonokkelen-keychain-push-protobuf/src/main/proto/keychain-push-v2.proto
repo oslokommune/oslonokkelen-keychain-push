@@ -40,8 +40,7 @@ message PushRequest {
   // Determines what the recipients will be granted access to and when.
   repeated Permission permissions = 3;
 
-  // Who will get the permissions. They will have to verify their phone numbers in
-  // Oslonøkkelen before the permission you have pushed can be associated with their profiles.
+  // Who will get the permissions. They will receive a code on SMS that they will have to input in Oslonøkkelen.
   repeated Recipient recipients = 4;
 
   // Optional
@@ -157,8 +156,7 @@ message StateResponse {
   // Recipient waiting to be associated with a profile in Oslonøkkelen.
   message PendingRecipient {
 
-    // The phone number used to connect the permission to a user profile.
-    // This must be verified in the app.
+    // The phone number that the key code is sent to. The user must input the code they receive on SMS in the app.
     PhoneNumber phoneNumber = 1;
 
     // When was the first time this phone number was pushed.
