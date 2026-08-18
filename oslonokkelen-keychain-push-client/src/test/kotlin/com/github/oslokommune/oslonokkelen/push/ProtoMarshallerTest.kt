@@ -59,7 +59,8 @@ internal class ProtoMarshallerTest {
                         phoneNumber = "12345789"
                     ),
                     pushedAt = Instant.now().truncatedTo(SECONDS),
-                    canShare = false
+                    canShare = false,
+                    keyCode = "TEST"
                 )
             ),
             confirmedRecipients = listOf(
@@ -71,7 +72,9 @@ internal class ProtoMarshallerTest {
                     usageCounter = 2,
                     confirmedAt = Instant.now().truncatedTo(SECONDS),
                     pushedAt = Instant.now().truncatedTo(SECONDS),
-                    canShare = true
+                    canShare = true,
+                    keyCode = "TEST",
+                    fullName = "Inn Bygger"
                 )
             ),
             version = 2,

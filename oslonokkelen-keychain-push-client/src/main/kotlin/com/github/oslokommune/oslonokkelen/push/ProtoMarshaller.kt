@@ -121,7 +121,8 @@ object ProtoMarshaller {
                         phoneNumber = pending.phoneNumber.number
                     ),
                     pushedAt = Instant.ofEpochSecond(pending.pushedAtEpochSeconds),
-                    canShare = pending.canShare
+                    canShare = pending.canShare,
+                    keyCode = pending.keyCode
                 )
             },
             confirmedRecipients = message.confirmedRecipientsList.map { confirmed ->
@@ -133,7 +134,9 @@ object ProtoMarshaller {
                         phoneNumber = confirmed.phoneNumber.number
                     ),
                     pushedAt = Instant.ofEpochSecond(confirmed.pushedAtEpochSeconds),
-                    canShare = confirmed.canShare
+                    canShare = confirmed.canShare,
+                    keyCode = confirmed.keyCode,
+                    fullName = confirmed.fullName
                 )
             },
             information = if (message.hasAdditionalInformation()) {
@@ -161,6 +164,7 @@ object ProtoMarshaller {
                     .setPhoneNumber(toProtobuf(pending.phoneNumber))
                     .setPushedAtEpochSeconds(pending.pushedAt.epochSecond)
                     .setCanShare(pending.canShare)
+                    .setKeyCode(pending.keyCode)
                     .build()
             })
             .addAllConfirmedRecipients(state.confirmedRecipients.map { confirmed ->
@@ -170,6 +174,8 @@ object ProtoMarshaller {
                     .setPhoneNumber(toProtobuf(confirmed.phoneNumber))
                     .setUsageCounter(confirmed.usageCounter)
                     .setCanShare(confirmed.canShare)
+                    .setKeyCode(confirmed.keyCode)
+                    .setFullName(confirmed.fullName)
                     .build()
             })
             .setVersion(state.version)

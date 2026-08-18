@@ -165,11 +165,14 @@ message StateResponse {
     // Whether the recipient can share the permissions they received
     bool canShare = 3;
 
+    // The key code to be used in the app that was sent to the phone number
+    string keyCode = 4;
+
   }
 
   message ConfirmedRecipient {
 
-    // The phone number used assigning the permission
+    // Phone number the key code was sent to
     PhoneNumber phoneNumber = 1;
 
     // How many times the permission has been used by the recipient
@@ -183,6 +186,12 @@ message StateResponse {
 
     // Whether the recipient can share the permissions they received
     bool canShare = 5;
+
+    // The key code that was used in the app by the user
+    string keyCode = 6;
+
+    // Full name of the user that used the key code
+    string fullName = 7;
 
   }
 
