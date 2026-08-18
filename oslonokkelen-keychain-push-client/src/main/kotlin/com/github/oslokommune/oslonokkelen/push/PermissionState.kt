@@ -32,7 +32,7 @@ data class PermissionState(
     /**
      * @param phoneNumber Phone number the key code was sent to
      * @param canShare Whether the user can share this permission in the app
-     * @param keyCode The key code that was used in the app by the user
+     * @param keyCode The key code that was used in the app by the user, if available
      * @param fullName Full name of the user that used the key code
      */
     data class ConfirmedRecipient(
@@ -41,7 +41,7 @@ data class PermissionState(
         val pushedAt: Instant,
         val confirmedAt: Instant,
         val canShare: Boolean,
-        val keyCode: String,
+        val keyCode: String?,
         val fullName: String
     )
 

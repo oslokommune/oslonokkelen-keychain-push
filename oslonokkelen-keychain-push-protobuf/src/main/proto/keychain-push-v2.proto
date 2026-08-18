@@ -187,8 +187,8 @@ message StateResponse {
     // Whether the recipient can share the permissions they received
     bool canShare = 5;
 
-    // The key code that was used in the app by the user
-    string keyCode = 6;
+    // The key code that was used in the app by the user, if available
+    optional string keyCode = 6;
 
     // Full name of the user that used the key code
     string fullName = 7;

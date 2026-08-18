@@ -135,7 +135,7 @@ object ProtoMarshaller {
                     ),
                     pushedAt = Instant.ofEpochSecond(confirmed.pushedAtEpochSeconds),
                     canShare = confirmed.canShare,
-                    keyCode = confirmed.keyCode,
+                    keyCode = if(confirmed.hasKeyCode()) confirmed.keyCode else null,
                     fullName = confirmed.fullName
                 )
             },
@@ -168,15 +168,19 @@ object ProtoMarshaller {
                     .build()
             })
             .addAllConfirmedRecipients(state.confirmedRecipients.map { confirmed ->
-                KeychainPushApiV2.StateResponse.ConfirmedRecipient.newBuilder()
+                val builder = KeychainPushApiV2.StateResponse.ConfirmedRecipient.newBuilder()
                     .setConfirmedAtEpochSeconds(confirmed.confirmedAt.epochSecond)
                     .setPushedAtEpochSeconds(confirmed.pushedAt.epochSecond)
                     .setPhoneNumber(toProtobuf(confirmed.phoneNumber))
                     .setUsageCounter(confirmed.usageCounter)
                     .setCanShare(confirmed.canShare)
-                    .setKeyCode(confirmed.keyCode)
                     .setFullName(confirmed.fullName)
-                    .build()
+
+                if(confirmed.keyCode != null) {
+                    builder.setKeyCode(confirmed.keyCode)
+                }
+
+                builder.build()
             })
             .setVersion(state.version)
 
