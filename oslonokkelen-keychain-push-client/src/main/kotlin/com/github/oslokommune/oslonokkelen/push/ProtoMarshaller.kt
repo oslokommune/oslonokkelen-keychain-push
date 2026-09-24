@@ -1,8 +1,9 @@
 package com.github.oslokommune.oslonokkelen.push
 
 import com.github.oslokommune.oslonokkelen.push.proto.KeychainPushApiV2
+import kotlinx.datetime.LocalDateTime
 import java.net.URI
-import java.time.Instant
+import kotlin.time.Instant
 
 object ProtoMarshaller {
 
@@ -26,18 +27,8 @@ object ProtoMarshaller {
                     .addAllAssetIds(permission.assetIds.map { assetId -> assetId.id })
                     .setTimeInterval(
                         KeychainPushApiV2.LocalDateTimeInterval.newBuilder()
-                            .setFrom(
-                                KeychainPushApiV2.LocalDateTime.newBuilder()
-                                    .setDate(permission.timeInterval.start.toLocalDate().toString())
-                                    .setTime(permission.timeInterval.start.toLocalTime().toString())
-                                    .build()
-                            )
-                            .setUntil(
-                                KeychainPushApiV2.LocalDateTime.newBuilder()
-                                    .setDate(permission.timeInterval.end.toLocalDate().toString())
-                                    .setTime(permission.timeInterval.end.toLocalTime().toString())
-                                    .build()
-                            )
+                            .setFrom(toProtobuf(permission.timeInterval.start))
+                            .setUntil(toProtobuf(permission.timeInterval.end))
                             .build()
                     )
                     .build()
@@ -52,6 +43,13 @@ object ProtoMarshaller {
         }
 
         return builder.build()
+    }
+
+    private fun toProtobuf(dateTime: LocalDateTime): KeychainPushApiV2.LocalDateTime {
+        return KeychainPushApiV2.LocalDateTime.newBuilder()
+            .setDate(TimeInterval.dateFormat.format(dateTime.date))
+            .setTime(TimeInterval.timeFormat.format(dateTime.time))
+            .build()
     }
 
     private fun toProtobuf(link: Link): KeychainPushApiV2.Link {
@@ -120,20 +118,20 @@ object ProtoMarshaller {
                         countryCode = pending.phoneNumber.cc,
                         phoneNumber = pending.phoneNumber.number
                     ),
-                    pushedAt = Instant.ofEpochSecond(pending.pushedAtEpochSeconds),
+                    pushedAt = Instant.fromEpochSeconds(pending.pushedAtEpochSeconds),
                     canShare = pending.canShare,
                     keyCode = pending.keyCode
                 )
             },
             confirmedRecipients = message.confirmedRecipientsList.map { confirmed ->
                 PermissionState.ConfirmedRecipient(
-                    confirmedAt = Instant.ofEpochSecond(confirmed.confirmedAtEpochSeconds),
+                    confirmedAt = Instant.fromEpochSeconds(confirmed.confirmedAtEpochSeconds),
                     usageCounter = confirmed.usageCounter,
                     phoneNumber = PhoneNumber(
                         countryCode = confirmed.phoneNumber.cc,
                         phoneNumber = confirmed.phoneNumber.number
                     ),
-                    pushedAt = Instant.ofEpochSecond(confirmed.pushedAtEpochSeconds),
+                    pushedAt = Instant.fromEpochSeconds(confirmed.pushedAtEpochSeconds),
                     canShare = confirmed.canShare,
                     keyCode = if(confirmed.hasKeyCode()) confirmed.keyCode else null,
                     fullName = confirmed.fullName
@@ -162,15 +160,15 @@ object ProtoMarshaller {
             .addAllPendingRecipients(state.pendingRecipients.map { pending ->
                 KeychainPushApiV2.StateResponse.PendingRecipient.newBuilder()
                     .setPhoneNumber(toProtobuf(pending.phoneNumber))
-                    .setPushedAtEpochSeconds(pending.pushedAt.epochSecond)
+                    .setPushedAtEpochSeconds(pending.pushedAt.epochSeconds)
                     .setCanShare(pending.canShare)
                     .setKeyCode(pending.keyCode)
                     .build()
             })
             .addAllConfirmedRecipients(state.confirmedRecipients.map { confirmed ->
                 val builder = KeychainPushApiV2.StateResponse.ConfirmedRecipient.newBuilder()
-                    .setConfirmedAtEpochSeconds(confirmed.confirmedAt.epochSecond)
-                    .setPushedAtEpochSeconds(confirmed.pushedAt.epochSecond)
+                    .setConfirmedAtEpochSeconds(confirmed.confirmedAt.epochSeconds)
+                    .setPushedAtEpochSeconds(confirmed.pushedAt.epochSeconds)
                     .setPhoneNumber(toProtobuf(confirmed.phoneNumber))
                     .setUsageCounter(confirmed.usageCounter)
                     .setCanShare(confirmed.canShare)

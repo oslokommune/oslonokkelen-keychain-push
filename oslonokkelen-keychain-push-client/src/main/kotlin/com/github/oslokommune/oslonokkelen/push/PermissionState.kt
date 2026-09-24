@@ -1,6 +1,6 @@
 package com.github.oslokommune.oslonokkelen.push
 
-import java.time.Instant
+import kotlin.time.Instant
 
 /**
  * @param version This version will be incremented for every change to the permission.

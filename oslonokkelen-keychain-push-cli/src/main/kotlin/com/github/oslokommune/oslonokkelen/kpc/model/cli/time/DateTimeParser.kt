@@ -1,8 +1,14 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.time
 
 import java.lang.UnsupportedOperationException
-import java.time.Duration
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 class DateTimeParser private constructor(private val parseRelativeTo: LocalDateTime) {
 
@@ -37,9 +43,9 @@ class DateTimeParser private constructor(private val parseRelativeTo: LocalDateT
                 }
 
                 when (matcher.group(4)) {
-                    "m" -> TimeToken.OffsetToken(Duration.ofMinutes(amount))
-                    "h" -> TimeToken.OffsetToken(Duration.ofHours(amount))
-                    "d" -> TimeToken.OffsetToken(Duration.ofDays(amount))
+                    "m" -> TimeToken.OffsetToken(amount.minutes)
+                    "h" -> TimeToken.OffsetToken(amount.hours)
+                    "d" -> TimeToken.OffsetToken(amount.days)
                     else -> throw UnsupportedOperationException("Unknown time unit: ${matcher.group(3)}")
                 }
             }
@@ -103,7 +109,7 @@ class DateTimeParser private constructor(private val parseRelativeTo: LocalDateT
         override fun on(token: TimeToken): Parser {
             return when (token) {
                 is TimeToken.OffsetToken -> {
-                    CompletedParser(result = result + token.duration)
+                    CompletedParser(result = (result.toInstant(TimeZone.UTC) + token.duration).toLocalDateTime(TimeZone.UTC))
                 }
                 else -> {
                     throw UnsupportedOperationException("Unexpected token: $token")

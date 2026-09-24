@@ -24,8 +24,6 @@ data class PermissionModel(
         )
     }
 
-
-
     @Serializable
     data class Information(
         val content: String

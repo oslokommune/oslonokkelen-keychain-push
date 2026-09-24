@@ -12,8 +12,6 @@ import com.github.oslokommune.oslonokkelen.push.TimeInterval
 import java.net.URI
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.time.LocalDate
-import java.time.LocalTime
 
 class SyncCommand(
     private val out: CliOutput,
@@ -42,9 +40,11 @@ class SyncCommand(
             for (permission in model.permissions) {
                 addPermission(
                     assetIds = permission.assetIds,
-                    interval = TimeInterval(
-                        start = LocalDate.parse(permission.fromDate).atTime(LocalTime.parse(permission.fromTime)),
-                        end = LocalDate.parse(permission.untilDate).atTime(LocalTime.parse(permission.untilTime)),
+                    interval = TimeInterval.parse(
+                        fromDate = permission.fromDate,
+                        fromTime = permission.fromTime,
+                        endDate = permission.untilDate,
+                        endTime = permission.untilTime,
                     )
                 )
             }

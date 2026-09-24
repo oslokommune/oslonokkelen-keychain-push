@@ -2,7 +2,7 @@ package com.github.oslokommune.oslonokkelen.kpc.model.cli.time
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
 
 internal class DateTimeParserTest {
 

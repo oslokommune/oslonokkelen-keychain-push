@@ -2,9 +2,10 @@ package com.github.oslokommune.oslonokkelen.push
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlinx.datetime.LocalDateTime
 import java.net.URI
-import java.time.Instant
-import java.time.temporal.ChronoUnit.SECONDS
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 internal class ProtoMarshallerTest {
 
@@ -29,6 +30,35 @@ internal class ProtoMarshallerTest {
         val recreatedRequest = ProtoMarshaller.fromProtobuf(protobuf)
 
         assertEquals(request, recreatedRequest)
+    }
+
+    @Test
+    fun `Date and time is serialized in a stable format`() {
+        val request = PermissionList.build("booking-123", "Booking #123") {
+            addRecipientByPhoneNumber("47", "12345789", false)
+            addPermission(
+                interval = TimeInterval(
+                    start = LocalDateTime(2022, 1, 2, 8, 5),
+                    end = LocalDateTime(2022, 11, 25, 13, 15, 30, 500_000_000)
+                ),
+                assetIds = listOf("kitchen")
+            )
+        }
+
+        val interval = ProtoMarshaller.toProtobuf(request).permissionsList.single().timeInterval
+
+        assertEquals("2022-01-02", interval.from.date)
+        assertEquals("08:05", interval.from.time)
+        assertEquals("2022-11-25", interval.until.date)
+        assertEquals("13:15:30", interval.until.time)
+    }
+
+    @Test
+    fun `Parsing ignores fractions of a second`() {
+        val interval = TimeInterval.parse("2022-01-02", "08:05:10.123456789", "2022-11-25", "13:15:30.5")
+
+        assertEquals(LocalDateTime(2022, 1, 2, 8, 5, 10), interval.start)
+        assertEquals(LocalDateTime(2022, 11, 25, 13, 15, 30), interval.end)
     }
 
     @Test
@@ -58,7 +88,7 @@ internal class ProtoMarshallerTest {
                         countryCode = "47",
                         phoneNumber = "12345789"
                     ),
-                    pushedAt = Instant.now().truncatedTo(SECONDS),
+                    pushedAt = Instant.fromEpochSeconds(Clock.System.now().epochSeconds),
                     canShare = false,
                     keyCode = "TEST"
                 )
@@ -70,8 +100,8 @@ internal class ProtoMarshallerTest {
                         phoneNumber = "32154987"
                     ),
                     usageCounter = 2,
-                    confirmedAt = Instant.now().truncatedTo(SECONDS),
-                    pushedAt = Instant.now().truncatedTo(SECONDS),
+                    confirmedAt = Instant.fromEpochSeconds(Clock.System.now().epochSeconds),
+                    pushedAt = Instant.fromEpochSeconds(Clock.System.now().epochSeconds),
                     canShare = true,
                     keyCode = "TEST",
                     fullName = "Inn Bygger"

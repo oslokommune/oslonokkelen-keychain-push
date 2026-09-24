@@ -6,7 +6,9 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.ajalt.clikt.parameters.options.validate
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.time.DateTimeParser
-import java.time.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 
 class IntervalOptionGroup : OptionGroup(
     name = "Interval",
@@ -37,7 +39,7 @@ class IntervalOptionGroup : OptionGroup(
 
     companion object {
 
-        private val dateTimeParser = DateTimeParser.newParser(LocalDateTime.now())
+        private val dateTimeParser = DateTimeParser.newParser(Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()))
 
     }
 
