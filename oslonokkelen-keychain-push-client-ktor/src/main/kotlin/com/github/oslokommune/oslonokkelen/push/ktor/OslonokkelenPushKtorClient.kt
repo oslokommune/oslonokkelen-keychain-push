@@ -25,7 +25,6 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.readBytes
 import io.ktor.client.statement.readRawBytes
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -167,11 +166,7 @@ class OslonokkelenPushKtorClient(
         }
     }
 
-    private suspend fun <M : GeneratedMessage> readSuccessfulResponsePayload(
-        httpResponse: HttpResponse,
-        expectedType: String,
-        factory: (ByteArray) -> M
-    ): M {
+    private suspend fun <M : GeneratedMessage> readSuccessfulResponsePayload(httpResponse: HttpResponse, expectedType: String, factory: (ByteArray) -> M): M {
         val oslonokkelenTraceId = httpResponse.headers[traceIdHeaderName]
         val responseApplicationType = getApplicationResponseType(httpResponse, oslonokkelenTraceId)
 
@@ -198,7 +193,6 @@ class OslonokkelenPushKtorClient(
             )
         }
     }
-
 
     private suspend fun handleStructuredErrorResponse(httpResponse: HttpResponse, oslonokkelenTraceId: String?) {
         val bytes = httpResponse.readRawBytes()
@@ -229,5 +223,4 @@ class OslonokkelenPushKtorClient(
 
         return responseContentType.parameter("type")
     }
-
 }

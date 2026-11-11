@@ -44,5 +44,4 @@ data class PermissionState(
         val keyCode: String?,
         val fullName: String
     )
-
 }

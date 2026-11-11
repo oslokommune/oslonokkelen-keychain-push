@@ -36,7 +36,6 @@ data class PermissionList(
         }
     }
 
-
     companion object {
 
         const val TITLE_MAX_LENGTH = 100
@@ -57,7 +56,6 @@ data class PermissionList(
         }
     }
 
-
     class Builder {
         val permissions = mutableListOf<Permission>()
         val recipients = mutableListOf<Recipient>()
@@ -65,9 +63,8 @@ data class PermissionList(
         var link: Link? = null
         var information: Information? = null
 
-
         fun addRecipientByPhoneNumber(countryCode: String, number: String, canShare: Boolean) {
-            recipients.add(Recipient(PhoneNumber(countryCode, number),  canShare))
+            recipients.add(Recipient(PhoneNumber(countryCode, number), canShare))
         }
 
         fun addPermission(interval: TimeInterval, assetIds: List<String>) {
@@ -94,7 +91,5 @@ data class PermissionList(
         fun additionalInformation(info: Information) {
             information = info
         }
-
     }
-
 }

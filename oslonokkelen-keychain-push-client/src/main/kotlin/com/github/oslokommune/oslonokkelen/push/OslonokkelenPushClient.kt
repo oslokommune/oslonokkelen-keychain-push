@@ -15,12 +15,12 @@ interface OslonokkelenPushClient {
     /**
      * @return A description of your client / system
      */
-    suspend fun describeSystem() : SystemInfo
+    suspend fun describeSystem(): SystemInfo
 
     /**
      * Can be used to figure out if all recipients have received the permission.
      */
-    suspend fun queryState(id: PermissionListId) : PermissionState
+    suspend fun queryState(id: PermissionListId): PermissionState
 
     /**
      * Fetches a list of all permissions your system has pushed to Oslonøkkelen including a version
@@ -29,7 +29,7 @@ interface OslonokkelenPushClient {
      *
      * @return A list of each permission list your system has pushed to Oslonøkkelen including a version field.
      */
-    suspend fun index() : PermissionsIndex
+    suspend fun index(): PermissionsIndex
 
     /**
      * Will delete the entire permission list. This will remove all traces of the permission
@@ -41,10 +41,11 @@ interface OslonokkelenPushClient {
      */
     suspend fun delete(id: PermissionListId)
 
+    // Public api used by library consumers, so renaming them to SCREAMING_SNAKE_CASE would be a breaking change
+    @Suppress("ktlint:standard:property-naming")
     companion object {
         const val clientIdHeaderName: String = "X-System-Id"
         const val clientApiKeyHeaderName: String = "X-System-Api-Key"
         const val traceIdHeaderName: String = "X-Trace-Id"
     }
-
 }

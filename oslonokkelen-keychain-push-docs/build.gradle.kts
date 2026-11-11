@@ -7,10 +7,6 @@ plugins {
     alias(libs.plugins.asciidoc.pdf)
 }
 
-repositories {
-    mavenCentral()
-}
-
 tasks {
     "asciidoctor"(AsciidoctorTask::class) {
 
@@ -63,13 +59,11 @@ tasks {
     }
 }
 
-
 asciidoctorj {
     setVersion(libs.versions.asciidocj)
     modules.diagram.setVersion(libs.versions.asciidoc.diagrams)
     logLevel = LogLevel.INFO
 }
-
 
 object ProcessUtil {
 

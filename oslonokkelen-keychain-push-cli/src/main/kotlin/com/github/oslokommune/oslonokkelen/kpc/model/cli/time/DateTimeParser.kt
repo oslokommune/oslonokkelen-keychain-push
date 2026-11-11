@@ -1,10 +1,10 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.time
 
-import java.lang.UnsupportedOperationException
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import java.lang.UnsupportedOperationException
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
@@ -71,18 +71,14 @@ class DateTimeParser private constructor(private val parseRelativeTo: LocalDateT
             }
         }
 
-        data class LocalDateAndTime(val time: LocalDateTime) : TimeToken {
-
-        }
+        data class LocalDateAndTime(val time: LocalDateTime) : TimeToken
 
         data class OffsetToken(val duration: Duration) : TimeToken
-
     }
 
     private interface Parser {
 
         fun on(token: TimeToken): Parser
-
     }
 
     private inner class EmptyParser : Parser {
@@ -117,5 +113,4 @@ class DateTimeParser private constructor(private val parseRelativeTo: LocalDateT
             }
         }
     }
-
 }

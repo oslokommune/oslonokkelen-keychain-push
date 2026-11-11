@@ -18,7 +18,6 @@ data class TimeInterval(
         }
     }
 
-
     companion object {
 
         /**
@@ -64,13 +63,16 @@ data class TimeInterval(
             return LocalTime(time.hour, time.minute, time.second)
         }
 
-        fun parse(fromDate: String, fromTime: String, endDate: String, endTime: String) : TimeInterval {
+        fun parse(
+            fromDate: String,
+            fromTime: String,
+            endDate: String,
+            endTime: String
+        ): TimeInterval {
             return TimeInterval(
                 start = dateFormat.parse(fromDate).atTime(parseTime(fromTime)),
                 end = dateFormat.parse(endDate).atTime(parseTime(endTime))
             )
         }
     }
-
-
 }

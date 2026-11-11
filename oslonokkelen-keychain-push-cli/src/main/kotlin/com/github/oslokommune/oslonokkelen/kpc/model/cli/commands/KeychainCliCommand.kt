@@ -27,7 +27,7 @@ class KeychainCliCommand : CliktCommand(
         |     --system-id <your-system-id> \
         |     --api-secret <your-secret> 
         | ```
-    """.trimMargin()
+        """.trimMargin()
     }
 
     init {

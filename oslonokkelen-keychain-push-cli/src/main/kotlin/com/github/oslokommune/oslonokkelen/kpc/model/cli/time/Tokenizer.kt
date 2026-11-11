@@ -7,7 +7,7 @@ class Tokenizer<T : Tokenizer.Token> private constructor(private val matchers: L
 
     private val emptyPattern = Pattern.compile("")
 
-    fun tokenize(input: String) : Sequence<T> {
+    fun tokenize(input: String): Sequence<T> {
         return sequence {
             val m = emptyPattern.matcher(input)
 
@@ -33,9 +33,7 @@ class Tokenizer<T : Tokenizer.Token> private constructor(private val matchers: L
 
             return Tokenizer(ctx.matchers)
         }
-
     }
-
 
     class BuilderCtx<T : Token> internal constructor() {
 
@@ -47,7 +45,6 @@ class Tokenizer<T : Tokenizer.Token> private constructor(private val matchers: L
 
             matchers.add(matcher)
         }
-
     }
 
     internal class RegexMatcher<T : Token>(
@@ -56,7 +53,7 @@ class Tokenizer<T : Tokenizer.Token> private constructor(private val matchers: L
         private val tokenFactory: (Matcher) -> T?
     ) {
 
-        operator fun invoke(matcher: Matcher) : T? {
+        operator fun invoke(matcher: Matcher): T? {
             matcher.usePattern(pattern)
 
             return if (matcher.lookingAt()) {
@@ -71,9 +68,7 @@ class Tokenizer<T : Tokenizer.Token> private constructor(private val matchers: L
                 null
             }
         }
-
     }
 
     interface Token
-
 }

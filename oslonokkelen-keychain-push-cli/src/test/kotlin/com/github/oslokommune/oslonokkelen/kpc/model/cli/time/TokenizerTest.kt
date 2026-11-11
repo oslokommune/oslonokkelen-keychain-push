@@ -27,13 +27,10 @@ internal class TokenizerTest {
             )
     }
 
-
     sealed interface TestToken : Tokenizer.Token {
 
         data class Str(val value: String) : TestToken
 
         data class Number(val value: Int) : TestToken
-
     }
-
 }

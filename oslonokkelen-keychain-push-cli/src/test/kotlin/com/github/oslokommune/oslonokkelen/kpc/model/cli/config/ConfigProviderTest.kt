@@ -11,12 +11,12 @@ import java.nio.file.Path
 internal class ConfigProviderTest {
 
     @TempDir
-    private lateinit var tempDir: Path;
+    private lateinit var tempDir: Path
 
     @Test
     fun `Will create default config file if missing`() {
         val configuration = readConfiguration()
-        val expectedPath = tempDir.resolve(ConfigProvider.filename)
+        val expectedPath = tempDir.resolve(ConfigProvider.FILENAME)
 
         assertThat(configuration).isNotNull
         assertThat(expectedPath).isRegularFile
@@ -150,7 +150,7 @@ internal class ConfigProviderTest {
             grpcUri = "https://backend.example.com"
         )
 
-        val ex = assertThrows<CliException>() {
+        val ex = assertThrows<CliException> {
             configuration.addProfile(
                 systemId = "test-system",
                 apiSecret = "don't-tell-anyone",
@@ -166,5 +166,4 @@ internal class ConfigProviderTest {
         val cli = CliOutput()
         return ConfigProvider.readConfig(cli, tempDir)
     }
-
 }

@@ -1,7 +1,7 @@
 package com.github.oslokommune.oslonokkelen.push
 
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -76,5 +76,4 @@ internal class PhoneNumberTest {
 
         assertNotNull(number)
     }
-
 }

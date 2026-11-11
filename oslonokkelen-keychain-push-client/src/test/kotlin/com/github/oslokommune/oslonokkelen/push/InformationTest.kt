@@ -10,11 +10,10 @@ internal class InformationTest {
     fun `Too long`() {
         val ex = assertThrows<IllegalArgumentException> {
             Information(
-                content = " ".repeat(PermissionList.INFORMATION_MAX_LENGTH+1)
+                content = " ".repeat(PermissionList.INFORMATION_MAX_LENGTH + 1)
             )
         }
 
         assertThat(ex).hasMessage("Information can't be longer then 2000 characters")
     }
-
 }

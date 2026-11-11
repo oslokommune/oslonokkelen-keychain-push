@@ -5,7 +5,6 @@ import com.github.ajalt.clikt.core.Context
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
-import com.github.oslokommune.oslonokkelen.kpc.model.cli.cli.CliOutput
 import com.github.oslokommune.oslonokkelen.kpc.model.cli.config.ConfigurationHandle
 
 class AddProfileCommand(private val configurationHandle: ConfigurationHandle) : CliktCommand(
@@ -37,7 +36,7 @@ class AddProfileCommand(private val configurationHandle: ConfigurationHandle) : 
             systemId = systemId,
             apiSecret = apiSecret,
             backendUri = backendUri,
-            grpcUri = grpcUri,
+            grpcUri = grpcUri
         )
     }
 }

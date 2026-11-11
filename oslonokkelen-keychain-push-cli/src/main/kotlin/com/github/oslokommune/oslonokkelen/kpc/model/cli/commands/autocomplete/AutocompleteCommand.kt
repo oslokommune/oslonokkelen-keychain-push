@@ -42,5 +42,4 @@ class AutocompleteCommand(
     enum class Autocomplete {
         PROFILE_IDS
     }
-
 }

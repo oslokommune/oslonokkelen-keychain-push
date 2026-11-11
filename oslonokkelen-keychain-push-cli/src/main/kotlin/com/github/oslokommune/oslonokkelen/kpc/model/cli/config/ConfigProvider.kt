@@ -9,10 +9,10 @@ import kotlin.text.Charsets.UTF_8
 
 object ConfigProvider {
 
-    const val filename = "keychain-pusher.yaml"
+    const val FILENAME = "keychain-pusher.yaml"
 
     fun readConfig(out: CliOutput, folder: Path = defaultConfigFolder()): ConfigurationHandle {
-        val path = folder.resolve(filename)
+        val path = folder.resolve(FILENAME)
 
         val config = if (!Files.exists(path)) {
             out.stderr("Configuration file not found.")

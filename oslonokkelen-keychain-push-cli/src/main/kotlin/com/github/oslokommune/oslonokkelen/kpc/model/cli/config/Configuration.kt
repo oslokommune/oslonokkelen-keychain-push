@@ -5,7 +5,7 @@ import kotlinx.serialization.Transient
 
 @Serializable
 data class Configuration(
-    val activeProfileId : String? = null,
+    val activeProfileId: String? = null,
     val profiles: List<Profile> = emptyList()
 ) {
 

@@ -36,11 +36,8 @@ class IntervalOptionGroup : OptionGroup(
             }
         }
 
-
     companion object {
 
         private val dateTimeParser = DateTimeParser.newParser(Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()))
-
     }
-
 }

@@ -1,8 +1,8 @@
 package com.github.oslokommune.oslonokkelen.push
 
+import kotlinx.datetime.LocalDateTime
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlinx.datetime.LocalDateTime
 import java.net.URI
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -138,5 +138,4 @@ internal class ProtoMarshallerTest {
 
         assertEquals(index, restoredIndex)
     }
-
 }

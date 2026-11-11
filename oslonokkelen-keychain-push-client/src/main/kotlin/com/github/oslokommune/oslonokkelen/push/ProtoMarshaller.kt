@@ -84,7 +84,7 @@ object ProtoMarshaller {
                         fromDate = permission.timeInterval.from.date,
                         fromTime = permission.timeInterval.from.time,
                         endDate = permission.timeInterval.until.date,
-                        endTime = permission.timeInterval.until.time,
+                        endTime = permission.timeInterval.until.time
                     ),
                     assetIds = permission.assetIdsList
                 )
@@ -107,7 +107,6 @@ object ProtoMarshaller {
             }
         }
     }
-
 
     fun fromProtobuf(message: KeychainPushApiV2.StateResponse): PermissionState {
         return PermissionState(
@@ -133,7 +132,7 @@ object ProtoMarshaller {
                     ),
                     pushedAt = Instant.fromEpochSeconds(confirmed.pushedAtEpochSeconds),
                     canShare = confirmed.canShare,
-                    keyCode = if(confirmed.hasKeyCode()) confirmed.keyCode else null,
+                    keyCode = if (confirmed.hasKeyCode()) confirmed.keyCode else null,
                     fullName = confirmed.fullName
                 )
             },
@@ -157,29 +156,33 @@ object ProtoMarshaller {
 
     fun toProtobuf(state: PermissionState): KeychainPushApiV2.StateResponse {
         val builder = KeychainPushApiV2.StateResponse.newBuilder()
-            .addAllPendingRecipients(state.pendingRecipients.map { pending ->
-                KeychainPushApiV2.StateResponse.PendingRecipient.newBuilder()
-                    .setPhoneNumber(toProtobuf(pending.phoneNumber))
-                    .setPushedAtEpochSeconds(pending.pushedAt.epochSeconds)
-                    .setCanShare(pending.canShare)
-                    .setKeyCode(pending.keyCode)
-                    .build()
-            })
-            .addAllConfirmedRecipients(state.confirmedRecipients.map { confirmed ->
-                val builder = KeychainPushApiV2.StateResponse.ConfirmedRecipient.newBuilder()
-                    .setConfirmedAtEpochSeconds(confirmed.confirmedAt.epochSeconds)
-                    .setPushedAtEpochSeconds(confirmed.pushedAt.epochSeconds)
-                    .setPhoneNumber(toProtobuf(confirmed.phoneNumber))
-                    .setUsageCounter(confirmed.usageCounter)
-                    .setCanShare(confirmed.canShare)
-                    .setFullName(confirmed.fullName)
-
-                if(confirmed.keyCode != null) {
-                    builder.setKeyCode(confirmed.keyCode)
+            .addAllPendingRecipients(
+                state.pendingRecipients.map { pending ->
+                    KeychainPushApiV2.StateResponse.PendingRecipient.newBuilder()
+                        .setPhoneNumber(toProtobuf(pending.phoneNumber))
+                        .setPushedAtEpochSeconds(pending.pushedAt.epochSeconds)
+                        .setCanShare(pending.canShare)
+                        .setKeyCode(pending.keyCode)
+                        .build()
                 }
+            )
+            .addAllConfirmedRecipients(
+                state.confirmedRecipients.map { confirmed ->
+                    val builder = KeychainPushApiV2.StateResponse.ConfirmedRecipient.newBuilder()
+                        .setConfirmedAtEpochSeconds(confirmed.confirmedAt.epochSeconds)
+                        .setPushedAtEpochSeconds(confirmed.pushedAt.epochSeconds)
+                        .setPhoneNumber(toProtobuf(confirmed.phoneNumber))
+                        .setUsageCounter(confirmed.usageCounter)
+                        .setCanShare(confirmed.canShare)
+                        .setFullName(confirmed.fullName)
 
-                builder.build()
-            })
+                    if (confirmed.keyCode != null) {
+                        builder.setKeyCode(confirmed.keyCode)
+                    }
+
+                    builder.build()
+                }
+            )
             .setVersion(state.version)
 
         if (state.link != null) {
@@ -192,20 +195,21 @@ object ProtoMarshaller {
         return builder.build()
     }
 
-    private fun toProtobuf(phoneNumber: PhoneNumber): KeychainPushApiV2.PhoneNumber? =
-        KeychainPushApiV2.PhoneNumber.newBuilder()
-            .setCc(phoneNumber.countryCode)
-            .setNumber(phoneNumber.phoneNumber)
-            .build()
+    private fun toProtobuf(phoneNumber: PhoneNumber): KeychainPushApiV2.PhoneNumber? = KeychainPushApiV2.PhoneNumber.newBuilder()
+        .setCc(phoneNumber.countryCode)
+        .setNumber(phoneNumber.phoneNumber)
+        .build()
 
     fun toProtobuf(index: PermissionsIndex): KeychainPushApiV2.IndexResponse {
         return KeychainPushApiV2.IndexResponse.newBuilder()
-            .addAllEntries(index.entries.map { e ->
-                KeychainPushApiV2.IndexResponse.Entry.newBuilder()
-                    .setPermissionId(e.id.id)
-                    .setVersion(e.version)
-                    .build()
-            })
+            .addAllEntries(
+                index.entries.map { e ->
+                    KeychainPushApiV2.IndexResponse.Entry.newBuilder()
+                        .setPermissionId(e.id.id)
+                        .setVersion(e.version)
+                        .build()
+                }
+            )
             .build()
     }
 
@@ -219,5 +223,4 @@ object ProtoMarshaller {
             }
         )
     }
-
 }

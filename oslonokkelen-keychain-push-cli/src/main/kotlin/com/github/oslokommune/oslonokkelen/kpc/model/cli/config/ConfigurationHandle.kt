@@ -11,7 +11,7 @@ class ConfigurationHandle(
     val profileIds: Set<String>
         get() = configuration.profiles.map { it.id }.toSet()
 
-    val activeProfileId : String?
+    val activeProfileId: String?
         get() = configuration.activeProfileId
 
     fun removeProfile(profileId: String) {
@@ -25,7 +25,12 @@ class ConfigurationHandle(
         }
     }
 
-    fun addProfile(systemId: String, apiSecret: String, backendUri: String, grpcUri: String) {
+    fun addProfile(
+        systemId: String,
+        apiSecret: String,
+        backendUri: String,
+        grpcUri: String
+    ) {
         if (configuration.profiles.any { it.systemId == systemId && it.backendUri == backendUri }) {
             throw CliException("Already have profile for system $systemId @ $backendUri")
         }

@@ -44,7 +44,7 @@ class SyncCommand(
                         fromDate = permission.fromDate,
                         fromTime = permission.fromTime,
                         endDate = permission.untilDate,
-                        endTime = permission.untilTime,
+                        endTime = permission.untilTime
                     )
                 )
             }

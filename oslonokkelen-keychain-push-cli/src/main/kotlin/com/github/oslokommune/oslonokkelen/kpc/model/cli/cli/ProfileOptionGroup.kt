@@ -18,11 +18,13 @@ class ProfileOptionGroup(private val configurationHandle: ConfigurationHandle) :
         help = "The profile / system you want to use",
         completionCandidates = CompletionCandidates.Custom.fromStdout("keychain-pusher auto --autocomplete PROFILE_IDS")
     )
-        .choice(if (configurationHandle.profileIds.isNotEmpty()) {
-            configurationHandle.profileIds.associateBy { it }
-        } else {
-            mapOf("missing" to "No profile found")
-        })
+        .choice(
+            if (configurationHandle.profileIds.isNotEmpty()) {
+                configurationHandle.profileIds.associateBy { it }
+            } else {
+                mapOf("missing" to "No profile found")
+            }
+        )
         .required()
         .validate { input ->
             if (!configurationHandle.profileIds.contains(input)) {
@@ -33,5 +35,4 @@ class ProfileOptionGroup(private val configurationHandle: ConfigurationHandle) :
                 }
             }
         }
-
 }

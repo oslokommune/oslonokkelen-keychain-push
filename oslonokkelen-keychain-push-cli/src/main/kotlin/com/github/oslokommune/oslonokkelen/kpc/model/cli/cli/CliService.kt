@@ -17,7 +17,6 @@ class CliService(
     val profileIds: Set<String>
         get() = configurationHandle.profileIds
 
-
     fun <R> withNewSession(block: suspend Session.(OslonokkelenPushClient) -> R): R {
         val activeProfileId = configurationHandle.activeProfileId ?: throw CliException(
             """No profiles defined. 
@@ -25,7 +24,8 @@ class CliService(
             |
             |```
             |keychain-pusher config --help
-            |```""".trimMargin()
+            |```
+            """.trimMargin()
         )
 
         val profile: Configuration.Profile = configurationHandle.requireProfile(activeProfileId)
@@ -45,5 +45,4 @@ class CliService(
     }
 
     class Session(val profile: Configuration.Profile)
-
 }

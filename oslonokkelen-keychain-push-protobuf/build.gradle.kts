@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.protobuf)
-    `java-library`
+    id("keychain-push.protobuf")
+    id("keychain-push.publishing")
+    // Also listed here so JitPack sees it and doesn't inject its own copy
     id("maven-publish")
-    idea
 }
 
 project.description = "Defines protobuf messages used in api"
@@ -13,9 +13,6 @@ dependencies {
 }
 
 protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.java.get()}"
-    }
     generateProtoTasks {
         ofSourceSet("protobuf").forEach { task ->
             task.descriptorSetOptions.includeImports = true
@@ -23,13 +20,3 @@ protobuf {
         }
     }
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-        }
-    }
-}
-
-

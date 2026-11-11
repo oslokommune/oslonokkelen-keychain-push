@@ -7,4 +7,4 @@ class OslonokkelenClientException(
     val technicalDebugMessage: String,
     val traceId: String? = null,
     cause: Throwable? = null
-) : Exception("Error response ${errorCode}: $technicalDebugMessage [trace-id: ${traceId ?: "none"}]", cause)
+) : Exception("Error response $errorCode: $technicalDebugMessage [trace-id: ${traceId ?: "none"}]", cause)

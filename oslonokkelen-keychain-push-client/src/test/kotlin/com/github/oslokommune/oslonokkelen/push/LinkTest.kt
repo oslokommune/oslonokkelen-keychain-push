@@ -29,5 +29,4 @@ internal class LinkTest {
 
         assertNotNull(link)
     }
-
 }

@@ -1,19 +1,12 @@
-import com.adarshr.gradle.testlogger.TestLoggerExtension
-import com.adarshr.gradle.testlogger.TestLoggerPlugin
-import com.adarshr.gradle.testlogger.theme.ThemeType
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    `java-library`
+    id("keychain-push.kotlin-library")
+    kotlin("plugin.serialization")
     application
-    idea
 
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.shadow)
     alias(libs.plugins.graalvm.buildtools)
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.testLogger)
-    id("java")
 }
 
 description = "Oslonøkkelen - Keychain push client - Cli"
@@ -31,8 +24,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.core)
 
     testImplementation(libs.slf4j.simple)
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation(libs.bundles.testing)
 }
 
 application {
@@ -48,23 +39,6 @@ graalvmNative {
             sharedLibrary.set(false)
             buildArgs.add("--initialize-at-build-time=io.ktor,kotlinx,kotlin")
         }
-    }
-}
-
-plugins.withType<TestLoggerPlugin> {
-    configure<TestLoggerExtension> {
-        theme = ThemeType.MOCHA_PARALLEL
-        slowThreshold = 5000
-        showStackTraces = true
-        showCauses = true
-    }
-}
-
-tasks.test {
-    useJUnitPlatform()
-    reports {
-        html.required.set(true)
-        junitXml.required.set(true)
     }
 }
 

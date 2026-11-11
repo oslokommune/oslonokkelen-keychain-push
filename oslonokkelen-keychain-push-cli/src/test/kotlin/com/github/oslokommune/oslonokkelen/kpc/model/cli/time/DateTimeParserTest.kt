@@ -1,8 +1,8 @@
 package com.github.oslokommune.oslonokkelen.kpc.model.cli.time
 
+import kotlinx.datetime.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import kotlinx.datetime.LocalDateTime
 
 internal class DateTimeParserTest {
 
@@ -45,6 +45,4 @@ internal class DateTimeParserTest {
 
         assertThat(parsed).isEqualTo(LocalDateTime.parse("2021-11-03T11:30:00"))
     }
-
-
 }

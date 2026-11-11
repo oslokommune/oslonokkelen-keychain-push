@@ -1,6 +1,5 @@
 package com.github.oslokommune.oslonokkelen.push
 
-
 data class PhoneNumber(
     val countryCode: String,
     val phoneNumber: String

@@ -43,5 +43,4 @@ data class PermissionModel(
         val fromTime: String,
         val untilTime: String
     )
-
 }
