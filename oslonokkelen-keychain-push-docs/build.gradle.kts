@@ -5,8 +5,6 @@ import java.util.concurrent.TimeUnit.SECONDS
 plugins {
     alias(libs.plugins.asciidoc.convert)
     alias(libs.plugins.asciidoc.pdf)
-    alias(libs.plugins.asciidoc.gems)
-    alias(libs.plugins.jrubyResolver) apply false
 }
 
 repositories {
@@ -39,10 +37,29 @@ tasks {
         )
         setBaseDir(file("src/docs/asciidoc"))
 
-        dependsOn("docs-verify-graphviz")
-        dependsOn("docs-verify-seqdiag")
-        dependsOn("docs-verify-blockdiag")
-        dependsOn("docs-verify-bob")
+        // Diagram generation shells out to these tools, so fail early with install hints if any are missing
+        doFirst {
+            ProcessUtil.verifyInstalled(
+                tool = "graphviz",
+                command = listOf("dot", "-V"),
+                installHint = "sudo apt install graphviz",
+            )
+            ProcessUtil.verifyInstalled(
+                tool = "seqdiag3",
+                command = listOf("seqdiag3", "--version"),
+                installHint = "sudo apt install python3-seqdiag",
+            )
+            ProcessUtil.verifyInstalled(
+                tool = "blockdiag3",
+                command = listOf("blockdiag3", "--version"),
+                installHint = "sudo apt install python3-blockdiag",
+            )
+            ProcessUtil.verifyInstalled(
+                tool = "svgbob",
+                command = listOf("svgbob_cli", "--help"),
+                installHint = "cargo install --git https://github.com/ivanceras/svgbob svgbob_cli",
+            )
+        }
     }
 }
 
@@ -51,57 +68,18 @@ asciidoctorj {
     setVersion(libs.versions.asciidocj)
     modules.diagram.setVersion(libs.versions.asciidoc.diagrams)
     logLevel = LogLevel.INFO
-
-    modules {
-        grolifantOps {
-
-        }
-    }
-}
-
-
-tasks.register<DefaultTask>("docs-verify-graphviz") {
-    doFirst {
-        try {
-            ProcessUtil.execute("dot", "-V")
-        } catch (ignored: Exception) {
-            throw GradleException("Unable to find 'dot'. Please install graphviz.\nThis is required for generating documentation diagrams.\n\n\u001B[91msudo apt install graphviz\u001B[0m")
-        }
-    }
-}
-
-tasks.register<DefaultTask>("docs-verify-seqdiag") {
-    doFirst {
-        try {
-            ProcessUtil.execute("seqdiag3", "--version")
-        } catch (ignored: Exception) {
-            throw GradleException("Unable to find 'seqdiag'. Please install seqdiag3.\nThis is required for generating documentation diagrams.\n\n\u001B[91msudo apt install python3-seqdiag\u001B[0m")
-        }
-    }
-}
-
-tasks.register<DefaultTask>("docs-verify-blockdiag") {
-    doFirst {
-        try {
-            ProcessUtil.execute("blockdiag3", "--version")
-        } catch (ignored: Exception) {
-            throw GradleException("Unable to find 'blockdiag3 '. Please install blockdiag3.\nThis is required for generating documentation diagrams.\n\n\u001B[91msudo apt install python3-blockdiag\u001B[0m")
-        }
-    }
-}
-
-tasks.register<DefaultTask>("docs-verify-bob") {
-    doFirst {
-        try {
-            ProcessUtil.execute("svgbob_cli", "--help")
-        } catch (ignored: Exception) {
-            throw GradleException("Unable to find 'svgbob'. Please install it.\nThis is required for generating documentation diagrams.\n\n\u001B[91mcargo install --git https://github.com/ivanceras/svgbob svgbob_cli\u001B[0m")
-        }
-    }
 }
 
 
 object ProcessUtil {
+
+    fun verifyInstalled(tool: String, command: List<String>, installHint: String) {
+        try {
+            execute(*command.toTypedArray())
+        } catch (ignored: Exception) {
+            throw GradleException("Unable to find '${command.first()}'. Please install $tool.\nThis is required for generating documentation diagrams.\n\n\u001B[91m$installHint\u001B[0m")
+        }
+    }
 
     fun execute(workingDirectory: File, vararg command: String): ProcessOutput {
         val process = ProcessBuilder(*command)
