@@ -4,7 +4,7 @@ import com.adarshr.gradle.testlogger.theme.ThemeType
 
 plugins {
     `java-library`
-    `maven-publish`
+    id("maven-publish")
     idea
 
     alias(libs.plugins.kotlin.jvm)

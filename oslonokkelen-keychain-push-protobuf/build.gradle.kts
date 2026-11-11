@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.protobuf)
     `java-library`
-    `maven-publish`
+    id("maven-publish")
     idea
 }
 
