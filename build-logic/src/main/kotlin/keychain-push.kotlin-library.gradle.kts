@@ -15,7 +15,7 @@ val libs = versionCatalogs.named("libs")
 
 kotlin {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_18)
+        jvmTarget.set(JvmTarget.JVM_21)
     }
 }
 
