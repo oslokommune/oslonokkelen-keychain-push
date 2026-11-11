@@ -32,7 +32,7 @@ java {
     }
 }
 
-// The published bytecode targets Java 18 regardless of which jdk builds it
+// The published bytecode targets Java 21 regardless of which jdk builds it
 tasks.withType<JavaCompile>().configureEach {
-    options.release.set(18)
+    options.release.set(21)
 }

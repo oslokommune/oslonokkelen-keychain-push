@@ -12,10 +12,11 @@ plugins {
 description = "Oslonøkkelen - Keychain push client - Cli"
 
 dependencies {
-    api(projects.oslonokkelenKeychainPushClientKtor)
+    implementation(projects.oslonokkelenKeychainPushClientKtor)
+
+    // Ktor logs through slf4j; the bom keeps its slf4j-api on 2.x so it matches the nop provider that silences it
     implementation(platform(libs.slf4j.bom))
-    implementation(libs.slf4j.api)
-    implementation(libs.slf4j.nop)
+    runtimeOnly(libs.slf4j.nop)
 
     implementation(libs.clikt)
     implementation(libs.ktor.client.cio)
@@ -23,7 +24,7 @@ dependencies {
     implementation(libs.kaml)
     implementation(libs.kotlinx.serialization.core)
 
-    testImplementation(libs.slf4j.simple)
+    testRuntimeOnly(libs.slf4j.simple)
 }
 
 application {
