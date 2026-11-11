@@ -1,3 +1,8 @@
+plugins {
+    // Lets Gradle download the JDK toolchain when it isn't installed locally (e.g. on JitPack)
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
 rootProject.name = "oslonokkelen-keychain-push"
 
 include(":oslonokkelen-keychain-push-protobuf")
